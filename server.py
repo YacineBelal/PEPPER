@@ -71,14 +71,17 @@ class Server(cSimpleModule):
         item_input = get_items_instances(train)
         embeddings = get_embeddings(item_input)    
         
+    
         model = util.get_model(len(item_input)) 
         self.global_weights.append(model.get_weights())
+        
         if self.getName() == 'server':
             
             for i in range(self.gateSize('sl')):
                 msg = dataMessage('PreparationPhase')
                 msg.user_ratings = np.array(get_user_vector(train,i))
                 msg.items_embeddings = embeddings
+                msg.id_user = i
                 self.send(msg, 'sl$o',i)
             self.scheduleAt(simTime() + 2,self.message_round)
        

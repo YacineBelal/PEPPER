@@ -29,7 +29,6 @@ def create_user_embedding(factors = 8):
 
 class Node(cSimpleModule):
     def initialize(self):
-        self.user_embedding = create_user_embedding()
         self.positives_nums = 0
         self.vector = np.empty(0)
         self.labels = np.empty(0)
@@ -40,7 +39,8 @@ class Node(cSimpleModule):
     def handleMessage(self, msg):
         if msg.getName() == 'PreparationPhase': 
             self.vector = msg.user_ratings
-            self.item_input, self.labels = self.my_dataset(msg.items_embeddings)
+            self.id_user = msg.id_user
+            self.item_input, self.labels, self.user_input = self.my_dataset(msg.items_embeddings)
             EV << 'got a '<< msg.getName() <<'  message from server\n' 
             
         elif msg.getName() == 'FirstRound': 
@@ -48,30 +48,28 @@ class Node(cSimpleModule):
             self.model = util.get_model(self.item_input.shape[0]) # giving the size of items as par
             self.model.set_weights(msg.weights)
             self.model.compile(optimizer=SGD(lr=0.001), loss='binary_crossentropy')
-            input_arr = np.tile(self.user_embedding,
-                (self.item_input.shape[0], 1))
-            hist = self.model.fit([input_arr, self.item_input], #input
+            hist = self.model.fit([self.user_input, self.item_input], #input
                         np.array(self.labels), # labels 
                         batch_size=2, nb_epoch=1, verbose=1, shuffle=True)
+       
             weights = WeightsMessage('Node_weights')
             weights.weights.append(self.model.get_weights())
             EV << 'len of weights : ' << len(weights.weights[0])
             weights.positives_nums = self.positives_nums            
             self.send(weights, 'nl$o',0)
+        
         elif msg.getName() == 'Round': 
               # advanced rounds 
-            EV << 'len of weights : ' << len(msg.weights[0])
+            
             self.model.set_weights(msg.weights)
-            input_arr = np.tile(self.user_embedding,
-                (self.item_input.shape[0], 1))
-            hist = self.model.fit([input_arr, self.item_input], #input
+            hist = self.model.fit([self.user_input, self.item_input], #input
                         np.array(self.labels), # labels 
                         batch_size=2, nb_epoch=1, verbose=1, shuffle=True)
             weights = WeightsMessage('Node_weights')
             weights.weights.append(self.model.get_weights())
             weights.positives_nums = self.positives_nums            
             self.send(weights, 'nl$o',0)
-
+        
     
     
     
@@ -80,14 +78,19 @@ class Node(cSimpleModule):
         item_input = []
         labels = []
         positives_nums = 0
+        user_input = []
         for i in self.vector:
             item_input.append(items_embeddings[i])
             labels.append(1)
+            user_input.append(self.id_user)
             positives_nums = positives_nums + 1
         self.positives_nums = positives_nums 
         for i in range(items_embeddings.shape[0]):
             if i not in self.vector:
+                user_input.append(self.id_user)
                 item_input.append(items_embeddings[i])
                 labels.append(0)
 
-        return np.array(item_input), np.array(labels)
+        return np.array(item_input), np.array(labels), np.array(user_input)
+
+    
