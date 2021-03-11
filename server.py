@@ -12,9 +12,11 @@ import functools
 from dataMessage import dataMessage
 from WeightsMessage import WeightsMessage
 import utility as util
+from evaluate import evaluate_model
+import random
 
 dataset = Dataset('small')
-train = dataset.trainMatrix
+train, testRatings, testNegatives = dataset.trainMatrix, dataset.testRatings, dataset.testNegatives
 
 
 def get_user_vector(train,user = 0):
@@ -22,7 +24,6 @@ def get_user_vector(train,user = 0):
     for (u,i) in train.keys():
         if u == user:
             positive_instances.append(i)
-            print(i)
         if u  > user :
             break
 
@@ -62,54 +63,36 @@ def create_structure(weights):
 
 class Server(cSimpleModule):
     def initialize(self):
-        self.number_rounds = 5
+        self.number_rounds = 60000
         self.message_round = cMessage('message_round')
         self.message_averaging = cMessage('StartAveraging')
         self.global_weights = []
         self.total_samples = [] 
+        self.all_participants = [i for i in range(self.gateSize('sl'))]
+        self.num_items = train.shape[1]#4000
+        self.num_users = train.shape[0]
+        self.model = util.get_model(self.num_items,self.num_users) 
         
-        item_input = get_items_instances(train)
-        embeddings = get_embeddings(item_input)    
+        EV << 'global model weights at the start :' << self.model.get_weights()[0]
+       
+        topK = 10
         
-    
-        model = util.get_model(len(item_input)) 
-        self.global_weights.append(model.get_weights())
-        
+        (hits, ndcgs) = evaluate_model(self.model, testRatings, testNegatives, topK, 1,self.num_items)
+        hr, ndcg = np.array(hits).mean(), np.array(ndcgs).mean()
+        EV << 'HR =  '<<  hr << ' NDCG = ' << ndcg
+       
+        self.global_weights.append(self.model.get_weights())
         if self.getName() == 'server':
-            
-            for i in range(self.gateSize('sl')):
-                msg = dataMessage('PreparationPhase')
-                msg.user_ratings = np.array(get_user_vector(train,i))
-                msg.items_embeddings = embeddings
-                msg.id_user = i
-                self.send(msg, 'sl$o',i)
-            self.scheduleAt(simTime() + 2,self.message_round)
+            self.diffuse_message('PreparationPhase')
+             
        
 
     def handleMessage(self, msg):
         if msg.isSelfMessage():
             if msg.getName() == 'StartAveraging':
-                sum = functools.reduce(lambda a,b : a+b,self.total_samples)
-                j = 0    
-                # averaging
-                for w in self.global_weights:
-                    for i in range(len(w)):
-                        w[i] = self.total_samples[j] * w[i] / sum
-                    j = j + 1
-                
-                # summing and then combining in one entity of weights
-                new_weights = self.global_weights[0].copy()
-                for i in range(1,len(self.global_weights)):
-                    new_weights = [ np.add(x,y) for x, y in zip(self.global_weights[i], new_weights)]
-                self.global_weights = []
-                self.global_weights.append(new_weights)
-                if self.number_rounds > 0:
-                    self.diffuse_weights() 
-
-               
+                self.fedAvg()
             else: 
-                EV << 'Server : starting a round of training'
-                self.diffuse_weights('FirstRound')
+                self.diffuse_message('FirstRound')
                 self.global_weights = []   
        
         elif msg.getName() == 'Node_weights':
@@ -118,14 +101,80 @@ class Server(cSimpleModule):
             self.global_weights.append(msg.weights[0])
             self.total_samples.append(msg.positives_nums)
             
-    def diffuse_weights(self,str = 'Round'):
-        
-        for i in range (self.gateSize('sl')):
-            weights = WeightsMessage(str)
-            weights.weights = self.global_weights[0]
-            self.send(weights,'sl$o',i)
-        self.scheduleAt(simTime() + self.gateSize('sl'),self.message_averaging)
-        self.number_rounds = self.number_rounds - 1    
+    def diffuse_message(self,str,sample = False):
+        participants = self.sampling()  if sample else self.all_participants
+
+        if str =='FirstRound':
+            for i in participants:
+                weights = WeightsMessage(str)
+                weights.weights = self.model.get_weights()
+                self.send(weights,'sl$o',i)
+            self.scheduleAt(simTime() + self.gateSize('sl'),self.message_averaging)
+            self.number_rounds = self.number_rounds - 1
+        elif str == 'PreparationPhase':
+            for i in participants:
+                msg = dataMessage('PreparationPhase')
+                msg.user_ratings = np.array(get_user_vector(train,i))
+                msg.num_items = self.num_items
+                msg.num_users = self.num_users
+                msg.id_user = i
+                self.send(msg, 'sl$o',i)
+            self.scheduleAt(simTime() + 2,self.message_round)
+        else:
+            for i in participants:
+                weights = WeightsMessage(str)
+                weights.weights = self.model.get_weights()
+                self.send(weights,'sl$o',i)
+            self.scheduleAt(simTime() + self.gateSize('sl'),self.message_averaging)
+            self.number_rounds = self.number_rounds - 1
+            
+       
+
+    
+    def fedAvg(self):
+            sum = functools.reduce(lambda a,b : a+b,self.total_samples)
+            j = 0    
+            # averaging
+            for w in self.global_weights:
+                for i in range(len(w)):
+                    w[i] = self.total_samples[j] * w[i] / sum
+                j = j + 1
+            
+            # summing and then combining in one entity of weights
+            new_weights = self.global_weights[0].copy()
+            for i in range(1,len(self.global_weights)):
+                new_weights = [ np.add(x,y) for x, y in zip(self.global_weights[i], new_weights)]
+            self.global_weights = []
+            self.model.set_weights(new_weights)
+            EV << 'global model weights in the middle :' << self.model.get_weights()[0]
+            self.total_samples = []
+            if self.number_rounds > 0:
+                self.diffuse_message('Round',True)
+            else:
+                EV << 'global model weights at the end :' << self.model.get_weights()[0]
+              
+                topK = 10
+                
+                (hits, ndcgs) = evaluate_model(self.model, testRatings, testNegatives, topK, 1,self.num_items)
+                hr, ndcg = np.array(hits).mean(), np.array(ndcgs).mean()
+                EV << 'HR =  '<<  hr << ' NDCG = ' << ndcg
+                
+
+
+    def sampling(self,num_samples = 10):
+        if num_samples > self.gateSize('sl'):
+            raise Exception("ERROR : size of sampling set is bigger than total samples of clients") 
+        else:
+            size =  self.gateSize('sl')
+            participants = []
+            for i in range(num_samples):
+                p = random.randint(0,size-1)
+                while p in participants:
+                    p = random.randint(0,size-1)
+                participants.append(p)
+        return participants
+
+
 
              
     
