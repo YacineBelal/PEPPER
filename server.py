@@ -15,8 +15,8 @@ import utility as util
 from evaluate import evaluate_model
 import random
 
-dataset = Dataset('small')
-train, testRatings, testNegatives = dataset.trainMatrix, dataset.testRatings, dataset.testNegatives
+dataset = Dataset('ml-100k')
+train ,testRatings, testNegatives= dataset.trainMatrix, dataset.testRatings, dataset.testNegatives
 
 
 def get_user_vector(train,user = 0):
@@ -36,19 +36,6 @@ def get_items_instances(train):
     
     return item_input
 
-def init_normal(shape, name=None):
-    return initializations.normal(shape, scale=0.01, name=name)
-
-def get_embeddings(input,factors = 8):
-    dim = len(input)
-    model = Sequential()
-    model.add(Embedding(input_dim=dim,output_dim=factors,name = 'item_embedding',
-                                  init = init_normal, W_regularizer = l2(0), input_length=1))
-    model.add(Flatten())
-    model.compile('rmsprop', 'mse')
-    output_array = model.predict(np.array(input))
-    return output_array     
-
 def create_structure(weights):
         struct = []
         for i in weights:
@@ -63,13 +50,14 @@ def create_structure(weights):
 
 class Server(cSimpleModule):
     def initialize(self):
-        self.number_rounds = 60000
+        self.number_rounds = 1000
         self.message_round = cMessage('message_round')
         self.message_averaging = cMessage('StartAveraging')
         self.global_weights = []
         self.total_samples = [] 
         self.all_participants = [i for i in range(self.gateSize('sl'))]
-        self.num_items = train.shape[1]#4000
+        self.oldparticipants = []
+        self.num_items = train.shape[1]
         self.num_users = train.shape[0]
         self.model = util.get_model(self.num_items,self.num_users) 
         
@@ -77,10 +65,15 @@ class Server(cSimpleModule):
        
         topK = 10
         
+        
         (hits, ndcgs) = evaluate_model(self.model, testRatings, testNegatives, topK, 1,self.num_items)
         hr, ndcg = np.array(hits).mean(), np.array(ndcgs).mean()
-        EV << 'HR =  '<<  hr << ' NDCG = ' << ndcg
-       
+        print('HR =  \n')
+        print(hr)
+        print(' NDCG = \n') 
+        print(ndcg)
+        
+
         self.global_weights.append(self.model.get_weights())
         if self.getName() == 'server':
             self.diffuse_message('PreparationPhase')
@@ -103,8 +96,9 @@ class Server(cSimpleModule):
             
     def diffuse_message(self,str,sample = False):
         participants = self.sampling()  if sample else self.all_participants
-
+        # participants = self.all_participants
         if str =='FirstRound':
+            print('******************** FirstRound *************************')
             for i in participants:
                 weights = WeightsMessage(str)
                 weights.weights = self.model.get_weights()
@@ -121,6 +115,8 @@ class Server(cSimpleModule):
                 self.send(msg, 'sl$o',i)
             self.scheduleAt(simTime() + 2,self.message_round)
         else:
+            print('******************** Round number ************************* \n')
+            print(self.number_rounds)
             for i in participants:
                 weights = WeightsMessage(str)
                 weights.weights = self.model.get_weights()
@@ -151,17 +147,23 @@ class Server(cSimpleModule):
             if self.number_rounds > 0:
                 self.diffuse_message('Round',True)
             else:
-                EV << 'global model weights at the end :' << self.model.get_weights()[0]
+                #self.model.save_weights('model.h5', overwrite=True)
+                
               
                 topK = 10
                 
                 (hits, ndcgs) = evaluate_model(self.model, testRatings, testNegatives, topK, 1,self.num_items)
                 hr, ndcg = np.array(hits).mean(), np.array(ndcgs).mean()
-                EV << 'HR =  '<<  hr << ' NDCG = ' << ndcg
-                
+                print('HR =  \n')
+                print(hr)
+                print(' NDCG = \n') 
+                print(ndcg)
+        
+
+               
 
 
-    def sampling(self,num_samples = 10):
+    def sampling(self,num_samples = 200):
         if num_samples > self.gateSize('sl'):
             raise Exception("ERROR : size of sampling set is bigger than total samples of clients") 
         else:
@@ -169,9 +171,10 @@ class Server(cSimpleModule):
             participants = []
             for i in range(num_samples):
                 p = random.randint(0,size-1)
-                while p in participants:
+                while p in participants or p in self.oldparticipants:
                     p = random.randint(0,size-1)
                 participants.append(p)
+        self.oldparticipants = participants.copy()
         return participants
 
 

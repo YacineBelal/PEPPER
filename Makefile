@@ -78,7 +78,7 @@ endif
 # >>>
 # inserted from file 'makefrag':
 INCLUDE_PATH += $(shell python3 -m pybind11 --include) -I$(OMNETPY_ROOT)/include
-LIBS = -lomnetpy $(shell python3-config --libs | cut -d" " -f1)
+LIBS = -lomnetpy $(shell python3-config --libs --embed| cut -d" " -f1)
 LDFLAGS += -L$(OMNETPY_ROOT)/lib
 
 # <<<

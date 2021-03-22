@@ -16,7 +16,7 @@ def init_normal(shape, name=None):
     return initializations.normal(shape, scale=0.01, name=name)
 
 
-def get_model(num_items,num_users = 100):
+def get_model(num_items,num_users):
     # Input variables
     user_input = Input(shape=(1,), dtype='int32', name = 'user_input')
     item_input = Input(shape=(1,), dtype='int32', name = 'item_input')
@@ -30,9 +30,12 @@ def get_model(num_items,num_users = 100):
     user_latent = Flatten()(MF_Embedding_User(user_input))
     item_latent = Flatten()(MF_Embedding_Item(item_input))
     
+    
     # Element-wise product of user and item embeddings 
     predict_vector = merge([user_latent, item_latent], mode = 'mul')
     
+    
+
     # Final prediction layer
     #prediction = Lambda(lambda x: K.sigmoid(K.sum(x)), output_shape=(1,))(predict_vector)
     prediction = Dense(1, activation='sigmoid', init='lecun_uniform', name = 'prediction')(predict_vector)

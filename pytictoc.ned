@@ -20,9 +20,9 @@ network PyTictoc
         server: Server {
             @display("p=339,24");
         }
-         Noeuds[100] : Node;
+         Noeuds[943] : Node;
     connections:
-        for i = 0 .. 99{ 
+        for i = 0 .. 942{ 
         server.sl++ <--> <--> Noeuds[i].nl++;
         }
 
