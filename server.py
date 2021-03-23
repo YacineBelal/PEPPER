@@ -29,13 +29,6 @@ def get_user_vector(train,user = 0):
 
     return positive_instances
 
-def get_items_instances(train):
-    item_input = []
-    for i in range(train.shape[1]):
-        item_input.append(i)
-    
-    return item_input
-
 def create_structure(weights):
         struct = []
         for i in weights:

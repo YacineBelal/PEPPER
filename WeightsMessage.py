@@ -7,4 +7,5 @@ class WeightsMessage(cMessage):
         cMessage.__init__(self,name, kind)
         self.weights = []
         self.positives_nums = 0
+        self.age = 0
     

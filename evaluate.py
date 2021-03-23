@@ -20,7 +20,7 @@ _testRatings = None
 _testNegatives = None
 _K = None
 
-def evaluate_model(model, testRatings, testNegatives, K, num_thread, max_items):
+def evaluate_model(model, testRatings, testNegatives, K, num_thread):
     """
     Evaluate the performance (Hit_Ratio, NDCG) of top-K recommendation
     Return: score of each test rating.
@@ -47,12 +47,12 @@ def evaluate_model(model, testRatings, testNegatives, K, num_thread, max_items):
     # Single thread
     for idx in range(len(_testRatings)):
         #if _testRatings[idx][1] < max_items:
-            (hr,ndcg) = eval_one_rating(idx,max_items)
+            (hr,ndcg) = eval_one_rating(idx)
             hits.append(hr)
             ndcgs.append(ndcg)      
     return (hits, ndcgs)
 
-def eval_one_rating(idx,max_items):
+def eval_one_rating(idx):
     rating = _testRatings[idx]
     items = _testNegatives[idx]
     u = rating[0]
