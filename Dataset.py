@@ -19,6 +19,8 @@ class Dataset(object):
         self.trainMatrix = self.load_rating_file_as_matrix(path + ".train.rating")
         self.testRatings = self.load_rating_file_as_list(path + ".test.rating")
         self.testNegatives = self.load_negative_file(path + ".test.negative")
+        self.validationRatings = self.load_rating_file_as_list(path + ".validation.rating")
+        self.validationNegatives = self.load_negative_file(path + ".validation.negative")
         #assert len(self.testRatings) == len(self.testNegatives)
         
         self.num_users, self.num_items = self.trainMatrix.shape
