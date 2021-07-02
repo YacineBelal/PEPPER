@@ -152,6 +152,52 @@ class Node(cSimpleModule):
         local_weights[:] =  [ (a * self.age + b * message_weights.age) / (self.age + message_weights.age) for a,b in zip(local_weights,weights)]
         self.model.set_weights(local_weights)
 
+    def DKL_mergeJ(self,message_weights):
+       
+        local = self.model.get_weights().copy()
+        
+        # if one doesn't have enough validation data, hit ratios calculated on this data wouldn't really make sens
+        # which is why we weight in a completely classic averaging way
+        if len(self.validationRatings) < 2:
+            self.simple_merge(message_weights.weights,local)
+            return
+
+        
+        hrs = []
+    
+        #evaluate local model hit ratio and append it to hrs
+        hr, _ = self.evaluate_local_model()
+        hrs.append(math.exp(hr))
+        
+
+     
+        self.model.set_weights(message_weights.weights)
+        hr, _ = self.evaluate_local_model()
+        hrs.append(math.exp(hr))
+        
+        hrs_total = sum(hrs)
+      
+        if(hrs_total) == 0:
+            self.model.set_weights(local)
+            return 
+        
+        #normalize hit ratios  
+        norm = [float(i)/hrs_total for i in hrs]
+             
+
+        local[:] = [w * norm[0] for w in local]
+        message_weights.weights[:] = [w * norm[1] for w in message_weights.weights]
+      
+        
+        # average weights
+        for w in message_weights.weights:
+            local[:] = [a + b for a,b in zip(local,w)]
+       
+        self.model.set_weights(local)
+        
+        
+
+
     # using the data at disposition (which is the positives ratings) we create the negative ratings that goes with, in order to have a small local dataset
     def my_dataset(self,num_negatives = 4):
         item_input = []
