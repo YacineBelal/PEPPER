@@ -1,7 +1,11 @@
+import os
+####*IMPORANT*: Have to do this line *before* importing tensorflow
+os.environ['PYTHONHASHSEED']=str(1)
+
+import random
 import numpy as np
-import random as rand
+
 import theano.tensor as T
-import keras
 from keras import backend as K
 from keras import initializations
 from keras.models import Sequential, Model, load_model, save_model
@@ -11,6 +15,13 @@ from keras.optimizers import SGD
 from keras.regularizers import l2
 from Dataset import Dataset
 
+
+def reset_random_seeds():
+   os.environ['PYTHONHASHSEED']=str(1)
+   np.random.seed(1)
+   random.seed(1)
+
+reset_random_seeds()
 
 def init_normal(shape, name=None):
     return initializations.normal(shape, scale=0.01, name=name)
@@ -44,3 +55,5 @@ def get_model(num_items,num_users):
 
     
     return model
+
+
