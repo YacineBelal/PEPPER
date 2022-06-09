@@ -1,4 +1,6 @@
 import os
+from configparser import ConfigParser
+
 ####*IMPORANT*: Have to do this line *before* importing tensorflow
 os.environ['PYTHONHASHSEED']=str(1)
 
@@ -14,6 +16,9 @@ from keras.layers import Embedding, Input, Dense, merge, Reshape, Merge, Flatten
 from keras.optimizers import SGD
 from keras.regularizers import l2
 from Dataset import Dataset
+
+
+cost_file_name ="overheadAlpha08.ini"
 
 
 def reset_random_seeds():
@@ -57,3 +62,35 @@ def get_model(num_items,num_users):
     return model
 
 
+def init_cost_file():
+    config_object = ConfigParser()
+    config_object["performance"] = {
+    "Aggregation_Time_Per_Round" : 0,
+    "Aggregation_Time_Total": 0,
+    "Transfer_Time_Per_Round_To_Server": 0,
+    "Transfer_Time_Total_To_Server": 0,
+    "Transfer_Time_Init_Total": 0
+    }
+    with open(cost_file_name,"w") as cost_file:
+        config_object.write(cost_file)
+
+init_cost_file()
+
+def save_per_round_cost(time_t, property):
+    config_object = ConfigParser()
+    config_object.read(cost_file_name)
+    performance = config_object["performance"]
+    performance[property] = str(time_t)
+    with open(cost_file_name,"w") as cost_file:
+        config_object.write(cost_file)
+
+def save_whole_cost(time_t, property):
+    config_object = ConfigParser()
+    config_object.read(cost_file_name)
+    performance = config_object["performance"]
+    if property in performance:
+        performance[property] = str( float(performance[property]) + time_t)
+    else:
+        performance[property] = str(time_t)
+    with open(cost_file_name,"w") as cost_file:
+        config_object.write(cost_file)

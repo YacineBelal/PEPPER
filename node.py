@@ -1,4 +1,5 @@
 from collections import defaultdict
+from tracemalloc import start
 
 
 
@@ -24,19 +25,18 @@ from sklearn.metrics import jaccard_score
 import pydp as dp
 
 from pydp.algorithms.laplacian import BoundedMean
-
+import time
 
 
 
 topK = 20
-dataset_name = "ml-100k" #  foursquareNYC ml-1m_version 
-num_items = 1682 #38333 #2943 3900
+dataset_name = "ml-100k" #foursquareNYC   ml-1m_version 
+num_items =  1682 # 38333  2943 3900
 dataset = Dataset(dataset_name)
 train ,testRatings, testNegatives,validationRatings, validationNegatives = dataset.trainMatrix, dataset.testRatings, dataset.testNegatives,dataset.validationRatings, dataset.validationNegatives
 
 # testRatings = testRatings[:1000] #  2453 1000
 # testNegatives= testNegatives[:1000]
-
 
 epochs = 2
 number_peers = 3
@@ -193,15 +193,16 @@ def jaccard_similarity(list1, list2):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 799
+        self.rounds = 250
         self.vector = np.empty(0)
         self.labels = np.empty(0)
         self.item_input = np.empty(0)
         self.age = 1
+        self.alpha = 0.4
         self.num_items = num_items #train.shape[1] #1682 #3900  TO DO automate this, doesn't work since the validation data has been added because one item is present there and not in training
         self.num_users = train.shape[0] #100 
         self.id_user = self.getIndex()  
-        self.period = 0 #np.random.exponential(1)
+        self.period =  0 #np.random.exponential(1)
 
         # if self.id_user == 100:
         #     self.vector, self.testRatings, self.testNegatives, self.validationRatings, self.validationNegatives = create_profile(self.id_user)
@@ -220,16 +221,25 @@ class Node(cSimpleModule):
         for x in self.vector:
             self.local_vector[x] = 1
 
+        self.time_update = 0
+        self.num_updates = 0 
+        self.aggregation_time = 0
+        self.transfer = 0
+        self.peer_sampling_time = 0
 
         self.positives_nums = len(self.vector)
+        self.received = 0
 
         self.item_input, self.labels, self.user_input = self.my_dataset()
         self.model = util.get_model(self.num_items,self.num_users) # each node initialize its own model 
         self.model.compile(optimizer=Adam(lr=0.01), loss='binary_crossentropy')
         self.period_message = cMessage('period_message')
-        self.best_hr = 0
+        self.best_hr = 0.0
+        self.best_ndcg = 0.0
         self.best_model = []
-        self.training_rounds = 1000
+
+        self.init_rounds = 500
+        self.training_rounds = self.init_rounds
         self.update()
         self.peers = []
         self.neighbours = dict()
@@ -239,8 +249,6 @@ class Node(cSimpleModule):
         #         self.peers.append(i)
     
         self.peer_sampling()
-        self.received = 0 
-        self.checkin = True
         self.performances = {}
         self.average = 0
         self.scheduleAt(simTime() + self.period,self.period_message)
@@ -250,34 +258,37 @@ class Node(cSimpleModule):
         # periodic self sent message used as a timer by each node to diffuse its model 
         if msg.getName() == 'period_message':
             if self.rounds > 0 :
-                # if self.id_user != 99:
-                self.diffuse_to_peer()
-                if self.rounds % 10 == 0:
-                    self.peer_sampling()
-                    # self.peer_sampling_enhanced()
+                if self.rounds != 1:
                     lhr, lndcg = self.evaluate_local_model(False,False)
-                    print('node : ',self.id_user)
-                    # print('round = ',self.rounds)
-                    print('temporary local HR =  ', lhr)
-                    print('temporary local NDCG =  ',lndcg)
-                    print("Neighbours : ")
-                    print(self.peers)
-                    sys.stdout.flush()
                     self.diffuse_to_server(lhr, lndcg)
+                else:
+                    self.model.set_weights(self.best_model)
+                    lhr, lndcg = self.evaluate_local_model(False, False)
+                    self.diffuse_to_server(lhr,lndcg)
 
+                start_time = time.process_time()
+                self.diffuse_to_peer()
+                self.transfer += 1
+                delta = time.process_time() - start_time
+                if self.rounds % 10 == 0:
+                    start_time = time.process_time()
+                    # self.peer_sampling()
+                    self.peer_sampling_enhanced()
+                    delta = time.process_time() - start_time
+                    self.peer_sampling_time += delta
+               
 
                 self.rounds = self.rounds - 1
                 self.scheduleAt(simTime() + self.period,self.period_message)
             
             elif self.rounds == 0: # if number of rounds has been acheived, we can evaluate the model both locally and globally
                 # if self.id_user != 99:
-                    lhr, lndcg = self.evaluate_local_model(False,False)
-                    hr, ndcg = self.evaluate_local_model(True)
-                    print('node : ',self.id_user)
-                    print('Local HR =  ', lhr)
-                    print('Local NDCG =  ',lndcg)
-                    print('global HR =  ',hr)
-                    print('global NDCG = ',ndcg)
+                lhr, lndcg = self.evaluate_local_model(False,False)
+                print('node : ',self.id_user)
+                print('Local HR =  ', lhr)
+                print('Local NDCG =  ',lndcg)
+                sys.stdout.flush()
+
                     # print("My Correspondance = ",get_genreattacked_prop(self.vector))
             
                 # else:
@@ -285,27 +296,43 @@ class Node(cSimpleModule):
                 #     best_profiles = sorted(list(self.neighbours.items()),key=lambda x: x[1]) 
                 #     print(best_profiles)
 
-                    sys.stdout.flush()
                 
              
-        # messsage containing a neighbour's mode is received here    
+        # messsage containing a neighbour's model is received here    
         elif msg.getName() == 'Model': 
             if(self.training_rounds > 0):
+                self.received += 1
                 # aggregating the weights received with the local weigths (ponderated by the model's age aka number of updates) before making some gradient steps 
-                # self.merge(msg)
+                start_time = time.process_time()
+                # dt = self.merge(msg)
+                dt = self.DKL_mergeJ(msg)
+                # dt = self.FullAvg(msg)
+                delta = time.process_time() - start_time - dt
+                self.aggregation_time += delta
+                
+                # evaluation to keep the best model
+                hr, ndcg = self.evaluate_local_model(False,True)
+                if hr >= self.best_hr:
+                    self.best_hr = hr
+                    self.best_ndcg = ndcg
+                    self.best_model = self.model.get_weights().copy()
+                
                 # if self.id_user == 99:
                 #     self.find_profiles(msg)
                 
-                # self.DKL_JaccardVariant(msg)
-                self.DKL_mergeJ(msg)
-                # self.FullAvg(msg)
-                self.received += 1
-                self.checkin = True
-                # self.item_input, self.labels, self.user_input = self.my_dataset()
             self.delete(msg)
             
 
-
+    def finish(self):
+        # self.meta_update()
+        util.save_whole_cost(self.transfer,"total_transfer_nb"+str(self.id_user))
+        util.save_whole_cost(self.peer_sampling_time,"total_peersampling_time"+str(self.id_user))
+        util.save_whole_cost(self.aggregation_time,"total_aggregation_time"+str(self.id_user))
+        util.save_whole_cost(self.aggregation_time / self.received,"average_aggregation_time"+str(self.id_user))
+        util.save_whole_cost(self.time_update,"total_update_time"+str(self.id_user))
+        util.save_whole_cost(self.time_update / self.received, "average_update_time"+str(self.id_user))
+        
+        
     def find_profiles(self, msg):
 
         items_embeddings = msg.weights[0]
@@ -325,19 +352,17 @@ class Node(cSimpleModule):
 
     # evaluation method : can be on the whole dataset for a general hit ratio but is usually on the local dataset.
     # locally, it can be either on validation data (during the aggregation) or on test data at the end of training
-    def evaluate_local_model(self,all_dataset = False, validation=True):
+    def evaluate_local_model(self,all_dataset = False, validation=True, topK = topK):
         evaluation_threads = 2 #mp.cpu_count()
         if not all_dataset:
             if validation :
                 (hits, ndcgs) = evaluate_model(self.model, self.validationRatings, self.validationNegatives, topK, evaluation_threads)               
             else:
                 (hits, ndcgs) = evaluate_model(self.model, self.testRatings, self.testNegatives, topK, evaluation_threads)
-                print("HITS ; TEST ITEMS")
-                for i in range(len(hits)):
-                    print(hits[i]," ; ",self.testRatings[i])
-                sys.stdout.flush()
-           
-
+                # print("HITS ; TEST ITEMS")
+                # for i in range(len(hits)):
+                #     print(hits[i]," ; ",self.testRatings[i])
+                # sys.stdout.flush()
         else:
             (hits, ndcgs) = evaluate_model(self.model, testRatings, testNegatives, topK, evaluation_threads)
         hr, ndcg = np.array(hits).mean(), np.array(ndcgs).mean()
@@ -353,16 +378,14 @@ class Node(cSimpleModule):
 
 
     def get_model(self):
-        print(type(self.dp.quick_result(self.model.get_layer("item_embedding").get_weights())))
-        sys.stdout.flush()
-        return self.dp.quick_result(self.model.get_layer("item_embedding").get_weights().copy())
+        # return self.dp.quick_result(self.model.get_layer("item_embedding").get_weights().copy())
         # return self.model.get_layer("item_embedding").get_weights().copy()
-        # return self.model.get_weights().copy()
+        return self.model.get_weights().copy()
     
 
     def set_model(self, weights):
-        self.model.get_layer("item_embedding").set_weights(weights)
-        # self.model.set_weights(weights)
+        # self.model.get_layer("item_embedding").set_weights(weights)
+        self.model.set_weights(weights)
 
 
 
@@ -383,11 +406,12 @@ class Node(cSimpleModule):
         else:
             return peer - 1 
 
-    def peer_sampling_enhanced(self,alpha = 0.4): #alpha is the exploration/exploitation ratio where alpha = 1 exclusively 
-        # keeps the same actual peers and alpha = 0 change all the peers
+    def peer_sampling_enhanced(self, alpha0 = 1.0): #alpha is the exploration/exploitation ratio where alpha = 0 exclusively 
+        # keeps the same actual peers and alpha = 1 change all the peers 
+        self.alpha =  0.8 #alpha0 *  (1 - self.received / self.init_rounds) 
         size = self.gateSize("no") - 1 
         self.peers = []
-        exploitation_peers = int(number_peers * (1 - alpha))
+        exploitation_peers = int(number_peers * (1 - self.alpha))
         self.performances = sorted(self.performances.items(), key=lambda x: x[1],reverse=True)  
         keys = [x[0] for x in self.performances]
         i = 0
@@ -413,7 +437,6 @@ class Node(cSimpleModule):
     # select a random peer and send its model weights and its age to it  
     def diffuse_to_peer(self,nb_peers = 3):
         peers = self.peers.copy()
-        self.dp = BoundedMean(1,)
         for _ in range(nb_peers):
             peer = random.randint(0,len(peers)-1)
             weights = WeightsMessage('Model')
@@ -427,7 +450,7 @@ class Node(cSimpleModule):
             peers.pop(peer)
 
     def diffuse_to_server(self,hr,ndcg):
-        weights = WeightsMessage('Model')
+        weights = WeightsMessage('Performance')
         weights.user_id = self.id_user
         weights.round = self.rounds
         weights.hit_ratio = hr
@@ -441,10 +464,10 @@ class Node(cSimpleModule):
                         batch_size=len(self.labels), nb_epoch=epochs, verbose=2, shuffle=True) 
         
         # want to keep best model according to validation set (used also for weighting)
-        # hr, _ = self.evaluate_local_model()
-        # # if hr >= self.best_hr:
-        #     self.best_hr = hr
-        #     self.best_model = self.model.get_weights().copy()
+        hr, _ = self.evaluate_local_model()
+        if hr >= self.best_hr:
+            self.best_hr = hr
+            self.best_model = self.model.get_weights().copy()
         
         self.age = self.age + 1
         print("Node : ",self.getIndex())
@@ -453,14 +476,74 @@ class Node(cSimpleModule):
         self.training_rounds -= 1
         sys.stdout.flush()
         
+    def meta_update(self):
+        start_time = time.process_time()
+        meta_lr0 = 0.1
+        meta_epochs = 120 
+        before_weights = self.model.get_weights()
+        
+        self.meta_model = util.get_model(self.num_items,self.num_users) 
+        self.meta_model.compile(optimizer=Adam(lr=0.01), loss='binary_crossentropy')
+        self.meta_model.set_weights(self.model.get_weights())
+        
+        # outer update
+        for ep in range(meta_epochs) :
+            hist = self.meta_model.fit([self.user_input, self.item_input], #input
+                        np.array(self.labels), # labels 
+                        batch_size=len(self.labels), nb_epoch=1, verbose = 0, shuffle=True)
+            after_weights = self.meta_model.get_weights()
+            # meta-step 
+            delta = []
+            for i in range(len(after_weights)):
+                delta.append(np.subtract(after_weights[i],before_weights[i]))
+        
+            meta_lr = meta_lr0 * (1 - ep / meta_epochs)
+            for i in range(len(before_weights)):             
+                before_weights[i] = before_weights[i] + meta_lr * delta[i]
+            self.meta_model.set_weights(before_weights)
+
+        end_time = time.process_time() - start_time
+        util.save_per_round_cost(end_time, "total_metaupdate_time"+str(self.id_user))
+        
+        self.model.set_weights(self.meta_model.get_weights())
+        lhr, lndcg = self.evaluate_local_model(False,False)
+        print("Node :",self.id_user)
+        print("Local META HR20: ",lhr)
+        print("Local META NDCG20 :",lndcg)
+        self.diffuse_to_server(lhr,lndcg)
+        
+        lhr, lndcg = self.evaluate_local_model(False, False, 10)
+        print("Node :",self.id_user)
+        print("Local META HR10: ",lhr)
+        print("Local META NDCG10 :",lndcg)
+        lhr, lndcg = self.evaluate_local_model(False, False, 5)
+        print("Node :",self.id_user)
+        print("Local META HR5: ",lhr)
+        print("Local META NDCG5 :",lndcg)
+        
+
+
+        sys.stdout.flush()
+
     def merge(self,message_weights):
         weights = message_weights.weights
         local_weights = self.get_model()
         local_weights[:] =  [ (a * self.age + b * message_weights.age) / (self.age + message_weights.age) for a,b in zip(local_weights,weights)]
         self.age = max(self.age,message_weights.age)
         self.set_model(local_weights)
+
+        start_time = time.process_time()
         self.update()
-    
+        delta = time.process_time() - start_time
+        self.time_update += delta
+        self.num_updates += 1
+        self.item_input, self.labels, self.user_input = self.my_dataset()
+
+        # util.save_whole_cost(delta, "Local_Update_Time"+str(self.id_user))
+        # util.save_whole_cost(delta, "Local_Update_Time_Total")
+        return delta
+
+        
     def simple_merge(self,weights):
         local = self.get_model()
         local[:] =  [ (a + b) / 2 for a,b in zip(local,weights)]
@@ -471,7 +554,15 @@ class Node(cSimpleModule):
         local_weights = self.get_model()
         local_weights [:] = [(self.positives_nums * a + message_weights.samples * b) / (message_weights.samples + self.positives_nums) for a,b in zip(local_weights,message_weights.weights)]
         self.set_model(local_weights)
+        start_time = time.process_time()
         self.update()
+        delta = time.process_time() - start_time
+        self.time_update += delta
+        self.num_updates += 1
+        self.item_input, self.labels, self.user_input = self.my_dataset()
+
+        return delta
+
 
     # not updated yet
     def Known_Distribution_Merge(self,message_weights):
@@ -679,13 +770,19 @@ class Node(cSimpleModule):
         if len(self.validationRatings) < 2:
             self.simple_merge(message_weights.weights)
             self.item_input, self.labels, self.user_input = self.my_dataset()
+            start_time = time.process_time()
             self.update()
-            return
+            delta = time.process_time() - start_time
+            self.time_update += delta
+            self.num_updates += 1
+        
+            return delta
 
         
         local = self.get_model()
-        
-        hrs = [self.best_hr]
+        hrs = []
+        hr, _ =self.evaluate_local_model()
+        hrs.append(hr)
         self.set_model(message_weights.weights)
         hr, _ = self.evaluate_local_model()
         self.performances[message_weights.id] = hr
@@ -698,7 +795,7 @@ class Node(cSimpleModule):
             self.set_model(local)
             # self.rounds += 1 # to do the exact same round as other methods;
             # self.simple_merge(message_weights.weights,self.model.get_weights())
-            return 
+            return 0
 
         #normalize hit ratios  
         norm = [ (float(i))/hrs_total for i in hrs]
@@ -714,7 +811,15 @@ class Node(cSimpleModule):
        
         self.set_model(local)
         self.item_input, self.labels, self.user_input = self.my_dataset()
+
+        start_time = time.process_time()
         self.update()
+        delta = time.process_time() - start_time
+        self.time_update += delta
+        self.num_updates += 1
+        
+        return delta
+        
        
 
     # ******************************************************************** #
