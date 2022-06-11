@@ -1,16 +1,10 @@
 from collections import defaultdict
-from tracemalloc import start
-
-
-
 from numpy.core.fromnumeric import std
 from sklearn import neighbors
 
 from pyopp import cSimpleModule, cMessage, EV, simTime
 import numpy as np
 import random
-from keras.optimizers import Adam, SGD
-from keras.regularizers import l2
 from Dataset import Dataset
 from WeightsMessage import WeightsMessage
 from dataMessage import dataMessage
@@ -18,30 +12,29 @@ import utility as util
 import random
 import math
 import sys
-from evaluate import evaluate_model, User_Popularity_Deviation
+from evaluate import evaluate_model
 from scipy.spatial.distance import cosine
 from sklearn.metrics import jaccard_score
-
-import pydp as dp
-
-from pydp.algorithms.laplacian import BoundedMean
+import multiprocessing as mp 
 import time
+import torch 
 
 
 
 topK = 20
-dataset_name = "ml-100k" #foursquareNYC   ml-1m_version 
-num_items =  1682 # 38333  2943 3900
+dataset_name = "ml-100k" #foursquareNYC    
+num_items =  1682 # 38333  
 dataset = Dataset(dataset_name)
 train ,testRatings, testNegatives,validationRatings, validationNegatives = dataset.trainMatrix, dataset.testRatings, dataset.testNegatives,dataset.validationRatings, dataset.validationNegatives
-
-# testRatings = testRatings[:1000] #  2453 1000
-# testNegatives= testNegatives[:1000]
+testRatings = testRatings[:1000] #  2453 1000
+testNegatives= testNegatives[:1000]
 
 epochs = 2
 number_peers = 3
 batch_size = 32
-genre = 1 # action
+device = "cpu" #torch.device("cuda:0" if torch.cuda.is_available else "cpu")
+
+# genre = 1 # action
 
 
 def get_items_per_class_file():
@@ -53,18 +46,11 @@ def get_items_per_class_file():
         T = input2.readlines()
         T = [ i.strip() for i in T]
 
-    
     return H, M, T
 
 def get_user_vector(train,user = 0):
-    positive_instances = []
-    # nb_user = 0
-    # last_u = list(train.keys())[0]
-    
+    positive_instances = []    
     for (u,i) in train.keys():
-        # if(u != last_u):
-        #     nb_user +=1
-        #     last_u = u
         if u == user:
             positive_instances.append(i)
         if u  > user :
@@ -75,13 +61,7 @@ def get_user_vector(train,user = 0):
 def get_user_test_set(testRatings,testNegatives,user):
     personal_testRatings = []
     personal_testNegatives = []
-    # nb_user = 0
-    # last_u = testRatings[0][0]
     for i in range(len(testRatings)):
-        
-        # if(testRatings[i][0] != last_u):
-        #     nb_user +=1
-        #     last_u = testRatings[i][0]
         idx = testRatings[i][0]
         if idx == user:
             personal_testRatings.append(testRatings[i])
@@ -90,7 +70,6 @@ def get_user_test_set(testRatings,testNegatives,user):
             break
         
     return personal_testRatings,personal_testNegatives
-
 
 def get_genreattacked_prop(vector):
     infos = []
@@ -195,8 +174,6 @@ class Node(cSimpleModule):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
         self.rounds = 250
         self.vector = np.empty(0)
-        self.labels = np.empty(0)
-        self.item_input = np.empty(0)
         self.age = 1
         self.alpha = 0.4
         self.num_items = num_items #train.shape[1] #1682 #3900  TO DO automate this, doesn't work since the validation data has been added because one item is present there and not in training
@@ -232,7 +209,7 @@ class Node(cSimpleModule):
 
         self.item_input, self.labels, self.user_input = self.my_dataset()
         self.model = util.get_model(self.num_items,self.num_users) # each node initialize its own model 
-        self.model.compile(optimizer=Adam(lr=0.01), loss='binary_crossentropy')
+        self.optimizer = util.optim.Adam(self.model.parameters(),lr=0.01)
         self.period_message = cMessage('period_message')
         self.best_hr = 0.0
         self.best_ndcg = 0.0
@@ -304,8 +281,8 @@ class Node(cSimpleModule):
                 self.received += 1
                 # aggregating the weights received with the local weigths (ponderated by the model's age aka number of updates) before making some gradient steps 
                 start_time = time.process_time()
-                # dt = self.merge(msg)
-                dt = self.DKL_mergeJ(msg)
+                dt = self.merge(msg)
+                # dt = self.DKL_mergeJ(msg)
                 # dt = self.FullAvg(msg)
                 delta = time.process_time() - start_time - dt
                 self.aggregation_time += delta
@@ -324,13 +301,14 @@ class Node(cSimpleModule):
             
 
     def finish(self):
+        pass  
         # self.meta_update()
-        util.save_whole_cost(self.transfer,"total_transfer_nb"+str(self.id_user))
-        util.save_whole_cost(self.peer_sampling_time,"total_peersampling_time"+str(self.id_user))
-        util.save_whole_cost(self.aggregation_time,"total_aggregation_time"+str(self.id_user))
-        util.save_whole_cost(self.aggregation_time / self.received,"average_aggregation_time"+str(self.id_user))
-        util.save_whole_cost(self.time_update,"total_update_time"+str(self.id_user))
-        util.save_whole_cost(self.time_update / self.received, "average_update_time"+str(self.id_user))
+        # util.save_whole_cost(self.transfer,"total_transfer_nb"+str(self.id_user))
+        # util.save_whole_cost(self.peer_sampling_time,"total_peersampling_time"+str(self.id_user))
+        # util.save_whole_cost(self.aggregation_time,"total_aggregation_time"+str(self.id_user))
+        # util.save_whole_cost(self.aggregation_time / self.received,"average_aggregation_time"+str(self.id_user))
+        # util.save_whole_cost(self.time_update,"total_update_time"+str(self.id_user))
+        # util.save_whole_cost(self.time_update / self.received, "average_update_time"+str(self.id_user))
         
         
     def find_profiles(self, msg):
@@ -353,40 +331,31 @@ class Node(cSimpleModule):
     # evaluation method : can be on the whole dataset for a general hit ratio but is usually on the local dataset.
     # locally, it can be either on validation data (during the aggregation) or on test data at the end of training
     def evaluate_local_model(self,all_dataset = False, validation=True, topK = topK):
-        evaluation_threads = 2 #mp.cpu_count()
-        if not all_dataset:
-            if validation :
-                (hits, ndcgs) = evaluate_model(self.model, self.validationRatings, self.validationNegatives, topK, evaluation_threads)               
+        with torch.no_grad():
+            self.model.eval()
+            evaluation_threads = mp.cpu_count()
+            if not all_dataset:
+                if validation :
+                    (hits, ndcgs) = evaluate_model(self.model, self.validationRatings, self.validationNegatives, topK, evaluation_threads)               
+                else:
+                    (hits, ndcgs) = evaluate_model(self.model, self.testRatings, self.testNegatives, topK, evaluation_threads)
             else:
-                (hits, ndcgs) = evaluate_model(self.model, self.testRatings, self.testNegatives, topK, evaluation_threads)
-                # print("HITS ; TEST ITEMS")
-                # for i in range(len(hits)):
-                #     print(hits[i]," ; ",self.testRatings[i])
-                # sys.stdout.flush()
-        else:
-            (hits, ndcgs) = evaluate_model(self.model, testRatings, testNegatives, topK, evaluation_threads)
-        hr, ndcg = np.array(hits).mean(), np.array(ndcgs).mean()
-        return hr, ndcg
-    
-    def evaluate_local_model_upd(self):
-        evaluation_threads = 2 #mp.cpu_count()
-        evaluate_model(self.model, self.testRatings, self.testNegatives, topK, evaluation_threads)
-        self.trainprop = self.get_user_train_distribution_vector()
-        upd = User_Popularity_Deviation(self.id_user, self.trainprop, self.H, self.M, self.T, self.num_items)   
-
-        return upd
-
-
+                (hits, ndcgs) = evaluate_model(self.model, testRatings, testNegatives, topK, evaluation_threads)
+            hr, ndcg = np.array(hits).mean(), np.array(ndcgs).mean()
+            return hr, ndcg
+        
     def get_model(self):
-        # return self.dp.quick_result(self.model.get_layer("item_embedding").get_weights().copy())
-        # return self.model.get_layer("item_embedding").get_weights().copy()
-        return self.model.get_weights().copy()
+        # return self.model.state_dict().values()
+        return self.model.state_dict()['items_embeddings.weight'].size()
+
     
 
     def set_model(self, weights):
-        # self.model.get_layer("item_embedding").set_weights(weights)
-        self.model.set_weights(weights)
-
+        # self.model.load_state_dict(weights); wouldn't work
+        sd = self.model.state_dict()
+        sd["items_embeddings.weight"] = weights
+        self.model.load_state_dict(sd)
+        
 
 
     def peer_sampling(self):
@@ -408,7 +377,7 @@ class Node(cSimpleModule):
 
     def peer_sampling_enhanced(self, alpha0 = 1.0): #alpha is the exploration/exploitation ratio where alpha = 0 exclusively 
         # keeps the same actual peers and alpha = 1 change all the peers 
-        self.alpha =  0.8 #alpha0 *  (1 - self.received / self.init_rounds) 
+        # self.alpha =  0.4 #alpha0 *  (1 - self.received / self.init_rounds) 
         size = self.gateSize("no") - 1 
         self.peers = []
         exploitation_peers = int(number_peers * (1 - self.alpha))
@@ -459,23 +428,120 @@ class Node(cSimpleModule):
     
     # making 4 gradient steps
     def update(self):
-        hist = self.model.fit([self.user_input, self.item_input], #input
-                        np.array(self.labels), # labels 
-                        batch_size=len(self.labels), nb_epoch=epochs, verbose=2, shuffle=True) 
+        self.model.train()
+        for e in range(epochs):
+            running_loss = 0.0
+            self.model.to(device)
+            user_input = torch.split(self.user_input,batch_size)
+            item_input = torch.split(self.item_input,batch_size)
+            labels = torch.split(self.labels,batch_size)
+            for i in range(len(labels)):
+                batch_user_input = user_input[i]
+                batch_item_input = item_input[i]
+                batch_labels = labels[i]
+                self.optimizer.zero_grad()
+                outputs = self.model(users_input=batch_user_input,items_input=batch_item_input)
+                loss = self.model.loss_func(outputs,batch_labels)
+                loss.backward()
+                self.optimizer.step()
+                running_loss += loss.item()
+            
+            print("Node %d, Epoch %d : Training loss %f" % (self.id_user, e + 1,running_loss/len(labels)))
+            
         
         # want to keep best model according to validation set (used also for weighting)
         hr, _ = self.evaluate_local_model()
         if hr >= self.best_hr:
             self.best_hr = hr
-            self.best_model = self.model.get_weights().copy()
+            self.best_model = self.model.state_dict().copy()
         
         self.age = self.age + 1
         print("Node : ",self.getIndex())
         print("Training Rounds Left : ",self.training_rounds)
-        # print("Age : ",self.age)
         self.training_rounds -= 1
         sys.stdout.flush()
+
+    def merge(self,message_weights):
+        weights = message_weights.weights
+        local_weights = self.get_model()
+        local_weights[:] =  [ (a * self.age + b * message_weights.age) / (self.age + message_weights.age) for a,b in zip(local_weights,weights)]
+        self.age = max(self.age,message_weights.age)
+        self.set_model(local_weights)
+
+        self.update()
+        self.num_updates += 1
+        self.item_input, self.labels, self.user_input = self.my_dataset()
+
+        return 0
+
         
+    def simple_merge(self,weights):
+        local = self.get_model()
+        local[:] =  [ (a + b) / 2 for a,b in zip(local,weights)]
+        self.set_model(local)
+
+
+    def FullAvg(self, message_weights):
+        local_weights = self.get_model()
+        local_weights [:] = [(self.positives_nums * a + message_weights.samples * b) / (message_weights.samples + self.positives_nums) for a,b in zip(local_weights,message_weights.weights)]
+        self.set_model(local_weights)
+        self.update()
+        self.num_updates += 1
+        self.item_input, self.labels, self.user_input = self.my_dataset()
+
+        return 0
+
+
+    def DKL_mergeJ(self,message_weights):
+        # # if one doesn't have enough validation data, hit ratios calculated on this data wouldn't really make sens
+        # # which is why we weight in a completely classic averaging way
+        if len(self.validationRatings) < 2:
+            self.simple_merge(message_weights.weights)
+            self.item_input, self.labels, self.user_input = self.my_dataset()
+            self.update()
+            self.num_updates += 1
+        
+            return 0
+
+        
+        local = self.get_model()
+        hrs = []
+        hr, _ =self.evaluate_local_model()
+        hrs.append(hr)
+        self.set_model(message_weights.weights)
+        hr, _ = self.evaluate_local_model()
+        self.performances[message_weights.id] = hr
+        hrs.append(hr)
+                
+
+        hrs_total = sum(hrs)
+        
+        if(hrs_total) == 0:
+            self.set_model(local)
+            return 0
+
+        #normalize hit ratios  
+        norm = [ (float(i))/hrs_total for i in hrs]
+             
+
+        local[:] = [w * norm[0] for w in local]
+        message_weights.weights[:] = [w * norm[1] for w in message_weights.weights]
+      
+        
+        # average weights
+        local[:] = [a + b for a,b in zip(local,message_weights.weights)]
+       
+        self.set_model(local)
+        self.item_input, self.labels, self.user_input = self.my_dataset()
+
+        self.update()
+        self.num_updates += 1
+        
+        return 0
+        
+# ******************************************************************* not updated yet **********************************************************
+
+  
     def meta_update(self):
         start_time = time.process_time()
         meta_lr0 = 0.1
@@ -524,44 +590,6 @@ class Node(cSimpleModule):
 
 
         sys.stdout.flush()
-
-    def merge(self,message_weights):
-        weights = message_weights.weights
-        local_weights = self.get_model()
-        local_weights[:] =  [ (a * self.age + b * message_weights.age) / (self.age + message_weights.age) for a,b in zip(local_weights,weights)]
-        self.age = max(self.age,message_weights.age)
-        self.set_model(local_weights)
-
-        start_time = time.process_time()
-        self.update()
-        delta = time.process_time() - start_time
-        self.time_update += delta
-        self.num_updates += 1
-        self.item_input, self.labels, self.user_input = self.my_dataset()
-
-        # util.save_whole_cost(delta, "Local_Update_Time"+str(self.id_user))
-        # util.save_whole_cost(delta, "Local_Update_Time_Total")
-        return delta
-
-        
-    def simple_merge(self,weights):
-        local = self.get_model()
-        local[:] =  [ (a + b) / 2 for a,b in zip(local,weights)]
-        self.set_model(local)
-
-
-    def FullAvg(self, message_weights):
-        local_weights = self.get_model()
-        local_weights [:] = [(self.positives_nums * a + message_weights.samples * b) / (message_weights.samples + self.positives_nums) for a,b in zip(local_weights,message_weights.weights)]
-        self.set_model(local_weights)
-        start_time = time.process_time()
-        self.update()
-        delta = time.process_time() - start_time
-        self.time_update += delta
-        self.num_updates += 1
-        self.item_input, self.labels, self.user_input = self.my_dataset()
-
-        return delta
 
 
     # not updated yet
@@ -709,176 +737,7 @@ class Node(cSimpleModule):
         self.local_vector = [ elem / summ for elem in self.local_vector]
         
         # self.positives_nums += message_weights.samples
-       
-
-    def Meta_Learning_Approach(self,message_weights):
-        if(self.rounds  > 650):
-            self.merge(message_weights)
-        
-        local = self.model.get_weights().copy()
-        
-        if len(self.validationRatings) < 2:
-            self.simple_merge(message_weights.weights,local)
-            return
-
-        
-        hrs = []
-    
-        #evaluate local model hit ratio and append it to hrs
-        hr, _ = self.evaluate_local_model()
    
-        hrs.append(math.exp(hr))
-        
-
-     
-        self.model.set_weights(message_weights.weights)
-        hr, _ = self.evaluate_local_model()
-        self.performances[message_weights.id] = hr
-        hrs.append(math.exp(hr))
-                
-
-        hrs_total = sum(hrs)
-    
-        norm = [ (float(i))/hrs_total for i in hrs]
-             
-
-        local[:] = [w * norm[0] for w in local]
-        message_weights.weights[:] = [w * norm[1] for w in message_weights.weights]
-      
-        
-        # average weights
-        old_local = local.copy()
-
-        local[:] = [a + b for a,b in zip(local,message_weights.weights)]
-
-
-
-        for l in range(len(local)-1):
-            for k in range(len(local[l])):
-                for i in range(len(local[l][k])):
-                    old_local[0][k][i] +=  0.1 * (local[0][k][i] - old_local [0][k][i]) 
-
-        old_local[3] +=  0.1 * (local[3] - old_local[3]) 
-
-
-        self.model.set_weights(old_local)
-        hrs = []
-
-    def DKL_mergeJ(self,message_weights):
-        # # if one doesn't have enough validation data, hit ratios calculated on this data wouldn't really make sens
-        # # which is why we weight in a completely classic averaging way
-        if len(self.validationRatings) < 2:
-            self.simple_merge(message_weights.weights)
-            self.item_input, self.labels, self.user_input = self.my_dataset()
-            start_time = time.process_time()
-            self.update()
-            delta = time.process_time() - start_time
-            self.time_update += delta
-            self.num_updates += 1
-        
-            return delta
-
-        
-        local = self.get_model()
-        hrs = []
-        hr, _ =self.evaluate_local_model()
-        hrs.append(hr)
-        self.set_model(message_weights.weights)
-        hr, _ = self.evaluate_local_model()
-        self.performances[message_weights.id] = hr
-        hrs.append(hr)
-                
-
-        hrs_total = sum(hrs)
-        
-        if(hrs_total) == 0:
-            self.set_model(local)
-            # self.rounds += 1 # to do the exact same round as other methods;
-            # self.simple_merge(message_weights.weights,self.model.get_weights())
-            return 0
-
-        #normalize hit ratios  
-        norm = [ (float(i))/hrs_total for i in hrs]
-             
-
-        local[:] = [w * norm[0] for w in local]
-        message_weights.weights[:] = [w * norm[1] for w in message_weights.weights]
-      
-        
-        # average weights
-      
-        local[:] = [a + b for a,b in zip(local,message_weights.weights)]
-       
-        self.set_model(local)
-        self.item_input, self.labels, self.user_input = self.my_dataset()
-
-        start_time = time.process_time()
-        self.update()
-        delta = time.process_time() - start_time
-        self.time_update += delta
-        self.num_updates += 1
-        
-        return delta
-        
-       
-
-    # ******************************************************************** #
-    def DKL_mergeJ_UPD(self,message_weights):
-       
-        local = self.model.get_weights().copy()
-        
-        # if one doesn't have enough validation data, hit ratios calculated on this data wouldn't really make sens
-        # which is why we weight in a completely classic averaging way
-        if len(self.validationRatings) < 2:
-            self.simple_merge(message_weights.weights,local)
-            return
-
-        
-        hrs = []
-    
-        #evaluate local model hit ratio and append it to hrs
-        hr, _ = self.evaluate_local_model()
-        upd = self.evaluate_local_model_upd()
-        hrs.append( math.pow(hr , 0.8) / math.pow(upd + 1e-4, 0.2))
-       
-
-
-        self.model.set_weights(message_weights.weights)
-        hr, _ = self.evaluate_local_model()
-        upd = self.evaluate_local_model_upd()
-        self.performances[message_weights.id] = hr 
-        # hrs.append(math.exp(-upd))
-        # hrs.append(hr / math.exp(upd))
-
-        hrs.append( math.pow(hr, 0.8) / math.pow(upd + 1e-4, 0.2))
-        
-        
-        
-        # sys.stdout.flush()
-   
-        hrs_total = sum(hrs)
-        
-        if(hrs_total) == 0:
-            self.model.set_weights(local)
-            hrs = []
-            return 
-
-        #normalize hit ratios  
-        norm = [ (float(i))/hrs_total for i in hrs]
-
-
-        local[:] = [w * norm[0] for w in local]
-        message_weights.weights[:] = [w * norm[1] for w in message_weights.weights]
-      
-        
-        # average weights
-      
-        local[:] = [a + b for a,b in zip(local,message_weights.weights)]
-       
-        self.model.set_weights(local)
-        hrs = []
-        
-
 
     # using the data at disposition (which is the positives ratings) we create the negative ratings that goes with, in order to have a small local dataset
     def my_dataset(self,num_negatives = 4):
@@ -896,7 +755,7 @@ class Node(cSimpleModule):
                 user_input.append(self.id_user)
                 item_input.append(j)
                 labels.append(0)            
-        return np.array(item_input), np.array(labels), np.array(user_input)
+        return torch.tensor(item_input), torch.FloatTensor(labels), torch.tensor(user_input)
 
     
     def get_user_train_distribution_vector(self):
