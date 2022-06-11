@@ -12,7 +12,8 @@ from scipy.spatial.distance import cosine
 from sklearn.metrics import jaccard_score
 import multiprocessing as mp 
 import time
-import torch 
+import torch
+from torch import optim
 
 
 
@@ -172,7 +173,7 @@ class Node(cSimpleModule):
         self.age = 1
         self.alpha = 0.4
         self.num_items = num_items #train.shape[1] #1682 #3900  TO DO automate this, doesn't work since the validation data has been added because one item is present there and not in training
-        self.num_users = train.shape[0] #100 
+        self.num_users = 100 #train.shape[0]  
         self.id_user = self.getIndex()  
         self.period =  0 #np.random.exponential(1)
 
@@ -203,8 +204,8 @@ class Node(cSimpleModule):
         self.received = 0
 
         self.item_input, self.labels, self.user_input = self.my_dataset()
-        self.model = util.get_model(self.num_items,self.num_users) # each node initialize its own model 
-        self.optimizer = util.optim.Adam(self.model.parameters(),lr=0.01)
+        self.model = util.get_model(self.num_users,self.num_items) # each node initialize its own model 
+        self.optimizer = optim.Adam(self.model.parameters(),lr=0.01)
         self.period_message = cMessage('period_message')
         self.best_hr = 0.0
         self.best_ndcg = 0.0

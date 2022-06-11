@@ -7,22 +7,133 @@ Setting up Cmdenv...
 Loading NED files from .:  1
 
 Preparing for running configuration General, run #0...
-Assigned runID=General-0-20220611-17:49:33-19852
+Assigned runID=General-0-20220611-19:18:20-70175
 Setting up network "RandomGraph"...
-
-[Warning: Program was compiled without debug info, you might not be able to debug.]
-
-RUNTIME ERROR. A cRuntimeError exception is about to be thrown, and you
-requested (by setting debug-on-errors=true in the ini file) that errors
-abort execution and break into the debugger.
-
-You should now probably be running the simulation under gdb or another
-debugger. The simulation kernel will now raise a SIGINT signal which will
-get you into the debugger. If you are not running under a debugger, you can
-still use the core dump for post-mortem debugging. Once in the debugger,
-view the call stack (in gdb: "bt" command) to see the context of the
-runtime error.
-
-<!> Class "Server" not found -- perhaps its code was not linked in, or the class wasn't registered with Register_Class(), or in the case of modules and channels, with Define_Module()/Define_Channel() -- in module (omnetpp::cModule) RandomGraph (id=1), during network setup
-
-TRAPPING on the exception above, due to a debug-on-errors=true configuration option. Is your debugger ready?
+Initializing...
+ml-100k
+Node 0, Epoch 1 : Training loss 0.653539
+Node 0, Epoch 2 : Training loss 0.548268
+Node :  0
+Training Rounds Left :  500
+Node 1, Epoch 1 : Training loss 0.687516
+Node 1, Epoch 2 : Training loss 0.626795
+Node :  1
+Training Rounds Left :  500
+Node 2, Epoch 1 : Training loss 0.705190
+Node 2, Epoch 2 : Training loss 0.643300
+Node :  2
+Training Rounds Left :  500
+Node 3, Epoch 1 : Training loss 0.700252
+Node 3, Epoch 2 : Training loss 0.668740
+Node :  3
+Training Rounds Left :  500
+Node 4, Epoch 1 : Training loss 0.649569
+Node 4, Epoch 2 : Training loss 0.577528
+Node :  4
+Training Rounds Left :  500
+Node 5, Epoch 1 : Training loss 0.746799
+Node 5, Epoch 2 : Training loss 0.635226
+Node :  5
+Training Rounds Left :  500
+Node 6, Epoch 1 : Training loss 0.621310
+Node 6, Epoch 2 : Training loss 0.517573
+Node :  6
+Training Rounds Left :  500
+Node 7, Epoch 1 : Training loss 0.925585
+Node 7, Epoch 2 : Training loss 0.829988
+Node :  7
+Training Rounds Left :  500
+Node 8, Epoch 1 : Training loss 0.727357
+Node 8, Epoch 2 : Training loss 0.710790
+Node :  8
+Training Rounds Left :  500
+Node 9, Epoch 1 : Training loss 0.687246
+Node 9, Epoch 2 : Training loss 0.588267
+Node :  9
+Training Rounds Left :  500
+Node 10, Epoch 1 : Training loss 0.747272
+Node 10, Epoch 2 : Training loss 0.637266
+Node :  10
+Training Rounds Left :  500
+Node 11, Epoch 1 : Training loss 0.689805
+Node 11, Epoch 2 : Training loss 0.631977
+Node :  11
+Training Rounds Left :  500
+Node 12, Epoch 1 : Training loss 0.607844
+Node 12, Epoch 2 : Training loss 0.480252
+Node :  12
+Training Rounds Left :  500
+Node 13, Epoch 1 : Training loss 0.653120
+Node 13, Epoch 2 : Training loss 0.591335
+Node :  13
+Training Rounds Left :  500
+Node 14, Epoch 1 : Training loss 0.740026
+Node 14, Epoch 2 : Training loss 0.613069
+Node :  14
+Training Rounds Left :  500
+Node 15, Epoch 1 : Training loss 0.615233
+Node 15, Epoch 2 : Training loss 0.552343
+Node :  15
+Training Rounds Left :  500
+Node 16, Epoch 1 : Training loss 0.771816
+Node 16, Epoch 2 : Training loss 0.741672
+Node :  16
+Training Rounds Left :  500
+Node 17, Epoch 1 : Training loss 0.601646
+Node 17, Epoch 2 : Training loss 0.535343
+Node :  17
+Training Rounds Left :  500
+Node 18, Epoch 1 : Training loss 0.841508
+Node 18, Epoch 2 : Training loss 0.814197
+Node :  18
+Training Rounds Left :  500
+Node 19, Epoch 1 : Training loss 0.630913
+Node 19, Epoch 2 : Training loss 0.597369
+Node :  19
+Training Rounds Left :  500
+Node 20, Epoch 1 : Training loss 0.641444
+Node 20, Epoch 2 : Training loss 0.564521
+Node :  20
+Training Rounds Left :  500
+Node 21, Epoch 1 : Training loss 0.668901
+Node 21, Epoch 2 : Training loss 0.612401
+Node :  21
+Training Rounds Left :  500
+Node 22, Epoch 1 : Training loss 0.804400
+Node 22, Epoch 2 : Training loss 0.705174
+Node :  22
+Training Rounds Left :  500
+Node 23, Epoch 1 : Training loss 0.734624
+Node 23, Epoch 2 : Training loss 0.687192
+Node :  23
+Training Rounds Left :  500
+Node 24, Epoch 1 : Training loss 0.845600
+Node 24, Epoch 2 : Training loss 0.760958
+Node :  24
+Training Rounds Left :  500
+Node 25, Epoch 1 : Training loss 0.703439
+Node 25, Epoch 2 : Training loss 0.612825
+Node :  25
+Training Rounds Left :  500
+Node 26, Epoch 1 : Training loss 0.734022
+Node 26, Epoch 2 : Training loss 0.715677
+Node :  26
+Training Rounds Left :  500
+Node 27, Epoch 1 : Training loss 0.786218
+Node 27, Epoch 2 : Training loss 0.719744
+Node :  27
+Training Rounds Left :  500
+Node 28, Epoch 1 : Training loss 0.715763
+Node 28, Epoch 2 : Training loss 0.683924
+Node :  28
+Training Rounds Left :  500
+Node 29, Epoch 1 : Training loss 0.798571
+Node 29, Epoch 2 : Training loss 0.765604
+Node :  29
+Training Rounds Left :  500
+Node 30, Epoch 1 : Training loss 0.642370
+Node 30, Epoch 2 : Training loss 0.618974
+Node :  30
+Training Rounds Left :  500
+Node 31, Epoch 1 : Training loss 0.632389
+Node 31, Epoch 2 : Training loss 0.606677

@@ -35,7 +35,7 @@ init_cost_file()
 
 
 class Network(nn.Module):
-        def __init__(self,num_users, num_items,latent_dim):
+        def __init__(self,num_users, num_items,latent_dim = 8):
             super().__init__()
             self.num_users = num_users
             self.num_items = num_items
@@ -65,8 +65,8 @@ class Network(nn.Module):
 
 
 
-def get_model(num_items,num_users):
-    model = Network(num_items, num_users)    
+def get_model(num_users,num_items):
+    model = Network(num_users, num_items)    
     return model
 
 

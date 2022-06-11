@@ -1,4 +1,3 @@
-package asynchGL;
 simple Server
 {
    gates:
