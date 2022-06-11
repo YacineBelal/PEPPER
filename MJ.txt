@@ -1,0 +1,28 @@
+OMNeT++ Discrete Event Simulation  (C) 1992-2019 Andras Varga, OpenSim Ltd.
+Version: 5.6.2, build: 200518-aa79d0918f, edition: Academic Public License -- NOT FOR COMMERCIAL USE
+See the license for distribution terms and warranty disclaimer
+
+Setting up Cmdenv...
+
+Loading NED files from .:  1
+
+Preparing for running configuration General, run #0...
+Assigned runID=General-0-20220611-17:49:33-19852
+Setting up network "RandomGraph"...
+
+[Warning: Program was compiled without debug info, you might not be able to debug.]
+
+RUNTIME ERROR. A cRuntimeError exception is about to be thrown, and you
+requested (by setting debug-on-errors=true in the ini file) that errors
+abort execution and break into the debugger.
+
+You should now probably be running the simulation under gdb or another
+debugger. The simulation kernel will now raise a SIGINT signal which will
+get you into the debugger. If you are not running under a debugger, you can
+still use the core dump for post-mortem debugging. Once in the debugger,
+view the call stack (in gdb: "bt" command) to see the context of the
+runtime error.
+
+<!> Class "Server" not found -- perhaps its code was not linked in, or the class wasn't registered with Register_Class(), or in the case of modules and channels, with Define_Module()/Define_Channel() -- in module (omnetpp::cModule) RandomGraph (id=1), during network setup
+
+TRAPPING on the exception above, due to a debug-on-errors=true configuration option. Is your debugger ready?

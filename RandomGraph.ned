@@ -1,7 +1,8 @@
+package asynchGL;
 simple Server
 {
-    gates:
-        inout sl[];
+   gates:
+       inout sl[];
 
 }
 simple Node
@@ -18,9 +19,7 @@ network RandomGraph
         int size = default(100);
         
     submodules: 
-        server: Server {
-            @display("p=339,24");
-        }
+         server: Server;
          Noeuds[size] : Node;
 
     connections allowunconnected:

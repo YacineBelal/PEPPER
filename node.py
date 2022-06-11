@@ -1,13 +1,8 @@
-from collections import defaultdict
-from numpy.core.fromnumeric import std
-from sklearn import neighbors
-
 from pyopp import cSimpleModule, cMessage, EV, simTime
 import numpy as np
 import random
 from Dataset import Dataset
 from WeightsMessage import WeightsMessage
-from dataMessage import dataMessage
 import utility as util
 import random
 import math
