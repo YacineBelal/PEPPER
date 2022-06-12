@@ -1,4 +1,5 @@
 from decimal import localcontext
+from zipfile import BadZipfile
 from pyopp import cSimpleModule, cMessage, EV, simTime
 import numpy as np
 import random
@@ -28,7 +29,7 @@ testNegatives= testNegatives[:1000]
 
 epochs = 2
 number_peers = 3
-batch_size = 128
+# batch_size = 128
 device = "cpu" #torch.device("cuda:0" if torch.cuda.is_available else "cpu")
 
 # genre = 1 # action
@@ -168,6 +169,7 @@ def jaccard_similarity(list1, list2):
 
 class Node(cSimpleModule):
     def initialize(self):
+        
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
         self.rounds = 400
         self.vector = np.empty(0)
@@ -424,13 +426,14 @@ class Node(cSimpleModule):
     
     # making 4 gradient steps
     def update(self):
+        self.batch_size = self.labels.size(dim=0)
         self.model.train()
         for e in range(epochs):
             running_loss = 0.0
             self.model.to(device)
-            user_input = torch.split(self.user_input,batch_size)
-            item_input = torch.split(self.item_input,batch_size)
-            labels = torch.split(self.labels,batch_size)
+            user_input = torch.split(self.user_input,self.batch_size)
+            item_input = torch.split(self.item_input,self.batch_size)
+            labels = torch.split(self.labels,self.batch_size)
             for i in range(len(labels)):
                 batch_user_input = user_input[i]
                 batch_item_input = item_input[i]
@@ -709,7 +712,6 @@ class Node(cSimpleModule):
         for i in range(2):
             ponderations.append(exps[i]/sum_exps)
 
-        # print("sum1 == ",sum(ponderations))        
 
         total_samples = self.positives_nums + message_weights.samples
         ponderations[0] *= self.positives_nums / total_samples

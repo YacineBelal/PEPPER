@@ -1,0 +1,107 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.12.18
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    python_version: 3.8.10
+    start_time: 1655068544
+    t:
+      1:
+      - 55
+      2:
+      - 1
+      - 5
+      - 53
+      - 55
+      3:
+      - 2
+      - 4
+      - 13
+      - 16
+      4: 3.8.10
+      5: 0.12.18
+      8:
+      - 8
+    visualize:
+      Local HR@CDF:
+        panel_config:
+          fieldSettings:
+            stroke: dash
+            x: Local HR@20
+            y: CDF
+          panelDefId: wandb/line/v0
+          stringSettings:
+            title: Local HR@20 cumulative distribution
+          transform:
+            name: tableWithLeafColNames
+          userQuery:
+            queryFields:
+            - args:
+              - name: runSets
+                value: ${runSets}
+              fields:
+              - fields: []
+                name: id
+              - fields: []
+                name: name
+              - fields: []
+                name: _defaultColorIndex
+              - args:
+                - name: tableKey
+                  value: Local HR@CDF_table
+                fields: []
+                name: summaryTable
+              name: runSets
+        panel_type: Vega2
+      Local NDCG@CDF:
+        panel_config:
+          fieldSettings:
+            stroke: dash
+            x: Local NDCG@20
+            y: CDF
+          panelDefId: wandb/line/v0
+          stringSettings:
+            title: Local NDCG@20 cumulative distribution
+          transform:
+            name: tableWithLeafColNames
+          userQuery:
+            queryFields:
+            - args:
+              - name: runSets
+                value: ${runSets}
+              fields:
+              - fields: []
+                name: id
+              - fields: []
+                name: name
+              - fields: []
+                name: _defaultColorIndex
+              - args:
+                - name: tableKey
+                  value: Local NDCG@CDF_table
+                fields: []
+                name: summaryTable
+              name: runSets
+        panel_type: Vega2
+batch_size:
+  desc: null
+  value: 128
+dataset:
+  desc: null
+  value: ml-100k
+epochs:
+  desc: null
+  value: 2
+learning_rate:
+  desc: null
+  value: 0.01
+rounds:
+  desc: null
+  value: 400
+topK:
+  desc: null
+  value: 20

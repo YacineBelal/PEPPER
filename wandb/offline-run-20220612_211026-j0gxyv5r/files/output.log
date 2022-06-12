@@ -1,0 +1,4356 @@
+Initializing...
+ml-100k
+Node 0, Epoch 1/2 : BCE Training loss 0.704705
+Node 0, Epoch 2/2 : BCE Training loss 0.635959
+Node :  0
+Training Rounds Left :  5
+Node 1, Epoch 1/2 : BCE Training loss 0.716738
+Node 1, Epoch 2/2 : BCE Training loss 0.690086
+Node :  1
+Training Rounds Left :  5
+Node 2, Epoch 1/2 : BCE Training loss 0.714711
+Node 2, Epoch 2/2 : BCE Training loss 0.689989
+Node :  2
+Training Rounds Left :  5
+Node 3, Epoch 1/2 : BCE Training loss 0.685281
+Node 3, Epoch 2/2 : BCE Training loss 0.675138
+Node :  3
+Training Rounds Left :  5
+Node 4, Epoch 1/2 : BCE Training loss 0.677432
+Node 4, Epoch 2/2 : BCE Training loss 0.648430
+Node :  4
+Training Rounds Left :  5
+Node 5, Epoch 1/2 : BCE Training loss 0.803705
+Node 5, Epoch 2/2 : BCE Training loss 0.742096
+Node :  5
+Training Rounds Left :  5
+Node 6, Epoch 1/2 : BCE Training loss 0.676697
+Node 6, Epoch 2/2 : BCE Training loss 0.614659
+Node :  6
+Training Rounds Left :  5
+Node 7, Epoch 1/2 : BCE Training loss 0.823720
+Node 7, Epoch 2/2 : BCE Training loss 0.799175
+Node :  7
+Training Rounds Left :  5
+Node 8, Epoch 1/2 : BCE Training loss 0.728101
+Node 8, Epoch 2/2 : BCE Training loss 0.718345
+Node :  8
+Training Rounds Left :  5
+Node 9, Epoch 1/2 : BCE Training loss 0.731149
+Node 9, Epoch 2/2 : BCE Training loss 0.670585
+Node :  9
+Training Rounds Left :  5
+Node 10, Epoch 1/2 : BCE Training loss 0.800406
+Node 10, Epoch 2/2 : BCE Training loss 0.732802
+Node :  10
+Training Rounds Left :  5
+Node 11, Epoch 1/2 : BCE Training loss 0.704458
+Node 11, Epoch 2/2 : BCE Training loss 0.675597
+Node :  11
+Training Rounds Left :  5
+Node 12, Epoch 1/2 : BCE Training loss 0.696320
+Node 12, Epoch 2/2 : BCE Training loss 0.576708
+Node :  12
+Training Rounds Left :  5
+Node 13, Epoch 1/2 : BCE Training loss 0.664365
+Node 13, Epoch 2/2 : BCE Training loss 0.632718
+Node :  13
+Training Rounds Left :  5
+Node 14, Epoch 1/2 : BCE Training loss 0.784359
+Node 14, Epoch 2/2 : BCE Training loss 0.716306
+Node :  14
+Training Rounds Left :  5
+Node 15, Epoch 1/2 : BCE Training loss 0.644591
+Node 15, Epoch 2/2 : BCE Training loss 0.610653
+Node :  15
+Training Rounds Left :  5
+Node 16, Epoch 1/2 : BCE Training loss 0.775309
+Node 16, Epoch 2/2 : BCE Training loss 0.761982
+Node :  16
+Training Rounds Left :  5
+Node 17, Epoch 1/2 : BCE Training loss 0.630828
+Node 17, Epoch 2/2 : BCE Training loss 0.600773
+Node :  17
+Training Rounds Left :  5
+Node 18, Epoch 1/2 : BCE Training loss 0.822877
+Node 18, Epoch 2/2 : BCE Training loss 0.807818
+Node :  18
+Training Rounds Left :  5
+Node 19, Epoch 1/2 : BCE Training loss 0.629307
+Node 19, Epoch 2/2 : BCE Training loss 0.612486
+Node :  19
+Training Rounds Left :  5
+Node 20, Epoch 1/2 : BCE Training loss 0.689455
+Node 20, Epoch 2/2 : BCE Training loss 0.638314
+Node :  20
+Training Rounds Left :  5
+Node 21, Epoch 1/2 : BCE Training loss 0.685533
+Node 21, Epoch 2/2 : BCE Training loss 0.660612
+Node :  21
+Training Rounds Left :  5
+Node 22, Epoch 1/2 : BCE Training loss 0.845089
+Node 22, Epoch 2/2 : BCE Training loss 0.798636
+Node :  22
+Training Rounds Left :  5
+Node 23, Epoch 1/2 : BCE Training loss 0.738550
+Node 23, Epoch 2/2 : BCE Training loss 0.715204
+Node :  23
+Training Rounds Left :  5
+Node 24, Epoch 1/2 : BCE Training loss 0.869587
+Node 24, Epoch 2/2 : BCE Training loss 0.829352
+Node :  24
+Training Rounds Left :  5
+Node 25, Epoch 1/2 : BCE Training loss 0.734985
+Node 25, Epoch 2/2 : BCE Training loss 0.689625
+Node :  25
+Training Rounds Left :  5
+Node 26, Epoch 1/2 : BCE Training loss 0.742128
+Node 26, Epoch 2/2 : BCE Training loss 0.734819
+Node :  26
+Training Rounds Left :  5
+Node 27, Epoch 1/2 : BCE Training loss 0.806960
+Node 27, Epoch 2/2 : BCE Training loss 0.777349
+Node :  27
+Training Rounds Left :  5
+Node 28, Epoch 1/2 : BCE Training loss 0.733675
+Node 28, Epoch 2/2 : BCE Training loss 0.721114
+Node :  28
+Training Rounds Left :  5
+Node 29, Epoch 1/2 : BCE Training loss 0.784922
+Node 29, Epoch 2/2 : BCE Training loss 0.769127
+Node :  29
+Training Rounds Left :  5
+Node 30, Epoch 1/2 : BCE Training loss 0.650278
+Node 30, Epoch 2/2 : BCE Training loss 0.641181
+Node :  30
+Training Rounds Left :  5
+Node 31, Epoch 1/2 : BCE Training loss 0.641953
+Node 31, Epoch 2/2 : BCE Training loss 0.626676
+Node :  31
+Training Rounds Left :  5
+Node 32, Epoch 1/2 : BCE Training loss 0.647919
+Node 32, Epoch 2/2 : BCE Training loss 0.639522
+Node :  32
+Training Rounds Left :  5
+Node 33, Epoch 1/2 : BCE Training loss 0.780826
+Node 33, Epoch 2/2 : BCE Training loss 0.763579
+Node :  33
+Training Rounds Left :  5
+Node 34, Epoch 1/2 : BCE Training loss 0.851215
+Node 34, Epoch 2/2 : BCE Training loss 0.830743
+Node :  34
+Training Rounds Left :  5
+Node 35, Epoch 1/2 : BCE Training loss 0.804721
+Node 35, Epoch 2/2 : BCE Training loss 0.792499
+Node :  35
+Training Rounds Left :  5
+Node 36, Epoch 1/2 : BCE Training loss 0.643388
+Node 36, Epoch 2/2 : BCE Training loss 0.627517
+Node :  36
+Training Rounds Left :  5
+Node 37, Epoch 1/2 : BCE Training loss 0.739121
+Node 37, Epoch 2/2 : BCE Training loss 0.714193
+Node :  37
+Training Rounds Left :  5
+Node 38, Epoch 1/2 : BCE Training loss 0.778683
+Node 38, Epoch 2/2 : BCE Training loss 0.762979
+Node :  38
+Training Rounds Left :  5
+Node 39, Epoch 1/2 : BCE Training loss 0.628128
+Node 39, Epoch 2/2 : BCE Training loss 0.616930
+Node :  39
+Training Rounds Left :  5
+Node 40, Epoch 1/2 : BCE Training loss 0.755165
+Node 40, Epoch 2/2 : BCE Training loss 0.738853
+Node :  40
+Training Rounds Left :  5
+Node 41, Epoch 1/2 : BCE Training loss 0.611148
+Node 41, Epoch 2/2 : BCE Training loss 0.581650
+Node :  41
+Training Rounds Left :  5
+Node 42, Epoch 1/2 : BCE Training loss 0.661577
+Node 42, Epoch 2/2 : BCE Training loss 0.618009
+Node :  42
+Training Rounds Left :  5
+Node 43, Epoch 1/2 : BCE Training loss 0.635456
+Node 43, Epoch 2/2 : BCE Training loss 0.605090
+Node :  43
+Training Rounds Left :  5
+Node 44, Epoch 1/2 : BCE Training loss 0.605037
+Node 44, Epoch 2/2 : BCE Training loss 0.588547
+Node :  44
+Training Rounds Left :  5
+Node 45, Epoch 1/2 : BCE Training loss 0.774180
+Node 45, Epoch 2/2 : BCE Training loss 0.758627
+Node :  45
+Training Rounds Left :  5
+Node 46, Epoch 1/2 : BCE Training loss 0.603131
+Node 46, Epoch 2/2 : BCE Training loss 0.596405
+Node :  46
+Training Rounds Left :  5
+Node 47, Epoch 1/2 : BCE Training loss 0.812349
+Node 47, Epoch 2/2 : BCE Training loss 0.796484
+Node :  47
+Training Rounds Left :  5
+Node 48, Epoch 1/2 : BCE Training loss 0.646861
+Node 48, Epoch 2/2 : BCE Training loss 0.607203
+Node :  48
+Training Rounds Left :  5
+Node 49, Epoch 1/2 : BCE Training loss 0.700673
+Node 49, Epoch 2/2 : BCE Training loss 0.687907
+Node :  49
+Training Rounds Left :  5
+Node 50, Epoch 1/2 : BCE Training loss 0.640532
+Node 50, Epoch 2/2 : BCE Training loss 0.626845
+Node :  50
+Training Rounds Left :  5
+Node 51, Epoch 1/2 : BCE Training loss 0.703232
+Node 51, Epoch 2/2 : BCE Training loss 0.684690
+Node :  51
+Training Rounds Left :  5
+Node 52, Epoch 1/2 : BCE Training loss 0.867836
+Node 52, Epoch 2/2 : BCE Training loss 0.844895
+Node :  52
+Training Rounds Left :  5
+Node 53, Epoch 1/2 : BCE Training loss 0.756744
+Node 53, Epoch 2/2 : BCE Training loss 0.725315
+Node :  53
+Training Rounds Left :  5
+Node 54, Epoch 1/2 : BCE Training loss 0.739243
+Node 54, Epoch 2/2 : BCE Training loss 0.726729
+Node :  54
+Training Rounds Left :  5
+Node 55, Epoch 1/2 : BCE Training loss 0.850055
+Node 55, Epoch 2/2 : BCE Training loss 0.781710
+Node :  55
+Training Rounds Left :  5
+Node 56, Epoch 1/2 : BCE Training loss 0.749825
+Node 56, Epoch 2/2 : BCE Training loss 0.723042
+Node :  56
+Training Rounds Left :  5
+Node 57, Epoch 1/2 : BCE Training loss 0.653257
+Node 57, Epoch 2/2 : BCE Training loss 0.613143
+Node :  57
+Training Rounds Left :  5
+Node 58, Epoch 1/2 : BCE Training loss 0.705354
+Node 58, Epoch 2/2 : BCE Training loss 0.634274
+Node :  58
+Training Rounds Left :  5
+Node 59, Epoch 1/2 : BCE Training loss 0.720872
+Node 59, Epoch 2/2 : BCE Training loss 0.682704
+Node :  59
+Training Rounds Left :  5
+Node 60, Epoch 1/2 : BCE Training loss 0.686617
+Node 60, Epoch 2/2 : BCE Training loss 0.673445
+Node :  60
+Training Rounds Left :  5
+Node 61, Epoch 1/2 : BCE Training loss 0.707426
+Node 61, Epoch 2/2 : BCE Training loss 0.659450
+Node :  61
+Training Rounds Left :  5
+Node 62, Epoch 1/2 : BCE Training loss 0.750652
+Node 62, Epoch 2/2 : BCE Training loss 0.730094
+Node :  62
+Training Rounds Left :  5
+Node 63, Epoch 1/2 : BCE Training loss 0.647729
+Node 63, Epoch 2/2 : BCE Training loss 0.602463
+Node :  63
+Training Rounds Left :  5
+Node 64, Epoch 1/2 : BCE Training loss 0.788078
+Node 64, Epoch 2/2 : BCE Training loss 0.769629
+Node :  64
+Training Rounds Left :  5
+Node 65, Epoch 1/2 : BCE Training loss 0.654477
+Node 65, Epoch 2/2 : BCE Training loss 0.636970
+Node :  65
+Training Rounds Left :  5
+Node 66, Epoch 1/2 : BCE Training loss 0.759604
+Node 66, Epoch 2/2 : BCE Training loss 0.738539
+Node :  66
+Training Rounds Left :  5
+Node 67, Epoch 1/2 : BCE Training loss 0.791370
+Node 67, Epoch 2/2 : BCE Training loss 0.784124
+Node :  67
+Training Rounds Left :  5
+Node 68, Epoch 1/2 : BCE Training loss 0.714158
+Node 68, Epoch 2/2 : BCE Training loss 0.681409
+Node :  68
+Training Rounds Left :  5
+Node 69, Epoch 1/2 : BCE Training loss 0.728041
+Node 69, Epoch 2/2 : BCE Training loss 0.696860
+Node :  69
+Training Rounds Left :  5
+Node 70, Epoch 1/2 : BCE Training loss 0.717197
+Node 70, Epoch 2/2 : BCE Training loss 0.676761
+Node :  70
+Training Rounds Left :  5
+Node 71, Epoch 1/2 : BCE Training loss 0.749933
+Node 71, Epoch 2/2 : BCE Training loss 0.717182
+Node :  71
+Training Rounds Left :  5
+Node 72, Epoch 1/2 : BCE Training loss 0.703198
+Node 72, Epoch 2/2 : BCE Training loss 0.676817
+Node :  72
+Training Rounds Left :  5
+Node 73, Epoch 1/2 : BCE Training loss 0.693124
+Node 73, Epoch 2/2 : BCE Training loss 0.673243
+Node :  73
+Training Rounds Left :  5
+Node 74, Epoch 1/2 : BCE Training loss 0.695278
+Node 74, Epoch 2/2 : BCE Training loss 0.673997
+Node :  74
+Training Rounds Left :  5
+Node 75, Epoch 1/2 : BCE Training loss 0.717839
+Node 75, Epoch 2/2 : BCE Training loss 0.686264
+Node :  75
+Training Rounds Left :  5
+Node 76, Epoch 1/2 : BCE Training loss 0.820316
+Node 76, Epoch 2/2 : BCE Training loss 0.785787
+Node :  76
+Training Rounds Left :  5
+Node 77, Epoch 1/2 : BCE Training loss 0.691803
+Node 77, Epoch 2/2 : BCE Training loss 0.680022
+Node :  77
+Training Rounds Left :  5
+Node 78, Epoch 1/2 : BCE Training loss 0.737583
+Node 78, Epoch 2/2 : BCE Training loss 0.717518
+Node :  78
+Training Rounds Left :  5
+Node 79, Epoch 1/2 : BCE Training loss 0.796023
+Node 79, Epoch 2/2 : BCE Training loss 0.783906
+Node :  79
+Training Rounds Left :  5
+Node 80, Epoch 1/2 : BCE Training loss 0.753098
+Node 80, Epoch 2/2 : BCE Training loss 0.726510
+Node :  80
+Training Rounds Left :  5
+Node 81, Epoch 1/2 : BCE Training loss 0.790255
+Node 81, Epoch 2/2 : BCE Training loss 0.741294
+Node :  81
+Training Rounds Left :  5
+Node 82, Epoch 1/2 : BCE Training loss 0.836380
+Node 82, Epoch 2/2 : BCE Training loss 0.777401
+Node :  82
+Training Rounds Left :  5
+Node 83, Epoch 1/2 : BCE Training loss 0.800998
+Node 83, Epoch 2/2 : BCE Training loss 0.766120
+Node :  83
+Training Rounds Left :  5
+Node 84, Epoch 1/2 : BCE Training loss 0.672407
+Node 84, Epoch 2/2 : BCE Training loss 0.582703
+Node :  84
+Training Rounds Left :  5
+Node 85, Epoch 1/2 : BCE Training loss 0.738147
+Node 85, Epoch 2/2 : BCE Training loss 0.723356
+Node :  85
+Training Rounds Left :  5
+Node 86, Epoch 1/2 : BCE Training loss 0.798807
+Node 86, Epoch 2/2 : BCE Training loss 0.750284
+Node :  86
+Training Rounds Left :  5
+Node 87, Epoch 1/2 : BCE Training loss 0.790080
+Node 87, Epoch 2/2 : BCE Training loss 0.772411
+Node :  87
+Training Rounds Left :  5
+Node 88, Epoch 1/2 : BCE Training loss 0.640752
+Node 88, Epoch 2/2 : BCE Training loss 0.613094
+Node :  88
+Training Rounds Left :  5
+Node 89, Epoch 1/2 : BCE Training loss 0.665513
+Node 89, Epoch 2/2 : BCE Training loss 0.612913
+Node :  89
+Training Rounds Left :  5
+Node 90, Epoch 1/2 : BCE Training loss 0.649630
+Node 90, Epoch 2/2 : BCE Training loss 0.622301
+Node :  90
+Training Rounds Left :  5
+Node 91, Epoch 1/2 : BCE Training loss 0.646701
+Node 91, Epoch 2/2 : BCE Training loss 0.579818
+Node :  91
+Training Rounds Left :  5
+Node 92, Epoch 1/2 : BCE Training loss 0.731681
+Node 92, Epoch 2/2 : BCE Training loss 0.719544
+Node :  92
+Training Rounds Left :  5
+Node 93, Epoch 1/2 : BCE Training loss 0.637950
+Node 93, Epoch 2/2 : BCE Training loss 0.585022
+Node :  93
+Training Rounds Left :  5
+Node 94, Epoch 1/2 : BCE Training loss 0.746298
+Node 94, Epoch 2/2 : BCE Training loss 0.696981
+Node :  94
+Training Rounds Left :  5
+Node 95, Epoch 1/2 : BCE Training loss 0.745746
+Node 95, Epoch 2/2 : BCE Training loss 0.726154
+Node :  95
+Training Rounds Left :  5
+Node 96, Epoch 1/2 : BCE Training loss 0.750618
+Node 96, Epoch 2/2 : BCE Training loss 0.730899
+Node :  96
+Training Rounds Left :  5
+Node 97, Epoch 1/2 : BCE Training loss 0.835690
+Node 97, Epoch 2/2 : BCE Training loss 0.815590
+Node :  97
+Training Rounds Left :  5
+Node 98, Epoch 1/2 : BCE Training loss 0.751191
+Node 98, Epoch 2/2 : BCE Training loss 0.712393
+Node :  98
+Training Rounds Left :  5
+Node 99, Epoch 1/2 : BCE Training loss 0.823238
+Node 99, Epoch 2/2 : BCE Training loss 0.790939
+Node :  99
+Training Rounds Left :  5
+Running simulation...
+** Event #0   t=0   Elapsed: 1.5e-05s (0m 00s)
+     Speed:     ev/sec=0   simsec/sec=0   ev/simsec=0
+     Messages:  created: 100   present: 100   in FES: 100
+__del__ WeightsMessage Performance
+Node 73, Epoch 1/2 : BCE Training loss 0.657067
+Node 73, Epoch 2/2 : BCE Training loss 0.642178
+Node :  73
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 18, Epoch 1/2 : BCE Training loss 0.794757
+Node 18, Epoch 2/2 : BCE Training loss 0.782375
+Node :  18
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 98, Epoch 1/2 : BCE Training loss 0.686263
+Node 98, Epoch 2/2 : BCE Training loss 0.665052
+Node :  98
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 9, Epoch 1/2 : BCE Training loss 0.631520
+Node 9, Epoch 2/2 : BCE Training loss 0.602524
+Node :  9
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 16, Epoch 1/2 : BCE Training loss 0.724613
+Node 16, Epoch 2/2 : BCE Training loss 0.714802
+Node :  16
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 33, Epoch 1/2 : BCE Training loss 0.787956
+Node 33, Epoch 2/2 : BCE Training loss 0.775453
+Node :  33
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 64, Epoch 1/2 : BCE Training loss 0.758056
+Node 64, Epoch 2/2 : BCE Training loss 0.740938
+Node :  64
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 58, Epoch 1/2 : BCE Training loss 0.595200
+Node 58, Epoch 2/2 : BCE Training loss 0.541396
+Node :  58
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 98, Epoch 1/2 : BCE Training loss 0.656049
+Node 98, Epoch 2/2 : BCE Training loss 0.635668
+Node :  98
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 49, Epoch 1/2 : BCE Training loss 0.671164
+Node 49, Epoch 2/2 : BCE Training loss 0.659948
+Node :  49
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 61, Epoch 1/2 : BCE Training loss 0.636692
+Node 61, Epoch 2/2 : BCE Training loss 0.608169
+Node :  61
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 84, Epoch 1/2 : BCE Training loss 0.552640
+Node 84, Epoch 2/2 : BCE Training loss 0.524174
+Node :  84
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 27, Epoch 1/2 : BCE Training loss 0.742582
+Node 27, Epoch 2/2 : BCE Training loss 0.725903
+Node :  27
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 13, Epoch 1/2 : BCE Training loss 0.598152
+Node 13, Epoch 2/2 : BCE Training loss 0.582140
+Node :  13
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 63, Epoch 1/2 : BCE Training loss 0.574221
+Node 63, Epoch 2/2 : BCE Training loss 0.548580
+Node :  63
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 50, Epoch 1/2 : BCE Training loss 0.621461
+Node 50, Epoch 2/2 : BCE Training loss 0.611170
+Node :  50
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 56, Epoch 1/2 : BCE Training loss 0.721385
+Node 56, Epoch 2/2 : BCE Training loss 0.699926
+Node :  56
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 3, Epoch 1/2 : BCE Training loss 0.663118
+Node 3, Epoch 2/2 : BCE Training loss 0.654674
+Node :  3
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 78, Epoch 1/2 : BCE Training loss 0.704853
+Node 78, Epoch 2/2 : BCE Training loss 0.688728
+Node :  78
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 99, Epoch 1/2 : BCE Training loss 0.757339
+Node 99, Epoch 2/2 : BCE Training loss 0.735194
+Node :  99
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 98, Epoch 1/2 : BCE Training loss 0.631998
+Node 98, Epoch 2/2 : BCE Training loss 0.610816
+Node :  98
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 0, Epoch 1/2 : BCE Training loss 0.600057
+Node 0, Epoch 2/2 : BCE Training loss 0.564106
+Node :  0
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 58, Epoch 1/2 : BCE Training loss 0.531340
+Node 58, Epoch 2/2 : BCE Training loss 0.455177
+Node :  58
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 90, Epoch 1/2 : BCE Training loss 0.597920
+Node 90, Epoch 2/2 : BCE Training loss 0.579695
+Node :  90
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 35, Epoch 1/2 : BCE Training loss 0.772895
+Node 35, Epoch 2/2 : BCE Training loss 0.764995
+Node :  35
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 93, Epoch 1/2 : BCE Training loss 0.550263
+Node 93, Epoch 2/2 : BCE Training loss 0.497653
+Node :  93
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 30, Epoch 1/2 : BCE Training loss 0.626915
+Node 30, Epoch 2/2 : BCE Training loss 0.620692
+Node :  30
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 14, Epoch 1/2 : BCE Training loss 0.631035
+Node 14, Epoch 2/2 : BCE Training loss 0.603392
+Node :  14
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 76, Epoch 1/2 : BCE Training loss 0.735348
+Node 76, Epoch 2/2 : BCE Training loss 0.712484
+Node :  76
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 41, Epoch 1/2 : BCE Training loss 0.567115
+Node 41, Epoch 2/2 : BCE Training loss 0.550748
+Node :  41
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 2, Epoch 1/2 : BCE Training loss 0.640697
+Node 2, Epoch 2/2 : BCE Training loss 0.626697
+Node :  2
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 84, Epoch 1/2 : BCE Training loss 0.531584
+Node 84, Epoch 2/2 : BCE Training loss 0.496379
+Node :  84
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 3, Epoch 1/2 : BCE Training loss 0.656518
+Node 3, Epoch 2/2 : BCE Training loss 0.651872
+Node :  3
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 70, Epoch 1/2 : BCE Training loss 0.696500
+Node 70, Epoch 2/2 : BCE Training loss 0.668953
+Node :  70
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 49, Epoch 1/2 : BCE Training loss 0.620903
+Node 49, Epoch 2/2 : BCE Training loss 0.615993
+Node :  49
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 1, Epoch 1/2 : BCE Training loss 0.649643
+Node 1, Epoch 2/2 : BCE Training loss 0.634619
+Node :  1
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 88, Epoch 1/2 : BCE Training loss 0.595119
+Node 88, Epoch 2/2 : BCE Training loss 0.578410
+Node :  88
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 55, Epoch 1/2 : BCE Training loss 0.737512
+Node 55, Epoch 2/2 : BCE Training loss 0.701810
+Node :  55
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 28, Epoch 1/2 : BCE Training loss 0.692924
+Node 28, Epoch 2/2 : BCE Training loss 0.684131
+Node :  28
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 68, Epoch 1/2 : BCE Training loss 0.621187
+Node 68, Epoch 2/2 : BCE Training loss 0.605090
+Node :  68
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 3, Epoch 1/2 : BCE Training loss 0.652222
+Node 3, Epoch 2/2 : BCE Training loss 0.646719
+Node :  3
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 93, Epoch 1/2 : BCE Training loss 0.488728
+Node 93, Epoch 2/2 : BCE Training loss 0.403891
+Node :  93
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 57, Epoch 1/2 : BCE Training loss 0.574763
+Node 57, Epoch 2/2 : BCE Training loss 0.555800
+Node :  57
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 29, Epoch 1/2 : BCE Training loss 0.769996
+Node 29, Epoch 2/2 : BCE Training loss 0.755898
+Node :  29
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 98, Epoch 1/2 : BCE Training loss 0.600311
+Node 98, Epoch 2/2 : BCE Training loss 0.574660
+Node :  98
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 71, Epoch 1/2 : BCE Training loss 0.696610
+Node 71, Epoch 2/2 : BCE Training loss 0.673402
+Node :  71
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 30, Epoch 1/2 : BCE Training loss 0.614646
+Node 30, Epoch 2/2 : BCE Training loss 0.609721
+Node :  30
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 64, Epoch 1/2 : BCE Training loss 0.748648
+Node 64, Epoch 2/2 : BCE Training loss 0.732600
+Node :  64
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 45, Epoch 1/2 : BCE Training loss 0.720955
+Node 45, Epoch 2/2 : BCE Training loss 0.709638
+Node :  45
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 30, Epoch 1/2 : BCE Training loss 0.611472
+Node 30, Epoch 2/2 : BCE Training loss 0.606572
+Node :  30
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 87, Epoch 1/2 : BCE Training loss 0.722574
+Node 87, Epoch 2/2 : BCE Training loss 0.711654
+Node :  87
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 59, Epoch 1/2 : BCE Training loss 0.658746
+Node 59, Epoch 2/2 : BCE Training loss 0.637836
+Node :  59
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 29, Epoch 1/2 : BCE Training loss 0.796834
+Node 29, Epoch 2/2 : BCE Training loss 0.783920
+Node :  29
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 38, Epoch 1/2 : BCE Training loss 0.706175
+Node 38, Epoch 2/2 : BCE Training loss 0.696550
+Node :  38
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 2, Epoch 1/2 : BCE Training loss 0.636048
+Node 2, Epoch 2/2 : BCE Training loss 0.624935
+Node :  2
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 54, Epoch 1/2 : BCE Training loss 0.713415
+Node 54, Epoch 2/2 : BCE Training loss 0.703473
+Node :  54
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 83, Epoch 1/2 : BCE Training loss 0.742894
+Node 83, Epoch 2/2 : BCE Training loss 0.717620
+Node :  83
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 72, Epoch 1/2 : BCE Training loss 0.645600
+Node 72, Epoch 2/2 : BCE Training loss 0.627828
+Node :  72
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 12, Epoch 1/2 : BCE Training loss 0.527571
+Node 12, Epoch 2/2 : BCE Training loss 0.447680
+Node :  12
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 24, Epoch 1/2 : BCE Training loss 0.782033
+Node 24, Epoch 2/2 : BCE Training loss 0.759629
+Node :  24
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 81, Epoch 1/2 : BCE Training loss 0.706799
+Node 81, Epoch 2/2 : BCE Training loss 0.679282
+Node :  81
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 93, Epoch 1/2 : BCE Training loss 0.391330
+Node 93, Epoch 2/2 : BCE Training loss 0.273617
+Node :  93
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 38, Epoch 1/2 : BCE Training loss 0.693699
+Node 38, Epoch 2/2 : BCE Training loss 0.687241
+Node :  38
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 96, Epoch 1/2 : BCE Training loss 0.715988
+Node 96, Epoch 2/2 : BCE Training loss 0.701709
+Node :  96
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 15, Epoch 1/2 : BCE Training loss 0.588616
+Node 15, Epoch 2/2 : BCE Training loss 0.571540
+Node :  15
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 92, Epoch 1/2 : BCE Training loss 0.731159
+Node 92, Epoch 2/2 : BCE Training loss 0.722134
+Node :  92
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 93, Epoch 1/2 : BCE Training loss 0.279399
+Node 93, Epoch 2/2 : BCE Training loss 0.159304
+Node :  93
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 43, Epoch 1/2 : BCE Training loss 0.585436
+Node 43, Epoch 2/2 : BCE Training loss 0.568874
+Node :  43
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 55, Epoch 1/2 : BCE Training loss 0.695144
+Node 55, Epoch 2/2 : BCE Training loss 0.661021
+Node :  55
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 65, Epoch 1/2 : BCE Training loss 0.666120
+Node 65, Epoch 2/2 : BCE Training loss 0.646658
+Node :  65
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 86, Epoch 1/2 : BCE Training loss 0.723134
+Node 86, Epoch 2/2 : BCE Training loss 0.683471
+Node :  86
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 39, Epoch 1/2 : BCE Training loss 0.650111
+Node 39, Epoch 2/2 : BCE Training loss 0.639031
+Node :  39
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 25, Epoch 1/2 : BCE Training loss 0.643249
+Node 25, Epoch 2/2 : BCE Training loss 0.617964
+Node :  25
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 37, Epoch 1/2 : BCE Training loss 0.694469
+Node 37, Epoch 2/2 : BCE Training loss 0.678766
+Node :  37
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 76, Epoch 1/2 : BCE Training loss 0.716455
+Node 76, Epoch 2/2 : BCE Training loss 0.696994
+Node :  76
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 65, Epoch 1/2 : BCE Training loss 0.706549
+Node 65, Epoch 2/2 : BCE Training loss 0.696413
+Node :  65
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 64, Epoch 1/2 : BCE Training loss 0.724438
+Node 64, Epoch 2/2 : BCE Training loss 0.708043
+Node :  64
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 4, Epoch 1/2 : BCE Training loss 0.633567
+Node 4, Epoch 2/2 : BCE Training loss 0.611151
+Node :  4
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 51, Epoch 1/2 : BCE Training loss 0.673518
+Node 51, Epoch 2/2 : BCE Training loss 0.660098
+Node :  51
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 76, Epoch 1/2 : BCE Training loss 0.679679
+Node 76, Epoch 2/2 : BCE Training loss 0.662085
+Node :  76
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 32, Epoch 1/2 : BCE Training loss 0.635761
+Node 32, Epoch 2/2 : BCE Training loss 0.626309
+Node :  32
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 96, Epoch 1/2 : BCE Training loss 0.692889
+Node 96, Epoch 2/2 : BCE Training loss 0.682476
+Node :  96
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 62, Epoch 1/2 : BCE Training loss 0.713950
+Node 62, Epoch 2/2 : BCE Training loss 0.697798
+Node :  62
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 54, Epoch 1/2 : BCE Training loss 0.721220
+Node 54, Epoch 2/2 : BCE Training loss 0.713627
+Node :  54
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 52, Epoch 1/2 : BCE Training loss 0.771436
+Node 52, Epoch 2/2 : BCE Training loss 0.755585
+Node :  52
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 86, Epoch 1/2 : BCE Training loss 0.672797
+Node 86, Epoch 2/2 : BCE Training loss 0.626428
+Node :  86
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 47, Epoch 1/2 : BCE Training loss 0.779580
+Node 47, Epoch 2/2 : BCE Training loss 0.766628
+Node :  47
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 71, Epoch 1/2 : BCE Training loss 0.670220
+Node 71, Epoch 2/2 : BCE Training loss 0.648046
+Node :  71
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 22, Epoch 1/2 : BCE Training loss 0.763278
+Node 22, Epoch 2/2 : BCE Training loss 0.738841
+Node :  22
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 87, Epoch 1/2 : BCE Training loss 0.724165
+Node 87, Epoch 2/2 : BCE Training loss 0.717046
+Node :  87
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 90, Epoch 1/2 : BCE Training loss 0.606503
+Node 90, Epoch 2/2 : BCE Training loss 0.588605
+Node :  90
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 95, Epoch 1/2 : BCE Training loss 0.693409
+Node 95, Epoch 2/2 : BCE Training loss 0.681275
+Node :  95
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+** Event #256   t=0   Elapsed: 27.9727s (0m 27s)
+     Speed:     ev/sec=9.18752   simsec/sec=0   ev/simsec=0
+     Messages:  created: 624   present: 499   in FES: 498
+__del__ WeightsMessage Performance
+Node 48, Epoch 1/2 : BCE Training loss 0.586613
+Node 48, Epoch 2/2 : BCE Training loss 0.566098
+Node :  48
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 57, Epoch 1/2 : BCE Training loss 0.559334
+Node 57, Epoch 2/2 : BCE Training loss 0.539121
+Node :  57
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 11, Epoch 1/2 : BCE Training loss 0.615667
+Node 11, Epoch 2/2 : BCE Training loss 0.598495
+Node :  11
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 13, Epoch 1/2 : BCE Training loss 0.579328
+Node 13, Epoch 2/2 : BCE Training loss 0.564596
+Node :  13
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 85, Epoch 1/2 : BCE Training loss 0.733318
+Node 85, Epoch 2/2 : BCE Training loss 0.721766
+Node :  85
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 66, Epoch 1/2 : BCE Training loss 0.721270
+Node 66, Epoch 2/2 : BCE Training loss 0.706272
+Node :  66
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 67, Epoch 1/2 : BCE Training loss 0.778341
+Node 67, Epoch 2/2 : BCE Training loss 0.771483
+Node :  67
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 20, Epoch 1/2 : BCE Training loss 0.607135
+Node 20, Epoch 2/2 : BCE Training loss 0.588620
+Node :  20
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 51, Epoch 1/2 : BCE Training loss 0.685147
+Node 51, Epoch 2/2 : BCE Training loss 0.673460
+Node :  51
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 94, Epoch 1/2 : BCE Training loss 0.665357
+Node 94, Epoch 2/2 : BCE Training loss 0.630511
+Node :  94
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 63, Epoch 1/2 : BCE Training loss 0.549291
+Node 63, Epoch 2/2 : BCE Training loss 0.522003
+Node :  63
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 48, Epoch 1/2 : BCE Training loss 0.559553
+Node 48, Epoch 2/2 : BCE Training loss 0.539983
+Node :  48
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 3, Epoch 1/2 : BCE Training loss 0.650440
+Node 3, Epoch 2/2 : BCE Training loss 0.645973
+Node :  3
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 5, Epoch 1/2 : BCE Training loss 0.698705
+Node 5, Epoch 2/2 : BCE Training loss 0.659742
+Node :  5
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 61, Epoch 1/2 : BCE Training loss 0.598046
+Node 61, Epoch 2/2 : BCE Training loss 0.567352
+Node :  61
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 79, Epoch 1/2 : BCE Training loss 0.783908
+Node 79, Epoch 2/2 : BCE Training loss 0.774232
+Node :  79
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 40, Epoch 1/2 : BCE Training loss 0.732825
+Node 40, Epoch 2/2 : BCE Training loss 0.720234
+Node :  40
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 91, Epoch 1/2 : BCE Training loss 0.557928
+Node 91, Epoch 2/2 : BCE Training loss 0.526572
+Node :  91
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 76, Epoch 1/2 : BCE Training loss 0.669457
+Node 76, Epoch 2/2 : BCE Training loss 0.650790
+Node :  76
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 75, Epoch 1/2 : BCE Training loss 0.644005
+Node 75, Epoch 2/2 : BCE Training loss 0.628102
+Node :  75
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 51, Epoch 1/2 : BCE Training loss 0.670697
+Node 51, Epoch 2/2 : BCE Training loss 0.659801
+Node :  51
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 65, Epoch 1/2 : BCE Training loss 0.674821
+Node 65, Epoch 2/2 : BCE Training loss 0.663164
+Node :  65
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 21, Epoch 1/2 : BCE Training loss 0.642073
+Node 21, Epoch 2/2 : BCE Training loss 0.623211
+Node :  21
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 83, Epoch 1/2 : BCE Training loss 0.764449
+Node 83, Epoch 2/2 : BCE Training loss 0.741589
+Node :  83
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 1, Epoch 1/2 : BCE Training loss 0.631599
+Node 1, Epoch 2/2 : BCE Training loss 0.621153
+Node :  1
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 29, Epoch 1/2 : BCE Training loss 0.751376
+Node 29, Epoch 2/2 : BCE Training loss 0.739290
+Node :  29
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 99, Epoch 1/2 : BCE Training loss 0.745813
+Node 99, Epoch 2/2 : BCE Training loss 0.728540
+Node :  99
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 71, Epoch 1/2 : BCE Training loss 0.638655
+Node 71, Epoch 2/2 : BCE Training loss 0.614526
+Node :  71
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 70, Epoch 1/2 : BCE Training loss 0.753193
+Node 70, Epoch 2/2 : BCE Training loss 0.739665
+Node :  70
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 25, Epoch 1/2 : BCE Training loss 0.622581
+Node 25, Epoch 2/2 : BCE Training loss 0.602616
+Node :  25
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 66, Epoch 1/2 : BCE Training loss 0.743305
+Node 66, Epoch 2/2 : BCE Training loss 0.733811
+Node :  66
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 52, Epoch 1/2 : BCE Training loss 0.744877
+Node 52, Epoch 2/2 : BCE Training loss 0.735429
+Node :  52
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 29, Epoch 1/2 : BCE Training loss 0.729749
+Node 29, Epoch 2/2 : BCE Training loss 0.718565
+Node :  29
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 46, Epoch 1/2 : BCE Training loss 0.605062
+Node 46, Epoch 2/2 : BCE Training loss 0.598900
+Node :  46
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 74, Epoch 1/2 : BCE Training loss 0.650406
+Node 74, Epoch 2/2 : BCE Training loss 0.637527
+Node :  74
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 45, Epoch 1/2 : BCE Training loss 0.693432
+Node 45, Epoch 2/2 : BCE Training loss 0.686390
+Node :  45
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 85, Epoch 1/2 : BCE Training loss 0.768593
+Node 85, Epoch 2/2 : BCE Training loss 0.758629
+Node :  85
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 34, Epoch 1/2 : BCE Training loss 0.830835
+Node 34, Epoch 2/2 : BCE Training loss 0.813420
+Node :  34
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 59, Epoch 1/2 : BCE Training loss 0.620821
+Node 59, Epoch 2/2 : BCE Training loss 0.600753
+Node :  59
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 78, Epoch 1/2 : BCE Training loss 0.707723
+Node 78, Epoch 2/2 : BCE Training loss 0.695201
+Node :  78
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 94, Epoch 1/2 : BCE Training loss 0.613213
+Node 94, Epoch 2/2 : BCE Training loss 0.569557
+Node :  94
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 71, Epoch 1/2 : BCE Training loss 0.605012
+Node 71, Epoch 2/2 : BCE Training loss 0.576212
+Node :  71
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 95, Epoch 1/2 : BCE Training loss 0.685508
+Node 95, Epoch 2/2 : BCE Training loss 0.676156
+Node :  95
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 50, Epoch 1/2 : BCE Training loss 0.636867
+Node 50, Epoch 2/2 : BCE Training loss 0.628848
+Node :  50
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 0, Epoch 1/2 : BCE Training loss 0.562667
+Node 0, Epoch 2/2 : BCE Training loss 0.514882
+Node :  0
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 67, Epoch 1/2 : BCE Training loss 0.773787
+Node 67, Epoch 2/2 : BCE Training loss 0.768051
+Node :  67
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 16, Epoch 1/2 : BCE Training loss 0.724141
+Node 16, Epoch 2/2 : BCE Training loss 0.716888
+Node :  16
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 66, Epoch 1/2 : BCE Training loss 0.734147
+Node 66, Epoch 2/2 : BCE Training loss 0.725500
+Node :  66
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 72, Epoch 1/2 : BCE Training loss 0.625729
+Node 72, Epoch 2/2 : BCE Training loss 0.613621
+Node :  72
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 26, Epoch 1/2 : BCE Training loss 0.730312
+Node 26, Epoch 2/2 : BCE Training loss 0.723775
+Node :  26
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 55, Epoch 1/2 : BCE Training loss 0.641851
+Node 55, Epoch 2/2 : BCE Training loss 0.603957
+Node :  55
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 46, Epoch 1/2 : BCE Training loss 0.583988
+Node 46, Epoch 2/2 : BCE Training loss 0.579640
+Node :  46
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 62, Epoch 1/2 : BCE Training loss 0.713054
+Node 62, Epoch 2/2 : BCE Training loss 0.697949
+Node :  62
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 7, Epoch 1/2 : BCE Training loss 0.768950
+Node 7, Epoch 2/2 : BCE Training loss 0.753096
+Node :  7
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 25, Epoch 1/2 : BCE Training loss 0.595373
+Node 25, Epoch 2/2 : BCE Training loss 0.575897
+Node :  25
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 73, Epoch 1/2 : BCE Training loss 0.619756
+Node 73, Epoch 2/2 : BCE Training loss 0.610222
+Node :  73
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 53, Epoch 1/2 : BCE Training loss 0.663826
+Node 53, Epoch 2/2 : BCE Training loss 0.646565
+Node :  53
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 65, Epoch 1/2 : BCE Training loss 0.657092
+Node 65, Epoch 2/2 : BCE Training loss 0.646467
+Node :  65
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 63, Epoch 1/2 : BCE Training loss 0.518698
+Node 63, Epoch 2/2 : BCE Training loss 0.483445
+Node :  63
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 44, Epoch 1/2 : BCE Training loss 0.581639
+Node 44, Epoch 2/2 : BCE Training loss 0.569657
+Node :  44
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 45, Epoch 1/2 : BCE Training loss 0.712967
+Node 45, Epoch 2/2 : BCE Training loss 0.705828
+Node :  45
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 54, Epoch 1/2 : BCE Training loss 0.699482
+Node 54, Epoch 2/2 : BCE Training loss 0.692361
+Node :  54
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 69, Epoch 1/2 : BCE Training loss 0.674617
+Node 69, Epoch 2/2 : BCE Training loss 0.655943
+Node :  69
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 0, Epoch 1/2 : BCE Training loss 0.495175
+Node 0, Epoch 2/2 : BCE Training loss 0.415789
+Node :  0
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 70, Epoch 1/2 : BCE Training loss 0.732423
+Node 70, Epoch 2/2 : BCE Training loss 0.715802
+Node :  70
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 79, Epoch 1/2 : BCE Training loss 0.774849
+Node 79, Epoch 2/2 : BCE Training loss 0.768886
+Node :  79
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 80, Epoch 1/2 : BCE Training loss 0.667175
+Node 80, Epoch 2/2 : BCE Training loss 0.653412
+Node :  80
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 42, Epoch 1/2 : BCE Training loss 0.595971
+Node 42, Epoch 2/2 : BCE Training loss 0.569666
+Node :  42
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 77, Epoch 1/2 : BCE Training loss 0.640479
+Node 77, Epoch 2/2 : BCE Training loss 0.633337
+Node :  77
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 59, Epoch 1/2 : BCE Training loss 0.587636
+Node 59, Epoch 2/2 : BCE Training loss 0.560736
+Node :  59
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 22, Epoch 1/2 : BCE Training loss 0.730742
+Node 22, Epoch 2/2 : BCE Training loss 0.707812
+Node :  22
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 82, Epoch 1/2 : BCE Training loss 0.741351
+Node 82, Epoch 2/2 : BCE Training loss 0.706350
+Node :  82
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 75, Epoch 1/2 : BCE Training loss 0.633432
+Node 75, Epoch 2/2 : BCE Training loss 0.619353
+Node :  75
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 23, Epoch 1/2 : BCE Training loss 0.697246
+Node 23, Epoch 2/2 : BCE Training loss 0.680507
+Node :  23
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 11, Epoch 1/2 : BCE Training loss 0.616118
+Node 11, Epoch 2/2 : BCE Training loss 0.603089
+Node :  11
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 32, Epoch 1/2 : BCE Training loss 0.663891
+Node 32, Epoch 2/2 : BCE Training loss 0.657517
+Node :  32
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 87, Epoch 1/2 : BCE Training loss 0.699551
+Node 87, Epoch 2/2 : BCE Training loss 0.692658
+Node :  87
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 9, Epoch 1/2 : BCE Training loss 0.599049
+Node 9, Epoch 2/2 : BCE Training loss 0.568894
+Node :  9
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 4, Epoch 1/2 : BCE Training loss 0.606307
+Node 4, Epoch 2/2 : BCE Training loss 0.582988
+Node :  4
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 2, Epoch 1/2 : BCE Training loss 0.605719
+Node 2, Epoch 2/2 : BCE Training loss 0.597886
+Node :  2
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 10, Epoch 1/2 : BCE Training loss 0.694638
+Node 10, Epoch 2/2 : BCE Training loss 0.658639
+Node :  10
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 57, Epoch 1/2 : BCE Training loss 0.532536
+Node 57, Epoch 2/2 : BCE Training loss 0.512158
+Node :  57
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 97, Epoch 1/2 : BCE Training loss 0.770732
+Node 97, Epoch 2/2 : BCE Training loss 0.757592
+Node :  97
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 1, Epoch 1/2 : BCE Training loss 0.613019
+Node 1, Epoch 2/2 : BCE Training loss 0.604395
+Node :  1
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 35, Epoch 1/2 : BCE Training loss 0.751535
+Node 35, Epoch 2/2 : BCE Training loss 0.746105
+Node :  35
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 31, Epoch 1/2 : BCE Training loss 0.604222
+Node 31, Epoch 2/2 : BCE Training loss 0.595399
+Node :  31
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 14, Epoch 1/2 : BCE Training loss 0.604005
+Node 14, Epoch 2/2 : BCE Training loss 0.583522
+Node :  14
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 34, Epoch 1/2 : BCE Training loss 0.765254
+Node 34, Epoch 2/2 : BCE Training loss 0.756506
+Node :  34
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 44, Epoch 1/2 : BCE Training loss 0.575633
+Node 44, Epoch 2/2 : BCE Training loss 0.565980
+Node :  44
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 23, Epoch 1/2 : BCE Training loss 0.690534
+Node 23, Epoch 2/2 : BCE Training loss 0.675512
+Node :  23
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 80, Epoch 1/2 : BCE Training loss 0.651221
+Node 80, Epoch 2/2 : BCE Training loss 0.640322
+Node :  80
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 21, Epoch 1/2 : BCE Training loss 0.614605
+Node 21, Epoch 2/2 : BCE Training loss 0.596119
+Node :  21
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 8, Epoch 1/2 : BCE Training loss 0.699907
+Node 8, Epoch 2/2 : BCE Training loss 0.692438
+Node :  8
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 37, Epoch 1/2 : BCE Training loss 0.671516
+Node 37, Epoch 2/2 : BCE Training loss 0.656259
+Node :  37
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 32, Epoch 1/2 : BCE Training loss 0.644900
+Node 32, Epoch 2/2 : BCE Training loss 0.638207
+Node :  32
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 68, Epoch 1/2 : BCE Training loss 0.583506
+Node 68, Epoch 2/2 : BCE Training loss 0.574485
+Node :  68
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 20, Epoch 1/2 : BCE Training loss 0.582902
+Node 20, Epoch 2/2 : BCE Training loss 0.564598
+Node :  20
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 34, Epoch 1/2 : BCE Training loss 0.771984
+Node 34, Epoch 2/2 : BCE Training loss 0.764040
+Node :  34
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 85, Epoch 1/2 : BCE Training loss 0.782362
+Node 85, Epoch 2/2 : BCE Training loss 0.773576
+Node :  85
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 21, Epoch 1/2 : BCE Training loss 0.592523
+Node 21, Epoch 2/2 : BCE Training loss 0.573172
+Node :  21
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 37, Epoch 1/2 : BCE Training loss 0.644722
+Node 37, Epoch 2/2 : BCE Training loss 0.627979
+Node :  37
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 83, Epoch 1/2 : BCE Training loss 0.736471
+Node 83, Epoch 2/2 : BCE Training loss 0.715129
+Node :  83
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 92, Epoch 1/2 : BCE Training loss 0.737611
+Node 92, Epoch 2/2 : BCE Training loss 0.731040
+Node :  92
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 41, Epoch 1/2 : BCE Training loss 0.555368
+Node 41, Epoch 2/2 : BCE Training loss 0.538396
+Node :  41
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 58, Epoch 1/2 : BCE Training loss 0.427345
+Node 58, Epoch 2/2 : BCE Training loss 0.306067
+Node :  58
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 90, Epoch 1/2 : BCE Training loss 0.572254
+Node 90, Epoch 2/2 : BCE Training loss 0.553492
+Node :  90
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 14, Epoch 1/2 : BCE Training loss 0.581736
+Node 14, Epoch 2/2 : BCE Training loss 0.561874
+Node :  14
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 60, Epoch 1/2 : BCE Training loss 0.634989
+Node 60, Epoch 2/2 : BCE Training loss 0.625586
+Node :  60
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 63, Epoch 1/2 : BCE Training loss 0.473190
+Node 63, Epoch 2/2 : BCE Training loss 0.419979
+Node :  63
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 49, Epoch 1/2 : BCE Training loss 0.633488
+Node 49, Epoch 2/2 : BCE Training loss 0.628167
+Node :  49
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 39, Epoch 1/2 : BCE Training loss 0.690738
+Node 39, Epoch 2/2 : BCE Training loss 0.682793
+Node :  39
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 53, Epoch 1/2 : BCE Training loss 0.648942
+Node 53, Epoch 2/2 : BCE Training loss 0.636391
+Node :  53
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 24, Epoch 1/2 : BCE Training loss 0.745383
+Node 24, Epoch 2/2 : BCE Training loss 0.728654
+Node :  24
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 43, Epoch 1/2 : BCE Training loss 0.564807
+Node 43, Epoch 2/2 : BCE Training loss 0.546472
+Node :  43
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 32, Epoch 1/2 : BCE Training loss 0.652517
+Node 32, Epoch 2/2 : BCE Training loss 0.646095
+Node :  32
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 33, Epoch 1/2 : BCE Training loss 0.779703
+Node 33, Epoch 2/2 : BCE Training loss 0.771832
+Node :  33
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 13, Epoch 1/2 : BCE Training loss 0.562616
+Node 13, Epoch 2/2 : BCE Training loss 0.547655
+Node :  13
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 26, Epoch 1/2 : BCE Training loss 0.726606
+Node 26, Epoch 2/2 : BCE Training loss 0.720702
+Node :  26
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 94, Epoch 1/2 : BCE Training loss 0.551298
+Node 94, Epoch 2/2 : BCE Training loss 0.481019
+Node :  94
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 78, Epoch 1/2 : BCE Training loss 0.687298
+Node 78, Epoch 2/2 : BCE Training loss 0.675375
+Node :  78
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 2, Epoch 1/2 : BCE Training loss 0.600488
+Node 2, Epoch 2/2 : BCE Training loss 0.592975
+Node :  2
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 55, Epoch 1/2 : BCE Training loss 0.584873
+Node 55, Epoch 2/2 : BCE Training loss 0.530955
+Node :  55
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 50, Epoch 1/2 : BCE Training loss 0.584285
+Node 50, Epoch 2/2 : BCE Training loss 0.578972
+Node :  50
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 28, Epoch 1/2 : BCE Training loss 0.691397
+Node 28, Epoch 2/2 : BCE Training loss 0.684624
+Node :  28
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 4, Epoch 1/2 : BCE Training loss 0.569428
+Node 4, Epoch 2/2 : BCE Training loss 0.538258
+Node :  4
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 18, Epoch 1/2 : BCE Training loss 0.741430
+Node 18, Epoch 2/2 : BCE Training loss 0.735904
+Node :  18
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 20, Epoch 1/2 : BCE Training loss 0.554903
+Node 20, Epoch 2/2 : BCE Training loss 0.530925
+Node :  20
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 91, Epoch 1/2 : BCE Training loss 0.501874
+Node 91, Epoch 2/2 : BCE Training loss 0.434442
+Node :  91
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 57, Epoch 1/2 : BCE Training loss 0.500387
+Node 57, Epoch 2/2 : BCE Training loss 0.472166
+Node :  57
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 54, Epoch 1/2 : BCE Training loss 0.705799
+Node 54, Epoch 2/2 : BCE Training loss 0.698551
+Node :  54
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 87, Epoch 1/2 : BCE Training loss 0.703683
+Node 87, Epoch 2/2 : BCE Training loss 0.696824
+Node :  87
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 64, Epoch 1/2 : BCE Training loss 0.703029
+Node 64, Epoch 2/2 : BCE Training loss 0.686304
+Node :  64
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 28, Epoch 1/2 : BCE Training loss 0.677780
+Node 28, Epoch 2/2 : BCE Training loss 0.672000
+Node :  28
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 69, Epoch 1/2 : BCE Training loss 0.649238
+Node 69, Epoch 2/2 : BCE Training loss 0.630928
+Node :  69
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 81, Epoch 1/2 : BCE Training loss 0.667424
+Node 81, Epoch 2/2 : BCE Training loss 0.643261
+Node :  81
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 89, Epoch 1/2 : BCE Training loss 0.583622
+Node 89, Epoch 2/2 : BCE Training loss 0.545857
+Node :  89
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 66, Epoch 1/2 : BCE Training loss 0.708811
+Node 66, Epoch 2/2 : BCE Training loss 0.700834
+Node :  66
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 84, Epoch 1/2 : BCE Training loss 0.480698
+Node 84, Epoch 2/2 : BCE Training loss 0.421250
+Node :  84
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 67, Epoch 1/2 : BCE Training loss 0.761437
+Node 67, Epoch 2/2 : BCE Training loss 0.756185
+Node :  67
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 28, Epoch 1/2 : BCE Training loss 0.664585
+Node 28, Epoch 2/2 : BCE Training loss 0.659337
+Node :  28
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 50, Epoch 1/2 : BCE Training loss 0.589341
+Node 50, Epoch 2/2 : BCE Training loss 0.583725
+Node :  50
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 85, Epoch 1/2 : BCE Training loss 0.768304
+Node 85, Epoch 2/2 : BCE Training loss 0.760080
+Node :  85
+Training Rounds Left :  1
+** Event #512   t=0   Elapsed: 58.5125s (0m 58s)
+     Speed:     ev/sec=8.38252   simsec/sec=0   ev/simsec=0
+     Messages:  created: 828   present: 498   in FES: 497
+__del__ WeightsMessage Model
+Node 41, Epoch 1/2 : BCE Training loss 0.526297
+Node 41, Epoch 2/2 : BCE Training loss 0.508146
+Node :  41
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 73, Epoch 1/2 : BCE Training loss 0.609873
+Node 73, Epoch 2/2 : BCE Training loss 0.601198
+Node :  73
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 80, Epoch 1/2 : BCE Training loss 0.631457
+Node 80, Epoch 2/2 : BCE Training loss 0.621184
+Node :  80
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 7, Epoch 1/2 : BCE Training loss 0.764535
+Node 7, Epoch 2/2 : BCE Training loss 0.750834
+Node :  7
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 16, Epoch 1/2 : BCE Training loss 0.726727
+Node 16, Epoch 2/2 : BCE Training loss 0.719723
+Node :  16
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 38, Epoch 1/2 : BCE Training loss 0.666197
+Node 38, Epoch 2/2 : BCE Training loss 0.660734
+Node :  38
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 95, Epoch 1/2 : BCE Training loss 0.668221
+Node 95, Epoch 2/2 : BCE Training loss 0.658859
+Node :  95
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 6, Epoch 1/2 : BCE Training loss 0.578424
+Node 6, Epoch 2/2 : BCE Training loss 0.523725
+Node :  6
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+Node 39, Epoch 1/2 : BCE Training loss 0.676745
+Node 39, Epoch 2/2 : BCE Training loss 0.668777
+Node :  39
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 27, Epoch 1/2 : BCE Training loss 0.717038
+Node 27, Epoch 2/2 : BCE Training loss 0.704581
+Node :  27
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 39, Epoch 1/2 : BCE Training loss 0.676380
+Node 39, Epoch 2/2 : BCE Training loss 0.668056
+Node :  39
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 9, Epoch 1/2 : BCE Training loss 0.552612
+Node 9, Epoch 2/2 : BCE Training loss 0.513967
+Node :  9
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 38, Epoch 1/2 : BCE Training loss 0.669575
+Node 38, Epoch 2/2 : BCE Training loss 0.664386
+Node :  38
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 53, Epoch 1/2 : BCE Training loss 0.642464
+Node 53, Epoch 2/2 : BCE Training loss 0.630327
+Node :  53
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 96, Epoch 1/2 : BCE Training loss 0.678632
+Node 96, Epoch 2/2 : BCE Training loss 0.668174
+Node :  96
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 20, Epoch 1/2 : BCE Training loss 0.518868
+Node 20, Epoch 2/2 : BCE Training loss 0.480347
+Node :  20
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 72, Epoch 1/2 : BCE Training loss 0.609475
+Node 72, Epoch 2/2 : BCE Training loss 0.598732
+Node :  72
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 16, Epoch 1/2 : BCE Training loss 0.715038
+Node 16, Epoch 2/2 : BCE Training loss 0.708571
+Node :  16
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 1, Epoch 1/2 : BCE Training loss 0.599035
+Node 1, Epoch 2/2 : BCE Training loss 0.591272
+Node :  1
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 4, Epoch 1/2 : BCE Training loss 0.537295
+Node 4, Epoch 2/2 : BCE Training loss 0.494077
+Node :  4
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 72, Epoch 1/2 : BCE Training loss 0.602580
+Node 72, Epoch 2/2 : BCE Training loss 0.592573
+Node :  72
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 75, Epoch 1/2 : BCE Training loss 0.610064
+Node 75, Epoch 2/2 : BCE Training loss 0.596542
+Node :  75
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 27, Epoch 1/2 : BCE Training loss 0.695978
+Node 27, Epoch 2/2 : BCE Training loss 0.684119
+Node :  27
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 21, Epoch 1/2 : BCE Training loss 0.567140
+Node 21, Epoch 2/2 : BCE Training loss 0.544023
+Node :  21
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 90, Epoch 1/2 : BCE Training loss 0.559025
+Node 90, Epoch 2/2 : BCE Training loss 0.538358
+Node :  90
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 58, Epoch 1/2 : BCE Training loss 0.256610
+Node 58, Epoch 2/2 : BCE Training loss 0.124329
+Node :  58
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 79, Epoch 1/2 : BCE Training loss 0.771455
+Node 79, Epoch 2/2 : BCE Training loss 0.766102
+Node :  79
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 25, Epoch 1/2 : BCE Training loss 0.575724
+Node 25, Epoch 2/2 : BCE Training loss 0.554752
+Node :  25
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 44, Epoch 1/2 : BCE Training loss 0.578288
+Node 44, Epoch 2/2 : BCE Training loss 0.568112
+Node :  44
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 48, Epoch 1/2 : BCE Training loss 0.522596
+Node 48, Epoch 2/2 : BCE Training loss 0.493607
+Node :  48
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 73, Epoch 1/2 : BCE Training loss 0.597546
+Node 73, Epoch 2/2 : BCE Training loss 0.589000
+Node :  73
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 12, Epoch 1/2 : BCE Training loss 0.401809
+Node 12, Epoch 2/2 : BCE Training loss 0.248185
+Node :  12
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 26, Epoch 1/2 : BCE Training loss 0.715355
+Node 26, Epoch 2/2 : BCE Training loss 0.710619
+Node :  26
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 75, Epoch 1/2 : BCE Training loss 0.598173
+Node 75, Epoch 2/2 : BCE Training loss 0.583791
+Node :  75
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 86, Epoch 1/2 : BCE Training loss 0.605941
+Node 86, Epoch 2/2 : BCE Training loss 0.545657
+Node :  86
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 13, Epoch 1/2 : BCE Training loss 0.548621
+Node 13, Epoch 2/2 : BCE Training loss 0.532006
+Node :  13
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 24, Epoch 1/2 : BCE Training loss 0.730848
+Node 24, Epoch 2/2 : BCE Training loss 0.714100
+Node :  24
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 49, Epoch 1/2 : BCE Training loss 0.635267
+Node 49, Epoch 2/2 : BCE Training loss 0.630279
+Node :  49
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 37, Epoch 1/2 : BCE Training loss 0.616254
+Node 37, Epoch 2/2 : BCE Training loss 0.594478
+Node :  37
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 41, Epoch 1/2 : BCE Training loss 0.500983
+Node 41, Epoch 2/2 : BCE Training loss 0.471979
+Node :  41
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 51, Epoch 1/2 : BCE Training loss 0.653595
+Node 51, Epoch 2/2 : BCE Training loss 0.643424
+Node :  51
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 78, Epoch 1/2 : BCE Training loss 0.673411
+Node 78, Epoch 2/2 : BCE Training loss 0.662685
+Node :  78
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 26, Epoch 1/2 : BCE Training loss 0.710385
+Node 26, Epoch 2/2 : BCE Training loss 0.705845
+Node :  26
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 42, Epoch 1/2 : BCE Training loss 0.570100
+Node 42, Epoch 2/2 : BCE Training loss 0.537974
+Node :  42
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 35, Epoch 1/2 : BCE Training loss 0.732719
+Node 35, Epoch 2/2 : BCE Training loss 0.727243
+Node :  35
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 69, Epoch 1/2 : BCE Training loss 0.623083
+Node 69, Epoch 2/2 : BCE Training loss 0.603492
+Node :  69
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 88, Epoch 1/2 : BCE Training loss 0.597762
+Node 88, Epoch 2/2 : BCE Training loss 0.582968
+Node :  88
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 6, Epoch 1/2 : BCE Training loss 0.502762
+Node 6, Epoch 2/2 : BCE Training loss 0.396352
+Node :  6
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 11, Epoch 1/2 : BCE Training loss 0.587867
+Node 11, Epoch 2/2 : BCE Training loss 0.577234
+Node :  11
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 35, Epoch 1/2 : BCE Training loss 0.726595
+Node 35, Epoch 2/2 : BCE Training loss 0.721530
+Node :  35
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 69, Epoch 1/2 : BCE Training loss 0.590687
+Node 69, Epoch 2/2 : BCE Training loss 0.565026
+Node :  69
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 44, Epoch 1/2 : BCE Training loss 0.567554
+Node 44, Epoch 2/2 : BCE Training loss 0.557031
+Node :  44
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 15, Epoch 1/2 : BCE Training loss 0.566752
+Node 15, Epoch 2/2 : BCE Training loss 0.552202
+Node :  15
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 99, Epoch 1/2 : BCE Training loss 0.731265
+Node 99, Epoch 2/2 : BCE Training loss 0.716306
+Node :  99
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 10, Epoch 1/2 : BCE Training loss 0.662312
+Node 10, Epoch 2/2 : BCE Training loss 0.625875
+Node :  10
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 53, Epoch 1/2 : BCE Training loss 0.624956
+Node 53, Epoch 2/2 : BCE Training loss 0.613730
+Node :  53
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 79, Epoch 1/2 : BCE Training loss 0.767592
+Node 79, Epoch 2/2 : BCE Training loss 0.761883
+Node :  79
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 15, Epoch 1/2 : BCE Training loss 0.545000
+Node 15, Epoch 2/2 : BCE Training loss 0.527666
+Node :  15
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 11, Epoch 1/2 : BCE Training loss 0.578571
+Node 11, Epoch 2/2 : BCE Training loss 0.568090
+Node :  11
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 14, Epoch 1/2 : BCE Training loss 0.558678
+Node 14, Epoch 2/2 : BCE Training loss 0.538417
+Node :  14
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 59, Epoch 1/2 : BCE Training loss 0.537959
+Node 59, Epoch 2/2 : BCE Training loss 0.487109
+Node :  59
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 36, Epoch 1/2 : BCE Training loss 0.597644
+Node 36, Epoch 2/2 : BCE Training loss 0.587890
+Node :  36
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 86, Epoch 1/2 : BCE Training loss 0.540248
+Node 86, Epoch 2/2 : BCE Training loss 0.453399
+Node :  86
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 31, Epoch 1/2 : BCE Training loss 0.590127
+Node 31, Epoch 2/2 : BCE Training loss 0.583922
+Node :  31
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 5, Epoch 1/2 : BCE Training loss 0.652152
+Node 5, Epoch 2/2 : BCE Training loss 0.607652
+Node :  5
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 15, Epoch 1/2 : BCE Training loss 0.525130
+Node 15, Epoch 2/2 : BCE Training loss 0.502716
+Node :  15
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 22, Epoch 1/2 : BCE Training loss 0.688928
+Node 22, Epoch 2/2 : BCE Training loss 0.663100
+Node :  22
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 96, Epoch 1/2 : BCE Training loss 0.666858
+Node 96, Epoch 2/2 : BCE Training loss 0.656526
+Node :  96
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 56, Epoch 1/2 : BCE Training loss 0.690810
+Node 56, Epoch 2/2 : BCE Training loss 0.671491
+Node :  56
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 92, Epoch 1/2 : BCE Training loss 0.723769
+Node 92, Epoch 2/2 : BCE Training loss 0.716805
+Node :  92
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 62, Epoch 1/2 : BCE Training loss 0.684796
+Node 62, Epoch 2/2 : BCE Training loss 0.669703
+Node :  62
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 5, Epoch 1/2 : BCE Training loss 0.596973
+Node 5, Epoch 2/2 : BCE Training loss 0.542423
+Node :  5
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 52, Epoch 1/2 : BCE Training loss 0.764559
+Node 52, Epoch 2/2 : BCE Training loss 0.754739
+Node :  52
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 77, Epoch 1/2 : BCE Training loss 0.640751
+Node 77, Epoch 2/2 : BCE Training loss 0.635021
+Node :  77
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 46, Epoch 1/2 : BCE Training loss 0.587302
+Node 46, Epoch 2/2 : BCE Training loss 0.583299
+Node :  46
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 34, Epoch 1/2 : BCE Training loss 0.787087
+Node 34, Epoch 2/2 : BCE Training loss 0.778656
+Node :  34
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 47, Epoch 1/2 : BCE Training loss 0.771480
+Node 47, Epoch 2/2 : BCE Training loss 0.760024
+Node :  47
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 97, Epoch 1/2 : BCE Training loss 0.789682
+Node 97, Epoch 2/2 : BCE Training loss 0.779495
+Node :  97
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 5, Epoch 1/2 : BCE Training loss 0.526662
+Node 5, Epoch 2/2 : BCE Training loss 0.451354
+Node :  5
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 40, Epoch 1/2 : BCE Training loss 0.724840
+Node 40, Epoch 2/2 : BCE Training loss 0.713501
+Node :  40
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 9, Epoch 1/2 : BCE Training loss 0.510942
+Node 9, Epoch 2/2 : BCE Training loss 0.457408
+Node :  9
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 82, Epoch 1/2 : BCE Training loss 0.704849
+Node 82, Epoch 2/2 : BCE Training loss 0.668807
+Node :  82
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 12, Epoch 1/2 : BCE Training loss 0.199452
+Node 12, Epoch 2/2 : BCE Training loss 0.066817
+Node :  12
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 19, Epoch 1/2 : BCE Training loss 0.600840
+Node 19, Epoch 2/2 : BCE Training loss 0.588861
+Node :  19
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 19, Epoch 1/2 : BCE Training loss 0.598878
+Node 19, Epoch 2/2 : BCE Training loss 0.588896
+Node :  19
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 18, Epoch 1/2 : BCE Training loss 0.759006
+Node 18, Epoch 2/2 : BCE Training loss 0.752426
+Node :  18
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+Node 22, Epoch 1/2 : BCE Training loss 0.654932
+Node 22, Epoch 2/2 : BCE Training loss 0.623396
+Node :  22
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 91, Epoch 1/2 : BCE Training loss 0.424527
+Node 91, Epoch 2/2 : BCE Training loss 0.293085
+Node :  91
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 70, Epoch 1/2 : BCE Training loss 0.724071
+Node 70, Epoch 2/2 : BCE Training loss 0.708140
+Node :  70
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+Node 18, Epoch 1/2 : BCE Training loss 0.761878
+Node 18, Epoch 2/2 : BCE Training loss 0.755618
+Node :  18
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 56, Epoch 1/2 : BCE Training loss 0.667040
+Node 56, Epoch 2/2 : BCE Training loss 0.647020
+Node :  56
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 92, Epoch 1/2 : BCE Training loss 0.716545
+Node 92, Epoch 2/2 : BCE Training loss 0.710261
+Node :  92
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 31, Epoch 1/2 : BCE Training loss 0.591595
+Node 31, Epoch 2/2 : BCE Training loss 0.585154
+Node :  31
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 56, Epoch 1/2 : BCE Training loss 0.635622
+Node 56, Epoch 2/2 : BCE Training loss 0.612329
+Node :  56
+Training Rounds Left :  1
+** Event #768   t=0   Elapsed: 80.3431s (1m 20s)
+     Speed:     ev/sec=11.7267   simsec/sec=0   ev/simsec=0
+     Messages:  created: 1032   present: 497   in FES: 496
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 83, Epoch 1/2 : BCE Training loss 0.695154
+Node 83, Epoch 2/2 : BCE Training loss 0.673302
+Node :  83
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 89, Epoch 1/2 : BCE Training loss 0.542034
+Node 89, Epoch 2/2 : BCE Training loss 0.489023
+Node :  89
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+Node 46, Epoch 1/2 : BCE Training loss 0.581646
+Node 46, Epoch 2/2 : BCE Training loss 0.577702
+Node :  46
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 33, Epoch 1/2 : BCE Training loss 0.758014
+Node 33, Epoch 2/2 : BCE Training loss 0.750828
+Node :  33
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 68, Epoch 1/2 : BCE Training loss 0.579853
+Node 68, Epoch 2/2 : BCE Training loss 0.571555
+Node :  68
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 30, Epoch 1/2 : BCE Training loss 0.602145
+Node 30, Epoch 2/2 : BCE Training loss 0.598680
+Node :  30
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 6, Epoch 1/2 : BCE Training loss 0.348694
+Node 6, Epoch 2/2 : BCE Training loss 0.192914
+Node :  6
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 99, Epoch 1/2 : BCE Training loss 0.700180
+Node 99, Epoch 2/2 : BCE Training loss 0.686709
+Node :  99
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 48, Epoch 1/2 : BCE Training loss 0.481195
+Node 48, Epoch 2/2 : BCE Training loss 0.425668
+Node :  48
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 19, Epoch 1/2 : BCE Training loss 0.583105
+Node 19, Epoch 2/2 : BCE Training loss 0.574130
+Node :  19
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 88, Epoch 1/2 : BCE Training loss 0.574848
+Node 88, Epoch 2/2 : BCE Training loss 0.563572
+Node :  88
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 12, Epoch 1/2 : BCE Training loss 0.102180
+Node 12, Epoch 2/2 : BCE Training loss 0.022264
+Node :  12
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 81, Epoch 1/2 : BCE Training loss 0.631645
+Node 81, Epoch 2/2 : BCE Training loss 0.605078
+Node :  81
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 88, Epoch 1/2 : BCE Training loss 0.560448
+Node 88, Epoch 2/2 : BCE Training loss 0.549712
+Node :  88
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 80, Epoch 1/2 : BCE Training loss 0.627247
+Node 80, Epoch 2/2 : BCE Training loss 0.617109
+Node :  80
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 77, Epoch 1/2 : BCE Training loss 0.623700
+Node 77, Epoch 2/2 : BCE Training loss 0.618659
+Node :  77
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 31, Epoch 1/2 : BCE Training loss 0.578856
+Node 31, Epoch 2/2 : BCE Training loss 0.572704
+Node :  31
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 68, Epoch 1/2 : BCE Training loss 0.564095
+Node 68, Epoch 2/2 : BCE Training loss 0.556773
+Node :  68
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 33, Epoch 1/2 : BCE Training loss 0.762971
+Node 33, Epoch 2/2 : BCE Training loss 0.755841
+Node :  33
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 45, Epoch 1/2 : BCE Training loss 0.667179
+Node 45, Epoch 2/2 : BCE Training loss 0.660733
+Node :  45
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 74, Epoch 1/2 : BCE Training loss 0.635477
+Node 74, Epoch 2/2 : BCE Training loss 0.624350
+Node :  74
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 47, Epoch 1/2 : BCE Training loss 0.760758
+Node 47, Epoch 2/2 : BCE Training loss 0.749424
+Node :  47
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 43, Epoch 1/2 : BCE Training loss 0.545752
+Node 43, Epoch 2/2 : BCE Training loss 0.521872
+Node :  43
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 82, Epoch 1/2 : BCE Training loss 0.660975
+Node 82, Epoch 2/2 : BCE Training loss 0.620454
+Node :  82
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 77, Epoch 1/2 : BCE Training loss 0.620032
+Node 77, Epoch 2/2 : BCE Training loss 0.615202
+Node :  77
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 52, Epoch 1/2 : BCE Training loss 0.745410
+Node 52, Epoch 2/2 : BCE Training loss 0.737094
+Node :  52
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 0, Epoch 1/2 : BCE Training loss 0.395980
+Node 0, Epoch 2/2 : BCE Training loss 0.277068
+Node :  0
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 67, Epoch 1/2 : BCE Training loss 0.756852
+Node 67, Epoch 2/2 : BCE Training loss 0.751479
+Node :  67
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 43, Epoch 1/2 : BCE Training loss 0.524165
+Node 43, Epoch 2/2 : BCE Training loss 0.493057
+Node :  43
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 82, Epoch 1/2 : BCE Training loss 0.625046
+Node 82, Epoch 2/2 : BCE Training loss 0.576921
+Node :  82
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 81, Epoch 1/2 : BCE Training loss 0.596942
+Node 81, Epoch 2/2 : BCE Training loss 0.561833
+Node :  81
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 91, Epoch 1/2 : BCE Training loss 0.273347
+Node 91, Epoch 2/2 : BCE Training loss 0.124340
+Node :  91
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 62, Epoch 1/2 : BCE Training loss 0.667358
+Node 62, Epoch 2/2 : BCE Training loss 0.651608
+Node :  62
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 8, Epoch 1/2 : BCE Training loss 0.671763
+Node 8, Epoch 2/2 : BCE Training loss 0.667075
+Node :  8
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 89, Epoch 1/2 : BCE Training loss 0.475064
+Node 89, Epoch 2/2 : BCE Training loss 0.384807
+Node :  89
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 95, Epoch 1/2 : BCE Training loss 0.660193
+Node 95, Epoch 2/2 : BCE Training loss 0.650925
+Node :  95
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 84, Epoch 1/2 : BCE Training loss 0.413586
+Node 84, Epoch 2/2 : BCE Training loss 0.306771
+Node :  84
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+** Event #1024   t=0   Elapsed: 91.491s (1m 31s)
+     Speed:     ev/sec=22.964   simsec/sec=0   ev/simsec=0
+     Messages:  created: 1236   present: 496   in FES: 495
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 61, Epoch 1/2 : BCE Training loss 0.562765
+Node 61, Epoch 2/2 : BCE Training loss 0.522152
+Node :  61
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 40, Epoch 1/2 : BCE Training loss 0.711991
+Node 40, Epoch 2/2 : BCE Training loss 0.701002
+Node :  40
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 94, Epoch 1/2 : BCE Training loss 0.453215
+Node 94, Epoch 2/2 : BCE Training loss 0.327886
+Node :  94
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 17, Epoch 1/2 : BCE Training loss 0.581517
+Node 17, Epoch 2/2 : BCE Training loss 0.557008
+Node :  17
+Training Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 23, Epoch 1/2 : BCE Training loss 0.675401
+Node 23, Epoch 2/2 : BCE Training loss 0.659315
+Node :  23
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 7, Epoch 1/2 : BCE Training loss 0.733678
+Node 7, Epoch 2/2 : BCE Training loss 0.718433
+Node :  7
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 74, Epoch 1/2 : BCE Training loss 0.620972
+Node 74, Epoch 2/2 : BCE Training loss 0.610555
+Node :  74
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 42, Epoch 1/2 : BCE Training loss 0.529709
+Node 42, Epoch 2/2 : BCE Training loss 0.482989
+Node :  42
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 6, Epoch 1/2 : BCE Training loss 0.222245
+Node 6, Epoch 2/2 : BCE Training loss 0.086852
+Node :  6
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 17, Epoch 1/2 : BCE Training loss 0.543724
+Node 17, Epoch 2/2 : BCE Training loss 0.506171
+Node :  17
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 8, Epoch 1/2 : BCE Training loss 0.673103
+Node 8, Epoch 2/2 : BCE Training loss 0.668037
+Node :  8
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 36, Epoch 1/2 : BCE Training loss 0.591123
+Node 36, Epoch 2/2 : BCE Training loss 0.583416
+Node :  36
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 17, Epoch 1/2 : BCE Training loss 0.475937
+Node 17, Epoch 2/2 : BCE Training loss 0.385760
+Node :  17
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 23, Epoch 1/2 : BCE Training loss 0.641080
+Node 23, Epoch 2/2 : BCE Training loss 0.625420
+Node :  23
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 17, Epoch 1/2 : BCE Training loss 0.380480
+Node 17, Epoch 2/2 : BCE Training loss 0.244381
+Node :  17
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 10, Epoch 1/2 : BCE Training loss 0.597549
+Node 10, Epoch 2/2 : BCE Training loss 0.558247
+Node :  10
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 19, Epoch 1/2 : BCE Training loss 0.580755
+Node 19, Epoch 2/2 : BCE Training loss 0.571225
+Node :  19
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 36, Epoch 1/2 : BCE Training loss 0.578265
+Node 36, Epoch 2/2 : BCE Training loss 0.571219
+Node :  36
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 7, Epoch 1/2 : BCE Training loss 0.732837
+Node 7, Epoch 2/2 : BCE Training loss 0.717824
+Node :  7
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 10, Epoch 1/2 : BCE Training loss 0.562887
+Node 10, Epoch 2/2 : BCE Training loss 0.513355
+Node :  10
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 74, Epoch 1/2 : BCE Training loss 0.605098
+Node 74, Epoch 2/2 : BCE Training loss 0.594430
+Node :  74
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 8, Epoch 1/2 : BCE Training loss 0.666960
+Node 8, Epoch 2/2 : BCE Training loss 0.662140
+Node :  8
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+** Event #1280   t=0   Elapsed: 100.023s (1m 40s)
+     Speed:     ev/sec=30.0039   simsec/sec=0   ev/simsec=0
+     Messages:  created: 1444   present: 500   in FES: 499
+__del__ WeightsMessage Performance
+Node 27, Epoch 1/2 : BCE Training loss 0.673650
+Node 27, Epoch 2/2 : BCE Training loss 0.661667
+Node :  27
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 47, Epoch 1/2 : BCE Training loss 0.742814
+Node 47, Epoch 2/2 : BCE Training loss 0.731308
+Node :  47
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 36, Epoch 1/2 : BCE Training loss 0.570203
+Node 36, Epoch 2/2 : BCE Training loss 0.562399
+Node :  36
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 89, Epoch 1/2 : BCE Training loss 0.403991
+Node 89, Epoch 2/2 : BCE Training loss 0.266132
+Node :  89
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 61, Epoch 1/2 : BCE Training loss 0.512640
+Node 61, Epoch 2/2 : BCE Training loss 0.447204
+Node :  61
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 40, Epoch 1/2 : BCE Training loss 0.694719
+Node 40, Epoch 2/2 : BCE Training loss 0.684354
+Node :  40
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 42, Epoch 1/2 : BCE Training loss 0.483550
+Node 42, Epoch 2/2 : BCE Training loss 0.409537
+Node :  42
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+** Event #1536   t=0   Elapsed: 105.622s (1m 45s)
+     Speed:     ev/sec=45.7234   simsec/sec=0   ev/simsec=0
+     Messages:  created: 1648   present: 499   in FES: 498
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+Node 97, Epoch 1/2 : BCE Training loss 0.773739
+Node 97, Epoch 2/2 : BCE Training loss 0.765477
+Node :  97
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 60, Epoch 1/2 : BCE Training loss 0.613692
+Node 60, Epoch 2/2 : BCE Training loss 0.606912
+Node :  60
+Training Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 60, Epoch 1/2 : BCE Training loss 0.622943
+Node 60, Epoch 2/2 : BCE Training loss 0.617294
+Node :  60
+Training Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 60, Epoch 1/2 : BCE Training loss 0.635710
+Node 60, Epoch 2/2 : BCE Training loss 0.629936
+Node :  60
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+** Event #1792   t=0   Elapsed: 110.635s (1m 50s)
+     Speed:     ev/sec=51.065   simsec/sec=0   ev/simsec=0
+     Messages:  created: 1852   present: 498   in FES: 497
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Node 97, Epoch 1/2 : BCE Training loss 0.773666
+Node 97, Epoch 2/2 : BCE Training loss 0.765039
+Node :  97
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+Node 24, Epoch 1/2 : BCE Training loss 0.714465
+Node 24, Epoch 2/2 : BCE Training loss 0.697427
+Node :  24
+Training Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+** Event #2048   t=0   Elapsed: 115.33s (1m 55s)
+     Speed:     ev/sec=54.5251   simsec/sec=0   ev/simsec=0
+     Messages:  created: 2056   present: 497   in FES: 496
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  0
+Local HR =   0.3
+Local NDCG =   0.09711528669280325
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  1
+Local HR =   0.2
+Local NDCG =   0.07354089133666383
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  2
+Local HR =   0.0
+Local NDCG =   0.0
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  3
+Local HR =   0.1
+Local NDCG =   0.03154648767857287
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  4
+Local HR =   0.3
+Local NDCG =   0.07923817951900455
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  5
+Local HR =   0.1
+Local NDCG =   0.03868528072345416
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  6
+Local HR =   0.3
+Local NDCG =   0.12317065537373742
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  7
+Local HR =   0.5
+Local NDCG =   0.17466761793432514
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  8
+Local HR =   0.1
+Local NDCG =   0.03562071871080222
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  9
+Local HR =   0.7
+Local NDCG =   0.2931940294539702
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  10
+Local HR =   0.3
+Local NDCG =   0.09433260931105866
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  11
+Local HR =   0.1
+Local NDCG =   0.025
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  12
+Local HR =   0.2
+Local NDCG =   0.06062071871080221
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  13
+Local HR =   0.0
+Local NDCG =   0.0
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  14
+Local HR =   0.3
+Local NDCG =   0.0834745364100095
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  15
+Local HR =   0.3
+Local NDCG =   0.09047562349288776
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  16
+Local HR =   0.2
+Local NDCG =   0.058929135814314894
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  17
+Local HR =   0.4
+Local NDCG =   0.11435792886086511
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  18
+Local HR =   0.3
+Local NDCG =   0.16570909616618615
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  19
+Local HR =   0.3
+Local NDCG =   0.08008160485984178
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  20
+Local HR =   0.3
+Local NDCG =   0.08375854002677814
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  21
+Local HR =   0.3
+Local NDCG =   0.08247002715097872
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  22
+Local HR =   0.2
+Local NDCG =   0.06188567221452157
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  23
+Local HR =   0.2
+Local NDCG =   0.06878828028985226
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  24
+Local HR =   0.4
+Local NDCG =   0.13246234834333373
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  25
+Local HR =   0.3
+Local NDCG =   0.13204702740128132
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  26
+Local HR =   0.3
+Local NDCG =   0.09707302430395168
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  27
+Local HR =   0.5
+Local NDCG =   0.16194652890732572
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  28
+Local HR =   0.1
+Local NDCG =   0.023540891336663823
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  29
+Local HR =   0.2
+Local NDCG =   0.07430599943425638
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  30
+Local HR =   0.1
+Local NDCG =   0.02890648263178878
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  31
+Local HR =   0.3
+Local NDCG =   0.08236899023731066
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  32
+Local HR =   0.3
+Local NDCG =   0.11878828028985226
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  33
+Local HR =   0.2
+Local NDCG =   0.05066131943480828
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  34
+Local HR =   0.4
+Local NDCG =   0.17817924522127254
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  35
+Local HR =   0.0
+Local NDCG =   0.0
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  36
+Local HR =   0.4
+Local NDCG =   0.1532817478461687
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  37
+Local HR =   0.1
+Local NDCG =   0.03154648767857287
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  38
+Local HR =   0.1
+Local NDCG =   0.025
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  39
+Local HR =   0.1
+Local NDCG =   0.03333333333333334
+** Event #2304   t=0   Elapsed: 119.736s (1m 59s)
+     Speed:     ev/sec=58.1078   simsec/sec=0   ev/simsec=0
+     Messages:  created: 2100   present: 336   in FES: 295
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  40
+Local HR =   0.1
+Local NDCG =   0.027023815442731976
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  41
+Local HR =   0.4
+Local NDCG =   0.12081480802883646
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  42
+Local HR =   0.3
+Local NDCG =   0.08669122627194058
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  43
+Local HR =   0.4
+Local NDCG =   0.17208178267332763
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  44
+Local HR =   0.1
+Local NDCG =   0.02626495350371936
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  45
+Local HR =   0.1
+Local NDCG =   0.0430676558073393
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  46
+Local HR =   0.2
+Local NDCG =   0.04940277481969527
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  47
+Local HR =   0.4
+Local NDCG =   0.1046434333664455
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  48
+Local HR =   0.3
+Local NDCG =   0.11570909616618615
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  49
+Local HR =   0.0
+Local NDCG =   0.0
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  50
+Local HR =   0.1
+Local NDCG =   0.03562071871080222
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  51
+Local HR =   0.2
+Local NDCG =   0.10616063116448504
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  52
+Local HR =   0.3
+Local NDCG =   0.111649487244971
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  53
+Local HR =   0.2
+Local NDCG =   0.07096195037245229
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  54
+Local HR =   0.4
+Local NDCG =   0.1173095830041091
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  55
+Local HR =   0.2
+Local NDCG =   0.05712681500913008
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  56
+Local HR =   0.2
+Local NDCG =   0.04903197837341465
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  57
+Local HR =   0.3
+Local NDCG =   0.08970496493401348
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  58
+Local HR =   0.0
+Local NDCG =   0.0
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  59
+Local HR =   0.0
+Local NDCG =   0.0
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  60
+Local HR =   0.0
+Local NDCG =   0.0
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  61
+Local HR =   0.3
+Local NDCG =   0.07923817951900455
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  62
+Local HR =   0.1
+Local NDCG =   0.02890648263178878
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  63
+Local HR =   0.5
+Local NDCG =   0.21502102408858237
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  64
+Local HR =   0.3
+Local NDCG =   0.1502462001605325
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  65
+Local HR =   0.3
+Local NDCG =   0.09407271790688443
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  66
+Local HR =   0.2
+Local NDCG =   0.0494650542118226
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  67
+Local HR =   0.2
+Local NDCG =   0.13154648767857285
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  68
+Local HR =   0.4
+Local NDCG =   0.10185014878814788
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  69
+Local HR =   0.2
+Local NDCG =   0.07313782131597592
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  70
+Local HR =   0.1
+Local NDCG =   0.025
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  71
+Local HR =   0.3
+Local NDCG =   0.0892636314078541
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  72
+Local HR =   0.3
+Local NDCG =   0.12269126219419843
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  73
+Local HR =   0.2
+Local NDCG =   0.058570303121304845
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  74
+Local HR =   0.3
+Local NDCG =   0.0739301084236452
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  75
+Local HR =   0.2
+Local NDCG =   0.06495023422717353
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  76
+Local HR =   0.2
+Local NDCG =   0.04903197837341465
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  77
+Local HR =   0.3
+Local NDCG =   0.10429528370578563
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  78
+Local HR =   0.2
+Local NDCG =   0.07559580248098155
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  79
+Local HR =   0.3
+Local NDCG =   0.07883662336335559
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  80
+Local HR =   0.0
+Local NDCG =   0.0
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  81
+Local HR =   0.2
+Local NDCG =   0.05404763088546395
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  82
+Local HR =   0.1
+Local NDCG =   0.03562071871080222
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  83
+Local HR =   0.2
+Local NDCG =   0.07789429456511299
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  84
+Local HR =   0.2
+Local NDCG =   0.09319597492354385
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  85
+Local HR =   0.2
+Local NDCG =   0.0727670248696953
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  86
+Local HR =   0.2
+Local NDCG =   0.08562071871080221
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  87
+Local HR =   0.2
+Local NDCG =   0.0524473739684526
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  88
+Local HR =   0.1
+Local NDCG =   0.1
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  89
+Local HR =   0.3
+Local NDCG =   0.07830925745148405
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  90
+Local HR =   0.3
+Local NDCG =   0.08710958836535679
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  91
+Local HR =   0.1
+Local NDCG =   0.027023815442731976
+** Event #2560   t=0   Elapsed: 124.323s (2m 04s)
+     Speed:     ev/sec=55.8042   simsec/sec=0   ev/simsec=0
+     Messages:  created: 2100   present: 132   in FES: 39
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  92
+Local HR =   0.0
+Local NDCG =   0.0
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  93
+Local HR =   0.3
+Local NDCG =   0.07747134370290767
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  94
+Local HR =   0.2
+Local NDCG =   0.04903197837341465
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  95
+Local HR =   0.2
+Local NDCG =   0.048540891336663824
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  96
+Local HR =   0.1
+Local NDCG =   0.025
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  97
+Local HR =   0.1
+Local NDCG =   0.023981246656813147
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  98
+Local HR =   0.3
+Local NDCG =   0.09438408277083382
+__del__ WeightsMessage Performance
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  99
+Local HR =   0.3
+Local NDCG =   0.1226949407247611
+** Event #2600   t=0   Elapsed: 125.01s (2m 05s)
+     Speed:     ev/sec=56.8305   simsec/sec=0   ev/simsec=0
+     Messages:  created: 2100   present: 100   in FES: 0
+<!> No more events, simulation completed -- at t=0s, event #2600
+Calling finish() at end of Run #0...
+round =  5
+Average Test HR =  0.222
+Average Test NDCG =  0.08028265307069525
+round =  4
+Average Test HR =  0.21600000000000003
+Average Test NDCG =  0.0776431358701304
+round =  3
+Average Test HR =  0.206
+Average Test NDCG =  0.07107777327078037
+round =  2
+Average Test HR =  0.223
+Average Test NDCG =  0.0765544024289627
+round =  1
+Average Test HR =  0.22500000000000003
+Average Test NDCG =  0.07612859246775884

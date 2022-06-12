@@ -1,0 +1,74 @@
+2022-06-12 22:15:55,086 INFO    MainThread:220834 [wandb_setup.py:_flush():76] Loading settings from /home/yacine/.config/wandb/settings
+2022-06-12 22:15:55,086 INFO    MainThread:220834 [wandb_setup.py:_flush():76] Loading settings from /home/yacine/git/PersonalizedGL/wandb/settings
+2022-06-12 22:15:55,086 INFO    MainThread:220834 [wandb_setup.py:_flush():76] Loading settings from environment variables: {'api_key': '***REDACTED***', 'mode': 'offline', 'start_method': 'thread'}
+2022-06-12 22:15:55,086 INFO    MainThread:220834 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program': '<python with no main file>'}
+2022-06-12 22:15:55,086 INFO    MainThread:220834 [wandb_init.py:_log_setup():428] Logging user logs to /home/yacine/git/PersonalizedGL/wandb/offline-run-20220612_221555-21c37fwv/logs/debug.log
+2022-06-12 22:15:55,086 INFO    MainThread:220834 [wandb_init.py:_log_setup():429] Logging internal logs to /home/yacine/git/PersonalizedGL/wandb/offline-run-20220612_221555-21c37fwv/logs/debug-internal.log
+2022-06-12 22:15:55,086 INFO    MainThread:220834 [wandb_init.py:init():462] calling init triggers
+2022-06-12 22:15:55,086 INFO    MainThread:220834 [wandb_init.py:init():465] wandb.init called with sweep_config: {}
+config: {'dataset': 'ml-100k', 'rounds': 400, 'learning_rate': 0.01, 'epochs': 2, 'batch_size': 128, 'topK': 20}
+2022-06-12 22:15:55,087 INFO    MainThread:220834 [wandb_init.py:init():515] starting backend
+2022-06-12 22:15:55,091 INFO    MainThread:220834 [backend.py:ensure_launched():217] starting backend process...
+2022-06-12 22:15:55,091 INFO    MainThread:220834 [backend.py:ensure_launched():222] started backend process with pid: 0
+2022-06-12 22:15:55,091 INFO    MainThread:220834 [wandb_init.py:init():525] backend started and connected
+2022-06-12 22:15:55,092 INFO    BackendThr:220834 [internal.py:wandb_internal():90] W&B internal server running at pid: 220834, started at: 2022-06-12 22:15:55.091583
+2022-06-12 22:15:55,095 INFO    MainThread:220834 [wandb_init.py:init():596] updated telemetry
+2022-06-12 22:15:55,096 INFO    WriterThread:220834 [datastore.py:open_for_write():75] open: /home/yacine/git/PersonalizedGL/wandb/offline-run-20220612_221555-21c37fwv/run-21c37fwv.wandb
+2022-06-12 22:15:55,103 INFO    MainThread:220834 [wandb_init.py:init():662] starting run threads in backend
+2022-06-12 22:15:55,152 INFO    MainThread:220834 [wandb_run.py:_console_start():1898] atexit reg
+2022-06-12 22:15:55,152 INFO    MainThread:220834 [wandb_run.py:_redirect():1771] redirect: SettingsConsole.WRAP
+2022-06-12 22:15:55,153 INFO    MainThread:220834 [wandb_run.py:_redirect():1808] Wrapping output streams.
+2022-06-12 22:15:55,153 INFO    MainThread:220834 [wandb_run.py:_redirect():1832] Redirects installed.
+2022-06-12 22:15:55,153 INFO    MainThread:220834 [wandb_init.py:init():688] run started, returning control to user process
+2022-06-12 22:18:12,012 INFO    MainThread:220834 [wandb_run.py:_config_callback():1136] config_cb ('_wandb', 'visualize', 'HR_CDF_1') {'panel_type': 'Vega2', 'panel_config': {'panelDefId': 'wandb/line/v0', 'fieldSettings': {'x': 'Average HR', 'y': 'CDF', 'stroke': None}, 'stringSettings': {'title': 'HR CDF'}, 'transform': {'name': 'tableWithLeafColNames'}, 'userQuery': {'queryFields': [{'name': 'runSets', 'args': [{'name': 'runSets', 'value': '${runSets}'}], 'fields': [{'name': 'id', 'fields': []}, {'name': 'name', 'fields': []}, {'name': '_defaultColorIndex', 'fields': []}, {'name': 'summaryTable', 'args': [{'name': 'tableKey', 'value': 'HR_CDF_1_table'}], 'fields': []}]}]}}} None
+2022-06-12 22:18:12,023 INFO    MainThread:220834 [wandb_run.py:_finish():1685] finishing run drimfederatedlearning/DecentralizedGL/21c37fwv
+2022-06-12 22:18:12,024 INFO    MainThread:220834 [wandb_run.py:_atexit_cleanup():1867] got exitcode: 0
+2022-06-12 22:18:12,025 INFO    MainThread:220834 [wandb_run.py:_restore():1839] restore
+2022-06-12 22:18:12,626 INFO    SenderThread:220834 [sender.py:send_exit():371] handling exit code: 0
+2022-06-12 22:18:12,627 INFO    SenderThread:220834 [sender.py:send_exit():373] handling runtime: 137
+2022-06-12 22:18:12,627 INFO    SenderThread:220834 [sender.py:_save_file():949] saving file wandb-summary.json with policy end
+2022-06-12 22:18:12,627 INFO    SenderThread:220834 [sender.py:send_exit():379] send defer
+2022-06-12 22:18:12,628 INFO    HandlerThread:220834 [handler.py:handle_request_defer():164] handle defer: 0
+2022-06-12 22:18:12,628 INFO    MainThread:220834 [wandb_run.py:_on_finish():1996] got exit ret: 
+2022-06-12 22:18:12,628 INFO    SenderThread:220834 [sender.py:send_request_defer():388] handle sender defer: 0
+2022-06-12 22:18:12,628 INFO    SenderThread:220834 [sender.py:transition_state():392] send defer: 1
+2022-06-12 22:18:12,628 INFO    HandlerThread:220834 [handler.py:handle_request_defer():164] handle defer: 1
+2022-06-12 22:18:12,699 INFO    SenderThread:220834 [sender.py:send_request_defer():388] handle sender defer: 1
+2022-06-12 22:18:12,699 INFO    SenderThread:220834 [sender.py:transition_state():392] send defer: 2
+2022-06-12 22:18:12,700 INFO    HandlerThread:220834 [handler.py:handle_request_defer():164] handle defer: 2
+2022-06-12 22:18:12,700 INFO    SenderThread:220834 [sender.py:send_request_defer():388] handle sender defer: 2
+2022-06-12 22:18:12,700 INFO    SenderThread:220834 [sender.py:transition_state():392] send defer: 3
+2022-06-12 22:18:12,700 INFO    HandlerThread:220834 [handler.py:handle_request_defer():164] handle defer: 3
+2022-06-12 22:18:12,700 INFO    SenderThread:220834 [sender.py:send_request_defer():388] handle sender defer: 3
+2022-06-12 22:18:12,700 INFO    SenderThread:220834 [sender.py:transition_state():392] send defer: 4
+2022-06-12 22:18:12,701 INFO    HandlerThread:220834 [handler.py:handle_request_defer():164] handle defer: 4
+2022-06-12 22:18:12,701 INFO    SenderThread:220834 [sender.py:send_request_defer():388] handle sender defer: 4
+2022-06-12 22:18:12,701 INFO    SenderThread:220834 [sender.py:transition_state():392] send defer: 5
+2022-06-12 22:18:12,701 INFO    HandlerThread:220834 [handler.py:handle_request_defer():164] handle defer: 5
+2022-06-12 22:18:12,702 INFO    SenderThread:220834 [sender.py:send_request_defer():388] handle sender defer: 5
+2022-06-12 22:18:12,702 INFO    SenderThread:220834 [sender.py:transition_state():392] send defer: 6
+2022-06-12 22:18:12,702 INFO    HandlerThread:220834 [handler.py:handle_request_defer():164] handle defer: 6
+2022-06-12 22:18:12,702 INFO    SenderThread:220834 [sender.py:send_request_defer():388] handle sender defer: 6
+2022-06-12 22:18:12,702 INFO    SenderThread:220834 [sender.py:transition_state():392] send defer: 7
+2022-06-12 22:18:12,702 INFO    HandlerThread:220834 [handler.py:handle_request_defer():164] handle defer: 7
+2022-06-12 22:18:12,703 INFO    SenderThread:220834 [sender.py:send_request_defer():388] handle sender defer: 7
+2022-06-12 22:18:12,703 INFO    SenderThread:220834 [sender.py:transition_state():392] send defer: 8
+2022-06-12 22:18:12,703 INFO    HandlerThread:220834 [handler.py:handle_request_defer():164] handle defer: 8
+2022-06-12 22:18:12,703 INFO    SenderThread:220834 [sender.py:send_request_defer():388] handle sender defer: 8
+2022-06-12 22:18:12,703 INFO    SenderThread:220834 [sender.py:transition_state():392] send defer: 9
+2022-06-12 22:18:12,703 INFO    HandlerThread:220834 [handler.py:handle_request_defer():164] handle defer: 9
+2022-06-12 22:18:12,703 INFO    SenderThread:220834 [sender.py:send_request_defer():388] handle sender defer: 9
+2022-06-12 22:18:12,703 INFO    SenderThread:220834 [sender.py:transition_state():392] send defer: 10
+2022-06-12 22:18:12,704 INFO    HandlerThread:220834 [handler.py:handle_request_defer():164] handle defer: 10
+2022-06-12 22:18:12,704 INFO    SenderThread:220834 [sender.py:send_request_defer():388] handle sender defer: 10
+2022-06-12 22:18:12,729 INFO    MainThread:220834 [wandb_run.py:_on_finish():1996] got exit ret: done: true
+exit_result {
+}
+local_info {
+}
+
+2022-06-12 22:18:12,831 INFO    HandlerThread:220834 [handler.py:finish():806] shutting down handler
+2022-06-12 22:18:13,704 INFO    WriterThread:220834 [datastore.py:close():279] close: /home/yacine/git/PersonalizedGL/wandb/offline-run-20220612_221555-21c37fwv/run-21c37fwv.wandb
+2022-06-12 22:18:13,729 INFO    SenderThread:220834 [sender.py:finish():1111] shutting down sender
+2022-06-12 22:18:13,833 INFO    MainThread:220834 [wandb_run.py:_footer_history_summary_info():3104] rendering history
+2022-06-12 22:18:13,833 INFO    MainThread:220834 [wandb_run.py:_footer_history_summary_info():3136] rendering summary

@@ -1,7 +1,8 @@
+from re import I
 from pyopp import cSimpleModule, cMessage
 import sys 
 from collections import defaultdict
-import matplotlib.pyplot as plt 
+# import matplotlib.pyplot as plt 
 import numpy as np
 import wandb
 import os 
@@ -28,21 +29,15 @@ def cdf(data, metric):
     counts=counts.astype(float)/data_size   
     
     # Find the cdf
-    cdf = np.cumsum(counts)
-    
-
-    # Plot the cdf
-    # Save the cdf
-    plt.plot(bin_edges[0:-1],cdf,linestyle = linestyle, linewidth=2)
+    cdf = np.cumsum(counts)    
     idx = np.arange(cdf.shape[0])
-    plt.scatter(bin_edges[idx],cdf[idx], marker= marker, label = name_)
-    plt.xlim((0,1))
-    plt.ylabel("CDF")
-    plt.xlabel(metric+str(topK))
-    plt.grid(True)
-    plt.legend()
+    data = [[x, y] for (x, y) in zip(bin_edges[idx], cdf[idx])]
+    table = wandb.Table(data=data, columns = [metric+"@"+str(topK), "CDF"])
+    wandb.log({metric+"@"+"CDF" : wandb.plot.line(table, metric+"@"+str(topK), "CDF", stroke="dash",
+           title = metric+"@"+str(topK)+" cumulative distribution")})
 
-if sync_:
+
+if  sync_:
     wandb_config = {
                 "dataset": dataset_,
                 "rounds": 400,
@@ -53,7 +48,8 @@ if sync_:
                 }
     os.environ["WANDB_API_KEY"] = "334fd1cd4a03c95f4655357b92cdba2b7d706d4c"
     os.environ["WANDB_MODE"] = "offline"
-    run = wandb.init(project="DecentralizedGL", entity="drimfederatedlearning", name = name_, config = wandb_config)
+    os.environ["WANDB_START_METHOD"] = "thread"
+    wandb.init(project="DecentralizedGL", entity="drimfederatedlearning", name = name_, config = wandb_config)
    
 
 class Server(cSimpleModule):
@@ -72,6 +68,7 @@ class Server(cSimpleModule):
             self.delete(msg)
     
     def finish(self):
+        global wandb
         nb_rounds = max(self.hit_ratios.keys())
         for round in self.hit_ratios.keys():
             if(len(self.hit_ratios[round]) == self.num_participants): # if we receive all the users' model we evaluate them and then compute an average perf
@@ -82,13 +79,10 @@ class Server(cSimpleModule):
                 print("Average Test NDCG = ",avg_ndcg)
                 sys.stdout.flush()
                 if sync_:
-                    run.log({"Average HR": avg_hr,"Average NDCG": avg_ndcg, "Round ": nb_rounds - round})
+                    wandb.log({"Average HR": avg_hr,"Average NDCG": avg_ndcg, "Round ": nb_rounds - round})
 
-        # cdf(self.hit_ratios[1],"Local Hit Ratio")
-        # wandb.log({"HR CDF": plt})
-        # plt.clf()
-        # cdf(self.ndcgs[1],"Local NDCG")
-        # wandb.log({"NDCG CDF": plt})
-        run.finish()
+        cdf(self.hit_ratios[1],"Local HR")      
+        cdf(self.ndcgs[1],"Local NDCG")
+        wandb.finish()
                     
 

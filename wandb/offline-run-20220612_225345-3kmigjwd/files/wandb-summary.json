@@ -1,0 +1,1 @@
+{"Average HR": 0.22500000000000003, "Average NDCG": 0.07612859246775884, "Round ": 4, "_timestamp": 1655067357, "_runtime": 132, "_step": 5, "HR CDF": {"_type": "plotly-file", "sha256": "8ef5e4015d84d956501a2db182fd91100b4a8387b022655a6ddb064dac8ff20c", "size": 9298, "path": "media/plotly/HR CDF_5_8ef5e4015d84d956501a.plotly.json"}, "_wandb": {"runtime": 132}}
