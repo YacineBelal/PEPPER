@@ -26,9 +26,9 @@ train ,testRatings, testNegatives,validationRatings, validationNegatives = datas
 testRatings = testRatings[:1000] #  2453 1000
 testNegatives= testNegatives[:1000]
 
-epochs = 1
+epochs = 2
 number_peers = 3
-batch_size = 64
+batch_size = 128
 device = "cpu" #torch.device("cuda:0" if torch.cuda.is_available else "cpu")
 
 # genre = 1 # action
@@ -169,7 +169,7 @@ def jaccard_similarity(list1, list2):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 5 # 250
+        self.rounds = 400
         self.vector = np.empty(0)
         self.age = 1
         self.alpha = 0.4
@@ -212,7 +212,7 @@ class Node(cSimpleModule):
         self.best_ndcg = 0.0
         self.best_model = []
 
-        self.init_rounds = 5 #500
+        self.init_rounds = 600
         self.training_rounds = self.init_rounds
         self.update()
         self.peers = []
@@ -244,7 +244,7 @@ class Node(cSimpleModule):
                 self.diffuse_to_peer()
                 # self.transfer += 1
                 # delta = time.process_time() - start_time
-                if self.rounds % 1 == 0:
+                if self.rounds % 10 == 0:
                     start_time = time.process_time()
                     self.peer_sampling()
                     # self.peer_sampling_enhanced()

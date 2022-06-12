@@ -4,7 +4,7 @@ from collections import defaultdict
 import matplotlib.pyplot as plt 
 import numpy as np
 import wandb
-
+import os 
 
 sync_ = 1
 name_ = "Model-Age-Based"
@@ -47,14 +47,14 @@ if sync_:
                 "dataset": dataset_,
                 "rounds": 400,
                 "learning_rate": 0.01,
-                "epochs": 1,
+                "epochs": 2,
                 "batch_size": 128,
                 "topK": topK
                 }
+    os.environ["WANDB_API_KEY"] = "334fd1cd4a03c95f4655357b92cdba2b7d706d4c"
+    os.environ["WANDB_MODE"] = "offline"
     run = wandb.init(project="DecentralizedGL", entity="drimfederatedlearning", name = name_, config = wandb_config)
-
-
-    # os.environ["WANDB_MODE"] = "offline"
+   
 
 class Server(cSimpleModule):
     
@@ -66,7 +66,6 @@ class Server(cSimpleModule):
 
     
     def handleMessage(self, msg):
-
         if msg.getName() == "Performance":            
             self.hit_ratios[msg.round].append(msg.hit_ratio) # hit ratio ~ recall for recsys 
             self.ndcgs[msg.round].append(msg.ndcg) # ~ accuracy
@@ -83,13 +82,13 @@ class Server(cSimpleModule):
                 print("Average Test NDCG = ",avg_ndcg)
                 sys.stdout.flush()
                 if sync_:
-                    wandb.log = {"Average HR": avg_hr,"Average NDCG": avg_ndcg, "Round ": nb_rounds - round}             
+                    run.log({"Average HR": avg_hr,"Average NDCG": avg_ndcg, "Round ": nb_rounds - round})
 
         # cdf(self.hit_ratios[1],"Local Hit Ratio")
         # wandb.log({"HR CDF": plt})
         # plt.clf()
         # cdf(self.ndcgs[1],"Local NDCG")
         # wandb.log({"NDCG CDF": plt})
-        # run.finish()
+        run.finish()
                     
 

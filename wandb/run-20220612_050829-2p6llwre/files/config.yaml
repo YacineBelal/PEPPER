@@ -1,0 +1,45 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.12.18
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    python_version: 3.8.10
+    start_time: 1655003309
+    t:
+      1:
+      - 55
+      2:
+      - 1
+      - 5
+      - 53
+      - 55
+      3:
+      - 2
+      - 13
+      - 16
+      4: 3.8.10
+      5: 0.12.18
+      8:
+      - 5
+batch_size:
+  desc: null
+  value: 128
+dataset:
+  desc: null
+  value: ml-100k
+epochs:
+  desc: null
+  value: 1
+learning_rate:
+  desc: null
+  value: 0.01
+rounds:
+  desc: null
+  value: 400
+topK:
+  desc: null
+  value: 20
