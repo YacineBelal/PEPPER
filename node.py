@@ -1,3 +1,4 @@
+from decimal import localcontext
 from pyopp import cSimpleModule, cMessage, EV, simTime
 import numpy as np
 import random
@@ -25,9 +26,9 @@ train ,testRatings, testNegatives,validationRatings, validationNegatives = datas
 testRatings = testRatings[:1000] #  2453 1000
 testNegatives= testNegatives[:1000]
 
-epochs = 2
+epochs = 1
 number_peers = 3
-batch_size = 32
+batch_size = 64
 device = "cpu" #torch.device("cuda:0" if torch.cuda.is_available else "cpu")
 
 # genre = 1 # action
@@ -168,7 +169,7 @@ def jaccard_similarity(list1, list2):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 250
+        self.rounds = 5 # 250
         self.vector = np.empty(0)
         self.age = 1
         self.alpha = 0.4
@@ -211,7 +212,7 @@ class Node(cSimpleModule):
         self.best_ndcg = 0.0
         self.best_model = []
 
-        self.init_rounds = 500
+        self.init_rounds = 5 #500
         self.training_rounds = self.init_rounds
         self.update()
         self.peers = []
@@ -235,20 +236,20 @@ class Node(cSimpleModule):
                     lhr, lndcg = self.evaluate_local_model(False,False)
                     self.diffuse_to_server(lhr, lndcg)
                 else:
-                    self.model.set_weights(self.best_model)
+                    self.model.load_state_dict(self.best_model)
                     lhr, lndcg = self.evaluate_local_model(False, False)
                     self.diffuse_to_server(lhr,lndcg)
 
                 start_time = time.process_time()
                 self.diffuse_to_peer()
-                self.transfer += 1
-                delta = time.process_time() - start_time
-                if self.rounds % 10 == 0:
+                # self.transfer += 1
+                # delta = time.process_time() - start_time
+                if self.rounds % 1 == 0:
                     start_time = time.process_time()
-                    # self.peer_sampling()
-                    self.peer_sampling_enhanced()
-                    delta = time.process_time() - start_time
-                    self.peer_sampling_time += delta
+                    self.peer_sampling()
+                    # self.peer_sampling_enhanced()
+                    # delta = time.process_time() - start_time
+                    # self.peer_sampling_time += delta
                
 
                 self.rounds = self.rounds - 1
@@ -288,8 +289,7 @@ class Node(cSimpleModule):
                 if hr >= self.best_hr:
                     self.best_hr = hr
                     self.best_ndcg = ndcg
-                    self.best_model = self.model.get_weights().copy()
-                
+                    self.best_model = self.model.state_dict().copy()                
                 # if self.id_user == 99:
                 #     self.find_profiles(msg)
                 
@@ -342,7 +342,7 @@ class Node(cSimpleModule):
         
     def get_model(self):
         # return self.model.state_dict().values()
-        return self.model.state_dict()['items_embeddings.weight'].size()
+        return self.model.state_dict()['items_embeddings.weight']
 
     
 
@@ -442,7 +442,7 @@ class Node(cSimpleModule):
                 self.optimizer.step()
                 running_loss += loss.item()
             
-            print("Node %d, Epoch %d : Training loss %f" % (self.id_user, e + 1,running_loss/len(labels)))
+            print("Node %d, Epoch %d/%d : BCE Training loss %f" % (self.id_user, e + 1, epochs, running_loss/len(labels)))
             
         
         # want to keep best model according to validation set (used also for weighting)
@@ -460,7 +460,8 @@ class Node(cSimpleModule):
     def merge(self,message_weights):
         weights = message_weights.weights
         local_weights = self.get_model()
-        local_weights[:] =  [ (a * self.age + b * message_weights.age) / (self.age + message_weights.age) for a,b in zip(local_weights,weights)]
+        local_weights = torch.add(local_weights * self.age, weights * message_weights.age) / (self.age + message_weights.age)  
+        # [ (a * self.age + b * message_weights.age) / (self.age + message_weights.age) for a,b in zip(local_weights,weights)]
         self.age = max(self.age,message_weights.age)
         self.set_model(local_weights)
 
