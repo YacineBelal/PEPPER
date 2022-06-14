@@ -31,7 +31,7 @@ def init_cost_file():
         config_object.write(cost_file)
 
 reset_random_seeds()
-init_cost_file()
+# init_cost_file()
 
 
 class Network(nn.Module):

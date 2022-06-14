@@ -171,14 +171,14 @@ class Node(cSimpleModule):
     def initialize(self):
         
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 400
+        self.rounds = 600
         self.vector = np.empty(0)
         self.age = 1
         self.alpha = 0.4
         self.num_items = num_items #train.shape[1] #1682 #3900  TO DO automate this, doesn't work since the validation data has been added because one item is present there and not in training
         self.num_users = 100 #train.shape[0]  
         self.id_user = self.getIndex()  
-        self.period =  0 #np.random.exponential(1)
+        self.period =  0 # np.random.exponential(1)
 
         # if self.id_user == 100:
         #     self.vector, self.testRatings, self.testNegatives, self.validationRatings, self.validationNegatives = create_profile(self.id_user)
@@ -213,8 +213,8 @@ class Node(cSimpleModule):
         self.best_hr = 0.0
         self.best_ndcg = 0.0
         self.best_model = []
-
-        self.init_rounds = 600
+        self.batch_size = self.labels.size(dim=0)
+        self.init_rounds = 1000
         self.training_rounds = self.init_rounds
         self.update()
         self.peers = []
@@ -227,6 +227,7 @@ class Node(cSimpleModule):
         self.peer_sampling()
         self.performances = {}
         self.average = 0
+        
         self.scheduleAt(simTime() + self.period,self.period_message)
 
 
@@ -236,18 +237,22 @@ class Node(cSimpleModule):
             if self.rounds > 0 :
                 if self.rounds != 1:
                     lhr, lndcg = self.evaluate_local_model(False,False)
+                    print('Node : ',self.id_user)
+                    print('Temporary Local HR =  ', lhr)
+                    print('Temporary Local NDCG =  ',lndcg)
+                    sys.stdout.flush()
                     self.diffuse_to_server(lhr, lndcg)
                 else:
                     self.model.load_state_dict(self.best_model)
                     lhr, lndcg = self.evaluate_local_model(False, False)
                     self.diffuse_to_server(lhr,lndcg)
 
-                start_time = time.process_time()
+                # start_time = time.process_time()
                 self.diffuse_to_peer()
                 # self.transfer += 1
                 # delta = time.process_time() - start_time
                 if self.rounds % 10 == 0:
-                    start_time = time.process_time()
+                    # start_time = time.process_time()
                     self.peer_sampling()
                     # self.peer_sampling_enhanced()
                     # delta = time.process_time() - start_time
@@ -279,16 +284,16 @@ class Node(cSimpleModule):
             if(self.training_rounds > 0):
                 self.received += 1
                 # aggregating the weights received with the local weigths (ponderated by the model's age aka number of updates) before making some gradient steps 
-                start_time = time.process_time()
+                # start_time = time.process_time()
                 dt = self.merge(msg)
                 # dt = self.DKL_mergeJ(msg)
                 # dt = self.FullAvg(msg)
-                delta = time.process_time() - start_time - dt
-                self.aggregation_time += delta
+                # delta = time.process_time() - start_time - dt
+                # self.aggregation_time += delta
                 
                 # evaluation to keep the best model
                 hr, ndcg = self.evaluate_local_model(False,True)
-                if hr >= self.best_hr:
+                if hr > self.best_hr:
                     self.best_hr = hr
                     self.best_ndcg = ndcg
                     self.best_model = self.model.state_dict().copy()                
@@ -343,16 +348,16 @@ class Node(cSimpleModule):
             return hr, ndcg
         
     def get_model(self):
-        # return self.model.state_dict().values()
-        return self.model.state_dict()['items_embeddings.weight']
+        return self.model.state_dict()
+        # return self.model.state_dict()['items_embeddings.weight']
 
     
 
     def set_model(self, weights):
-        # self.model.load_state_dict(weights); wouldn't work
-        sd = self.model.state_dict()
-        sd["items_embeddings.weight"] = weights
-        self.model.load_state_dict(sd)
+        self.model.load_state_dict(weights)
+        # sd = self.model.state_dict()
+        # sd["items_embeddings.weight"] = weights
+        # self.model.load_state_dict(sd)
         
 
 
@@ -426,27 +431,23 @@ class Node(cSimpleModule):
     
     # making 4 gradient steps
     def update(self):
-        self.batch_size = self.labels.size(dim=0)
         self.model.train()
         for e in range(epochs):
             running_loss = 0.0
-            self.model.to(device)
-            user_input = torch.split(self.user_input,self.batch_size)
-            item_input = torch.split(self.item_input,self.batch_size)
-            labels = torch.split(self.labels,self.batch_size)
-            for i in range(len(labels)):
-                batch_user_input = user_input[i]
-                batch_item_input = item_input[i]
-                batch_labels = labels[i]
-                self.optimizer.zero_grad()
-                outputs = self.model(users_input=batch_user_input,items_input=batch_item_input)
-                loss = self.model.loss_func(outputs,batch_labels)
-                loss.backward()
-                self.optimizer.step()
-                running_loss += loss.item()
+            # self.model.to(device)
+                # batch_user_input = user_input[i]
+                # batch_item_input = item_input[i]
+                # batch_labels = labels[i]
+            self.optimizer.zero_grad()
+            outputs = self.model(users_input=self.user_input,items_input=self.item_input)
+            loss = self.model.loss_func(outputs,self.labels)
+            loss.backward()
+            self.optimizer.step()
+            running_loss += loss.item()
             
-            print("Node %d, Epoch %d/%d : BCE Training loss %f" % (self.id_user, e + 1, epochs, running_loss/len(labels)))
-            
+            print("Node %d, Epoch %d/%d : BCE Training loss %f" % (self.id_user, e + 1, epochs, running_loss))
+            # print("Node %d, Epoch %d/%d : BCE Training loss %f" % (self.id_user, e + 1, epochs, running_loss/len(self.labels)))
+            # 
         
         # want to keep best model according to validation set (used also for weighting)
         hr, _ = self.evaluate_local_model()
@@ -463,11 +464,12 @@ class Node(cSimpleModule):
     def merge(self,message_weights):
         weights = message_weights.weights
         local_weights = self.get_model()
-        local_weights = torch.add(local_weights * self.age, weights * message_weights.age) / (self.age + message_weights.age)  
+        for key in local_weights:
+            local_weights[key] = (local_weights[key] * self.age + weights[key] * message_weights.age) / (self.age + message_weights.age)
+        # local_weights = torch.add(local_weights * self.age, weights * message_weights.age) / (self.age + message_weights.age)  
         # [ (a * self.age + b * message_weights.age) / (self.age + message_weights.age) for a,b in zip(local_weights,weights)]
         self.age = max(self.age,message_weights.age)
         self.set_model(local_weights)
-
         self.update()
         self.num_updates += 1
         self.item_input, self.labels, self.user_input = self.my_dataset()
