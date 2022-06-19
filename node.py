@@ -171,7 +171,7 @@ class Node(cSimpleModule):
     def initialize(self):
         
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 600
+        self.rounds = 400
         self.vector = np.empty(0)
         self.age = 1
         self.alpha = 0.4
@@ -215,7 +215,7 @@ class Node(cSimpleModule):
         self.best_model = []
         self.batch_size = self.labels.size(dim=0)
         self.init_rounds = 1000
-        self.training_rounds = self.init_rounds
+        # self.training_rounds = self.init_rounds
         self.update()
         self.peers = []
         self.neighbours = dict()
@@ -253,8 +253,8 @@ class Node(cSimpleModule):
                 # delta = time.process_time() - start_time
                 if self.rounds % 10 == 0:
                     # start_time = time.process_time()
-                    self.peer_sampling()
-                    # self.peer_sampling_enhanced()
+                    # self.peer_sampling()
+                    self.peer_sampling_enhanced()
                     # delta = time.process_time() - start_time
                     # self.peer_sampling_time += delta
                
@@ -281,26 +281,20 @@ class Node(cSimpleModule):
              
         # messsage containing a neighbour's model is received here    
         elif msg.getName() == 'Model': 
-            if(self.training_rounds > 0):
+            # if(self.training_rounds > 0):
                 self.received += 1
                 # aggregating the weights received with the local weigths (ponderated by the model's age aka number of updates) before making some gradient steps 
                 # start_time = time.process_time()
-                dt = self.merge(msg)
-                # dt = self.DKL_mergeJ(msg)
+                # dt = self.merge(msg)
+                dt = self.DKL_mergeJ(msg)
                 # dt = self.FullAvg(msg)
                 # delta = time.process_time() - start_time - dt
                 # self.aggregation_time += delta
                 
-                # evaluation to keep the best model
-                hr, ndcg = self.evaluate_local_model(False,True)
-                if hr > self.best_hr:
-                    self.best_hr = hr
-                    self.best_ndcg = ndcg
-                    self.best_model = self.model.state_dict().copy()                
+                # evaluation to keep the best model  
                 # if self.id_user == 99:
                 #     self.find_profiles(msg)
-                
-            self.delete(msg)
+                self.delete(msg)
             
 
     def finish(self):
@@ -348,16 +342,16 @@ class Node(cSimpleModule):
             return hr, ndcg
         
     def get_model(self):
-        return self.model.state_dict()
-        # return self.model.state_dict()['items_embeddings.weight']
+        # return self.model.state_dict()
+        return self.model.state_dict()['items_embeddings.weight']
 
     
 
     def set_model(self, weights):
-        self.model.load_state_dict(weights)
-        # sd = self.model.state_dict()
-        # sd["items_embeddings.weight"] = weights
-        # self.model.load_state_dict(sd)
+        # self.model.load_state_dict(weights)
+        sd = self.model.state_dict()
+        sd["items_embeddings.weight"] = weights
+        self.model.load_state_dict(sd)
         
 
 
@@ -457,8 +451,8 @@ class Node(cSimpleModule):
         
         self.age = self.age + 1
         print("Node : ",self.getIndex())
-        print("Training Rounds Left : ",self.training_rounds)
-        self.training_rounds -= 1
+        print("Rounds Left : ",self.rounds)
+        # self.training_rounds -= 1
         sys.stdout.flush()
 
     def merge(self,message_weights):
@@ -469,18 +463,18 @@ class Node(cSimpleModule):
         # local_weights = torch.add(local_weights * self.age, weights * message_weights.age) / (self.age + message_weights.age)  
         # [ (a * self.age + b * message_weights.age) / (self.age + message_weights.age) for a,b in zip(local_weights,weights)]
         self.age = max(self.age,message_weights.age)
+        self.item_input, self.labels, self.user_input = self.my_dataset()
         self.set_model(local_weights)
         self.update()
         self.num_updates += 1
-        self.item_input, self.labels, self.user_input = self.my_dataset()
 
         return 0
 
         
     def simple_merge(self,weights):
-        local = self.get_model()
-        local[:] =  [ (a + b) / 2 for a,b in zip(local,weights)]
-        self.set_model(local)
+        local_weights = self.get_model()
+        local_weights = torch.add(local_weights, weights) / 2
+        self.set_model(local_weights)
 
 
     def FullAvg(self, message_weights):
@@ -525,14 +519,14 @@ class Node(cSimpleModule):
         #normalize hit ratios  
         norm = [ (float(i))/hrs_total for i in hrs]
              
-
-        local[:] = [w * norm[0] for w in local]
-        message_weights.weights[:] = [w * norm[1] for w in message_weights.weights]
+        local = local * norm[0]
+        message_weights.weights = message_weights.weights * norm[1]
+        # local[:] = [w * norm[0] for w in local]
+        # message_weights.weights[:] = [w * norm[1] for w in message_weights.weights]
       
         
         # average weights
-        local[:] = [a + b for a,b in zip(local,message_weights.weights)]
-       
+        local = torch.add(local, message_weights.weights)
         self.set_model(local)
         self.item_input, self.labels, self.user_input = self.my_dataset()
 

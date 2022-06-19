@@ -8,7 +8,7 @@ import wandb
 import os 
 
 sync_ = 1
-name_ = "Model-Age-Based"
+name_ = "Performance-Based"
 dataset_ = "ml-100k" #foursquareNYC   
 topK = 20
 
