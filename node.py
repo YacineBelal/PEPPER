@@ -1,9 +1,7 @@
 from collections import defaultdict
-from tracemalloc import start
 
 
 
-from numpy.core.fromnumeric import std
 from sklearn import neighbors
 
 from pyopp import cSimpleModule, cMessage, EV, simTime
@@ -13,16 +11,17 @@ from keras.optimizers import Adam, SGD
 from keras.regularizers import l2
 from Dataset import Dataset
 from WeightsMessage import WeightsMessage
-from dataMessage import dataMessage
 import utility as util
 import random
 import math
 import sys
 from evaluate import evaluate_model, User_Popularity_Deviation
 from scipy.spatial.distance import cosine
-from sklearn.metrics import jaccard_score
 
 import multiprocessing as mp
+from numpy import linalg as LA
+from sklearn.metrics  import mean_squared_error
+
 
 import time
 
@@ -193,6 +192,10 @@ class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
         self.rounds = 600
+        self.mse_ponderations = 0
+        self.nb_mse = 0
+        self.accuracy_rank_ponderations = 0
+        self.nb_accuracy_rank = 0
         self.vector = np.empty(0)
         self.labels = np.empty(0)
         self.item_input = np.empty(0)
@@ -379,7 +382,22 @@ class Node(cSimpleModule):
         return self.model.get_layer("item_embedding").get_weights().copy()
         # return self.model.get_weights().copy()
     
+    def get_DP_model(self):
+        return self.dp_model 
 
+    def add_noise(self):
+        sensitivity = 2
+        epsilon = 0.1
+        delta = 10e-5  
+        sigma =  sensitivity * np.sqrt(2 * np.log(1.25 / delta)) / epsilon
+        self.dp_model = self.get_model()
+        norm = LA.norm(self.dp_model)
+        self.dp_model = np.divide(self.dp_model, norm)     
+        self.dp_model = np.add(self.dp_model,np.random.normal(loc = 0, scale = sigma, size = self.dp_model.shape))
+
+        return self.dp_model
+    
+    
     def set_model(self, weights):
         self.model.get_layer("item_embedding").set_weights(weights)
         # self.model.set_weights(weights)
@@ -438,6 +456,7 @@ class Node(cSimpleModule):
             peer = random.randint(0,len(peers)-1)
             weights = WeightsMessage('Model')
             weights.weights = self.get_model()
+            weights.dp_weights = self.get_DP_model()
             weights.age = self.age       
             # weights.dist = self.local_dist
             weights.local_vector = self.local_vector
@@ -447,7 +466,12 @@ class Node(cSimpleModule):
             peers.pop(peer)
 
     def diffuse_to_server(self,hr,ndcg):
-        weights = WeightsMessage('Performance')
+        if self.rounds != 1:
+            weights = WeightsMessage('Performance')
+        else:
+            weights = WeightsMessage('FinalPerformance')
+            weights.mse_peformances = self.mse_ponderations
+            weights.accuracy_rank = self.accuracy_rank_ponderations
         weights.user_id = self.id_user
         weights.round = self.rounds
         weights.hit_ratio = hr
@@ -469,9 +493,11 @@ class Node(cSimpleModule):
         self.age = self.age + 1
         print("Node : ",self.getIndex())
         print("Rounds Left : ",self.rounds)
-        # print("Age : ",self.age)
         # self.training_rounds -= 1
         sys.stdout.flush()
+
+        self.add_noise()
+
         
     def meta_update(self):
         start_time = time.process_time()
@@ -560,154 +586,58 @@ class Node(cSimpleModule):
 
         return delta
 
-
-    # not updated yet
-    def Known_Distribution_Merge(self,message_weights):
-        local = self.model.get_weights().copy()
-        
-        # computes score for each user
-        scores = []
-        score = 0
-        i = 0
-        for elem in self.local_dist:
-            if(elem != 0):
-                score += elem * math.log2(elem / self.global_dist[i])
-            i += 1
-
-        # score = score * (self.num_samples / self.total_samples)
-        scores.append(score)
-
-        i = 0
-        for elem in message_weights.dist:
-            if(elem != 0):
-                score += elem * math.log2(elem / self.global_dist[i])
-            i += 1
-            # score = score * (self.samples[i] / self.total_samples)
-        scores.append(score) 
-
-
-
-        exps = [math.exp(- score) for score in scores]
-        sum_exps = sum(exps)
-
-        ponderations = []
-        for i in range(2):
-            ponderations.append(exps[i]/sum_exps)
-
-        total_samples = message_weights.samples + self.positives_nums
-
-        ponderations[0] *= self.positives_nums / total_samples
-        ponderations[1] *= message_weights.samples / total_samples
-        
-        
-        ponderations[:] = [p / sum(ponderations) for p in ponderations]
-
-        
-        
-        local[:] = [w * ponderations[0] for w in local]
-        message_weights.weights[:] = [w * ponderations[1] for w in message_weights.weights]
-           
-       
-        
-        
-        local[:] = [a + b for a,b in zip(local,message_weights.weights)]
-        
-
-
-
-
-        self.model.set_weights(local)
-
-        self.local_dist = [ elem * ponderations[0] for elem in self.local_dist]
-        for i in range(len(self.local_dist)):
-                self.local_dist[i] += message_weights.dist[i] * ponderations[1] 
-        
-
-        summ = sum(self.local_dist)
-        self.local_dist = [ elem / summ for elem in self.local_dist]
-        
-        self.positives_nums += message_weights.samples
-       
-
-    def DKL_JaccardVariant(self,message_weights):
+    def DKL_mergeJ(self,message_weights):  
         local = self.get_model()
-        scores = []
-        # scores.append(jaccard(self.local_vector,self.global_vector))
-        sc = jaccard_score(message_weights.local_vector,self.local_vector)
-        scores.append(1)
-        scores.append(sc)
-        sum_ = sum(scores) 
-        scores = [x/sum_ for x in scores]
-        # exps = [math.exp(- score) for score in scores]
-        # sum_exps = sum(exps)
+        hrs = []
+        lhr, _ =self.evaluate_local_model()
+        hrs.append(lhr)
+        self.set_model(message_weights.dp_weights)
+        dp_hr, _ = self.evaluate_local_model()
+        self.performances[message_weights.id] = dp_hr
+        hrs.append(dp_hr)
 
-        # ponderations = []
-        # for i in range(2):
-        #     ponderations.append(exps[i]/sum_exps)
+        self.set_model(message_weights.weights)
+        hr, _ = self.evaluate_local_model()
+        
+        self.nb_mse += 1        
+        self.mse_ponderations +=  (dp_hr - hr) ** 2 / self.nb_mse 
+        
+        # mse or something to compare weights with and without DP
 
-        # total_samples = self.positives_nums + message_weights.samples
-        # ponderations[0] *= self.positives_nums / total_samples
-        # ponderations[1] *= message_weights.samples / total_samples 
-                
-        # ponderations[:] = [p / sum(ponderations) for p in ponderations]
+        hrs_total = sum(hrs)
+        
+        if(hrs_total) == 0:
+            self.set_model(local)
+            return 0
+
+        #normalize hit ratios  
+        norm = [ (float(i))/hrs_total for i in hrs]
+            
+
+        local[:] = [w * norm[0] for w in local]
+        message_weights.weights[:] = [w * norm[1] for w in message_weights.weights]
+        
+        self.nb_accuracy_rank += 1
+        if (hr > lhr and dp_hr > lhr) or (hr < lhr and dp_hr < lhr) or (hr == dp_hr == lhr):
+            self.accuracy_rank_ponderations += 1 / self.nb_accuracy_rank 
 
 
-        local[:] = [w * scores[0] for w in local]
-        message_weights.weights[:] = [w * scores[1] for w in message_weights.weights]
+        # average weights
+      
         local[:] = [a + b for a,b in zip(local,message_weights.weights)]
-        
-        for x in range(len(self.local_vector)):
-            if self.local_vector[x] == 0 and message_weights.local_vector[x] == 1:
-                p = random.random()
-                if p < scores[1]:
-                    self.local_vector[x] = 1
-
-        self.set_model(local)
-        # self.positives_nums += message_weights.samples
-        
-
-
-    def Known_Distribution_Merge_CosineVariant(self,message_weights):
-        local = self.model.get_weights().copy()
-        scores = []
-        scores.append(cosine(self.local_vector,self.global_vector))
-        scores.append(cosine(message_weights.local_vector,self.global_vector))
-        # sum_ = sum(scores) 
-        # ponderations = [x/sum_ for x in scores]
-        exps = [math.exp(- score) for score in scores]
-        sum_exps = sum(exps)
-
-        ponderations = []
-        for i in range(2):
-            ponderations.append(exps[i]/sum_exps)
-
-        # print("sum1 == ",sum(ponderations))        
-
-        total_samples = self.positives_nums + message_weights.samples
-        ponderations[0] *= self.positives_nums / total_samples
-        ponderations[1] *= message_weights.samples / total_samples 
-                
-          
-        ponderations[:] = [p / sum(ponderations) for p in ponderations]
-
-
-        local[:] = [w * ponderations[0] for w in local]
-        message_weights.weights[:] = [w * ponderations[1] for w in message_weights.weights]
-        local[:] = [a + b for a,b in zip(local,message_weights.weights)]
-        
-        self.model.set_weights(local)
-
-        self.local_vector = [ elem * ponderations[0] for elem in self.local_vector]
-        for i in range(len(self.local_vector)):
-                self.local_vector[i] += message_weights.local_vector[i] * ponderations[1] 
-        
-
-        summ = sum(self.local_vector)
-        self.local_vector = [ elem / summ for elem in self.local_vector]
-        
-        # self.positives_nums += message_weights.samples
        
+        self.set_model(local)
+        self.item_input, self.labels, self.user_input = self.my_dataset()
 
+        # start_time = time.process_time()
+        self.update()
+        # delta = time.process_time() - start_time
+        # self.time_update += delta
+        self.num_updates += 1
+        
+        return 0
+        
+    
     def Meta_Learning_Approach(self,message_weights):
         if(self.rounds  > 650):
             self.merge(message_weights)
@@ -760,122 +690,7 @@ class Node(cSimpleModule):
 
         self.model.set_weights(old_local)
         hrs = []
-
-    def DKL_mergeJ(self,message_weights):
-        # # if one doesn't have enough validation data, hit ratios calculated on this data wouldn't really make sens
-        # # which is why we weight in a completely classic averaging way
-        if len(self.validationRatings) < 2:
-            self.simple_merge(message_weights.weights)
-            self.item_input, self.labels, self.user_input = self.my_dataset()
-            # start_time = time.process_time()
-            self.update()
-            # delta = time.process_time() - start_time
-            # self.time_update += delta
-            self.num_updates += 1
-            return 0
-
-        
-        local = self.get_model()
-        hrs = []
-        hr, _ =self.evaluate_local_model()
-        hrs.append(hr)
-        self.set_model(message_weights.weights)
-        hr, _ = self.evaluate_local_model()
-        self.performances[message_weights.id] = hr
-        hrs.append(hr)
-                
-
-        hrs_total = sum(hrs)
-        
-        if(hrs_total) == 0:
-            self.set_model(local)
-            # self.rounds += 1 # to do the exact same round as other methods;
-            # self.simple_merge(message_weights.weights,self.model.get_weights())
-            return 0
-
-        #normalize hit ratios  
-        norm = [ (float(i))/hrs_total for i in hrs]
-             
-
-        local[:] = [w * norm[0] for w in local]
-        message_weights.weights[:] = [w * norm[1] for w in message_weights.weights]
-      
-        
-        # average weights
-      
-        local[:] = [a + b for a,b in zip(local,message_weights.weights)]
-       
-        self.set_model(local)
-        self.item_input, self.labels, self.user_input = self.my_dataset()
-
-        # start_time = time.process_time()
-        self.update()
-        # delta = time.process_time() - start_time
-        # self.time_update += delta
-        self.num_updates += 1
-        
-        return 0
-        
-       
-
-    # ******************************************************************** #
-    def DKL_mergeJ_UPD(self,message_weights):
-       
-        local = self.model.get_weights().copy()
-        
-        # if one doesn't have enough validation data, hit ratios calculated on this data wouldn't really make sens
-        # which is why we weight in a completely classic averaging way
-        if len(self.validationRatings) < 2:
-            self.simple_merge(message_weights.weights,local)
-            return
-
-        
-        hrs = []
-    
-        #evaluate local model hit ratio and append it to hrs
-        hr, _ = self.evaluate_local_model()
-        upd = self.evaluate_local_model_upd()
-        hrs.append( math.pow(hr , 0.8) / math.pow(upd + 1e-4, 0.2))
-       
-
-
-        self.model.set_weights(message_weights.weights)
-        hr, _ = self.evaluate_local_model()
-        upd = self.evaluate_local_model_upd()
-        self.performances[message_weights.id] = hr 
-        # hrs.append(math.exp(-upd))
-        # hrs.append(hr / math.exp(upd))
-
-        hrs.append( math.pow(hr, 0.8) / math.pow(upd + 1e-4, 0.2))
-        
-        
-        
-        # sys.stdout.flush()
    
-        hrs_total = sum(hrs)
-        
-        if(hrs_total) == 0:
-            self.model.set_weights(local)
-            hrs = []
-            return 
-
-        #normalize hit ratios  
-        norm = [ (float(i))/hrs_total for i in hrs]
-
-
-        local[:] = [w * norm[0] for w in local]
-        message_weights.weights[:] = [w * norm[1] for w in message_weights.weights]
-      
-        
-        # average weights
-      
-        local[:] = [a + b for a,b in zip(local,message_weights.weights)]
-       
-        self.model.set_weights(local)
-        hrs = []
-        
-
-
     # using the data at disposition (which is the positives ratings) we create the negative ratings that goes with, in order to have a small local dataset
     def my_dataset(self,num_negatives = 4):
         item_input = []

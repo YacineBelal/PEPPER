@@ -62,13 +62,20 @@ class Server(cSimpleModule):
         self.num_participants = len(self.all_participants)
         self.hit_ratios = defaultdict(list)
         self.ndcgs = defaultdict(list)
-
+        self.accuracy_rank = defaultdict(list)
+        self.mse_performances = defaultdict(list)
     
     def handleMessage(self, msg):
         if msg.getName() == "Performance":            
             self.hit_ratios[msg.round].append(msg.hit_ratio) # hit ratio ~ recall for recsys 
             self.ndcgs[msg.round].append(msg.ndcg) # ~ accuracy
-            self.delete(msg)
+        elif msg.getName() == "FinalPerformance":
+            self.hit_ratios[msg.round].append(msg.hit_ratio) # hit ratio ~ recall for recsys 
+            self.ndcgs[msg.round].append(msg.ndcg) # ~ accuracy
+            self.accuracy_rank[msg.round].append(msg.accuracy_rank)
+            self.mse_performances[msg.round].append(msg.mse_performances)        
+        self.delete(msg)
+            
     
     def finish(self):
         global wandb
@@ -86,4 +93,6 @@ class Server(cSimpleModule):
 
         cdf(self.hit_ratios[1],"Local HR")      
         cdf(self.ndcgs[1],"Local NDCG")
+        cdf(self.mse_performances[1],"MSE per node (Weights computed)")
+        cdf(self.accuracy_rank[1],"Ranking accuracy per node (After weight normalization)")
         wandb.finish()
