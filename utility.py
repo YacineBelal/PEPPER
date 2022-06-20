@@ -74,7 +74,7 @@ def init_cost_file():
     with open(cost_file_name,"w") as cost_file:
         config_object.write(cost_file)
 
-init_cost_file()
+# init_cost_file()
 
 def save_per_round_cost(time_t, property):
     config_object = ConfigParser()

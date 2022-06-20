@@ -22,25 +22,24 @@ from evaluate import evaluate_model, User_Popularity_Deviation
 from scipy.spatial.distance import cosine
 from sklearn.metrics import jaccard_score
 
-import pydp as dp
+import multiprocessing as mp
 
-from pydp.algorithms.laplacian import BoundedMean
 import time
 
 
 
 topK = 20
 dataset_name = "ml-100k" #foursquareNYC   ml-1m_version 
-num_items =  1682 # 38333  2943 3900
+num_items =  1682 # 38333  
 dataset = Dataset(dataset_name)
 train ,testRatings, testNegatives,validationRatings, validationNegatives = dataset.trainMatrix, dataset.testRatings, dataset.testNegatives,dataset.validationRatings, dataset.validationNegatives
 
-# testRatings = testRatings[:1000] #  2453 1000
-# testNegatives= testNegatives[:1000]
+testRatings = testRatings[:1000] #  2453 1000
+testNegatives= testNegatives[:1000]
 
 epochs = 2
 number_peers = 3
-batch_size = 32
+# batch_size = 32s
 genre = 1 # action
 
 
@@ -193,7 +192,7 @@ def jaccard_similarity(list1, list2):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 250
+        self.rounds = 600
         self.vector = np.empty(0)
         self.labels = np.empty(0)
         self.item_input = np.empty(0)
@@ -239,7 +238,7 @@ class Node(cSimpleModule):
         self.best_model = []
 
         self.init_rounds = 500
-        self.training_rounds = self.init_rounds
+        # self.training_rounds = self.init_rounds
         self.update()
         self.peers = []
         self.neighbours = dict()
@@ -266,16 +265,16 @@ class Node(cSimpleModule):
                     lhr, lndcg = self.evaluate_local_model(False, False)
                     self.diffuse_to_server(lhr,lndcg)
 
-                start_time = time.process_time()
+                # start_time = time.process_time()
                 self.diffuse_to_peer()
-                self.transfer += 1
-                delta = time.process_time() - start_time
+                # self.transfer += 1
+                # delta = time.process_time() - start_time
                 if self.rounds % 10 == 0:
-                    start_time = time.process_time()
+                    # start_time = time.process_time()
                     # self.peer_sampling()
                     self.peer_sampling_enhanced()
-                    delta = time.process_time() - start_time
-                    self.peer_sampling_time += delta
+                    # delta = time.process_time() - start_time
+                    # self.peer_sampling_time += delta
                
 
                 self.rounds = self.rounds - 1
@@ -283,13 +282,13 @@ class Node(cSimpleModule):
             
             elif self.rounds == 0: # if number of rounds has been acheived, we can evaluate the model both locally and globally
                 # if self.id_user != 99:
-                lhr, lndcg = self.evaluate_local_model(False,False)
+                hr, ndcg = self.evaluate_local_model(False,False)
                 print('node : ',self.id_user)
-                print('Local HR =  ', lhr)
-                print('Local NDCG =  ',lndcg)
+                print('Local HR =  ', hr)
+                print('Local NDCG =  ',ndcg)
                 sys.stdout.flush()
 
-                    # print("My Correspondance = ",get_genreattacked_prop(self.vector))
+                # print("My Correspondance = ",get_genreattacked_prop(self.vector))
             
                 # else:
                 #     print("Profiles Found \n")
@@ -300,37 +299,37 @@ class Node(cSimpleModule):
              
         # messsage containing a neighbour's model is received here    
         elif msg.getName() == 'Model': 
-            if(self.training_rounds > 0):
-                self.received += 1
-                # aggregating the weights received with the local weigths (ponderated by the model's age aka number of updates) before making some gradient steps 
-                start_time = time.process_time()
-                # dt = self.merge(msg)
-                dt = self.DKL_mergeJ(msg)
-                # dt = self.FullAvg(msg)
-                delta = time.process_time() - start_time - dt
-                self.aggregation_time += delta
-                
-                # evaluation to keep the best model
-                hr, ndcg = self.evaluate_local_model(False,True)
-                if hr >= self.best_hr:
-                    self.best_hr = hr
-                    self.best_ndcg = ndcg
-                    self.best_model = self.model.get_weights().copy()
-                
-                # if self.id_user == 99:
+            # if(self.training_rounds > 0):
+            # self.received += 1
+            # aggregating the weights received with the local weigths (ponderated by the model's age aka number of updates) before making some gradient steps 
+            # start_time = time.process_time()
+            # dt = self.merge(msg)
+            dt = self.DKL_mergeJ(msg)
+            # dt = self.FullAvg(msg)
+            # delta = time.process_time() - start_time - dt
+            # self.aggregation_time += delta
+
+            # lhr, lndcg = self.evaluate_local_model(False,True)
+            # if lhr >= self.best_hr:
+            #     self.best_hr = lhr
+            #     self.best_ndcg = lndcg
+            #     self.best_model = self.model.get_weights().copy()
+            
+            # if self.id_user == 99:
                 #     self.find_profiles(msg)
                 
             self.delete(msg)
             
 
     def finish(self):
+        pass
         # self.meta_update()
-        util.save_whole_cost(self.transfer,"total_transfer_nb"+str(self.id_user))
-        util.save_whole_cost(self.peer_sampling_time,"total_peersampling_time"+str(self.id_user))
-        util.save_whole_cost(self.aggregation_time,"total_aggregation_time"+str(self.id_user))
-        util.save_whole_cost(self.aggregation_time / self.received,"average_aggregation_time"+str(self.id_user))
-        util.save_whole_cost(self.time_update,"total_update_time"+str(self.id_user))
-        util.save_whole_cost(self.time_update / self.received, "average_update_time"+str(self.id_user))
+        # util.save_whole_cost(self.transfer,"total_transfer_nb"+str(self.id_user))
+        # util.save_whole_cost(self.peer_sampling_time,"total_peersampling_time"+str(self.id_user))
+        # util.save_whole_cost(self.aggregation_time,"total_aggregation_time"+str(self.id_user))
+        # util.save_whole_cost(self.aggregation_time / self.received,"average_aggregation_time"+str(self.id_user))
+        # util.save_whole_cost(self.time_update,"total_update_time"+str(self.id_user))
+        # util.save_whole_cost(self.time_update / self.received, "average_update_time"+str(self.id_user))
         
         
     def find_profiles(self, msg):
@@ -353,7 +352,7 @@ class Node(cSimpleModule):
     # evaluation method : can be on the whole dataset for a general hit ratio but is usually on the local dataset.
     # locally, it can be either on validation data (during the aggregation) or on test data at the end of training
     def evaluate_local_model(self,all_dataset = False, validation=True, topK = topK):
-        evaluation_threads = 2 #mp.cpu_count()
+        evaluation_threads = mp.cpu_count()
         if not all_dataset:
             if validation :
                 (hits, ndcgs) = evaluate_model(self.model, self.validationRatings, self.validationNegatives, topK, evaluation_threads)               
@@ -373,19 +372,17 @@ class Node(cSimpleModule):
         evaluate_model(self.model, self.testRatings, self.testNegatives, topK, evaluation_threads)
         self.trainprop = self.get_user_train_distribution_vector()
         upd = User_Popularity_Deviation(self.id_user, self.trainprop, self.H, self.M, self.T, self.num_items)   
-
         return upd
 
 
     def get_model(self):
-        # return self.dp.quick_result(self.model.get_layer("item_embedding").get_weights().copy())
-        # return self.model.get_layer("item_embedding").get_weights().copy()
-        return self.model.get_weights().copy()
+        return self.model.get_layer("item_embedding").get_weights().copy()
+        # return self.model.get_weights().copy()
     
 
     def set_model(self, weights):
-        # self.model.get_layer("item_embedding").set_weights(weights)
-        self.model.set_weights(weights)
+        self.model.get_layer("item_embedding").set_weights(weights)
+        # self.model.set_weights(weights)
 
 
 
@@ -406,9 +403,9 @@ class Node(cSimpleModule):
         else:
             return peer - 1 
 
-    def peer_sampling_enhanced(self, alpha0 = 1.0): #alpha is the exploration/exploitation ratio where alpha = 0 exclusively 
+    def peer_sampling_enhanced(self): #alpha is the exploration/exploitation ratio where alpha = 0 exclusively 
         # keeps the same actual peers and alpha = 1 change all the peers 
-        self.alpha =  0.8 #alpha0 *  (1 - self.received / self.init_rounds) 
+      
         size = self.gateSize("no") - 1 
         self.peers = []
         exploitation_peers = int(number_peers * (1 - self.alpha))
@@ -471,9 +468,9 @@ class Node(cSimpleModule):
         
         self.age = self.age + 1
         print("Node : ",self.getIndex())
-        print("Training Rounds Left : ",self.training_rounds)
+        print("Rounds Left : ",self.rounds)
         # print("Age : ",self.age)
-        self.training_rounds -= 1
+        # self.training_rounds -= 1
         sys.stdout.flush()
         
     def meta_update(self):
@@ -532,16 +529,16 @@ class Node(cSimpleModule):
         self.age = max(self.age,message_weights.age)
         self.set_model(local_weights)
 
-        start_time = time.process_time()
+        # start_time = time.process_time()
         self.update()
-        delta = time.process_time() - start_time
-        self.time_update += delta
+        # delta = time.process_time() - start_time
+        # self.time_update += delta
         self.num_updates += 1
         self.item_input, self.labels, self.user_input = self.my_dataset()
 
         # util.save_whole_cost(delta, "Local_Update_Time"+str(self.id_user))
         # util.save_whole_cost(delta, "Local_Update_Time_Total")
-        return delta
+        return 0
 
         
     def simple_merge(self,weights):
@@ -770,13 +767,12 @@ class Node(cSimpleModule):
         if len(self.validationRatings) < 2:
             self.simple_merge(message_weights.weights)
             self.item_input, self.labels, self.user_input = self.my_dataset()
-            start_time = time.process_time()
+            # start_time = time.process_time()
             self.update()
-            delta = time.process_time() - start_time
-            self.time_update += delta
+            # delta = time.process_time() - start_time
+            # self.time_update += delta
             self.num_updates += 1
-        
-            return delta
+            return 0
 
         
         local = self.get_model()
@@ -812,13 +808,13 @@ class Node(cSimpleModule):
         self.set_model(local)
         self.item_input, self.labels, self.user_input = self.my_dataset()
 
-        start_time = time.process_time()
+        # start_time = time.process_time()
         self.update()
-        delta = time.process_time() - start_time
-        self.time_update += delta
+        # delta = time.process_time() - start_time
+        # self.time_update += delta
         self.num_updates += 1
         
-        return delta
+        return 0
         
        
 
