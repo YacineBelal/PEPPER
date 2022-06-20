@@ -623,9 +623,7 @@ class Node(cSimpleModule):
 
 
         # average weights
-      
         local[:] = [a + b for a,b in zip(local,message_weights.weights)]
-       
         self.set_model(local)
         self.item_input, self.labels, self.user_input = self.my_dataset()
 

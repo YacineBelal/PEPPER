@@ -13,8 +13,6 @@ dataset_ = "ml-100k" #foursquareNYC
 topK = 20
 
 def cdf(data, metric):
-    linestyle = "dashed"
-    marker = "x"
     data_size=len(data)
      
     # Set bins edges
@@ -41,12 +39,14 @@ if  sync_:
     wandb_config = {
                 "dataset": dataset_,
                 "implementation": "TensorFlow",
-                "rounds": 400,
+                "rounds": 600,
                 "learning_rate": 0.01,
                 "epochs": 2,
                 "batch_size": "Full",
                 "topK": topK,
-                "Epsilon": "Infinity"
+                "Epsilon": "0.1",
+                "Delta": 10e-5,
+                
                 }
 
     os.environ["WANDB_API_KEY"] = "334fd1cd4a03c95f4655357b92cdba2b7d706d4c"
@@ -88,11 +88,19 @@ class Server(cSimpleModule):
                 avg_ndcg = sum(self.ndcgs[round]) / self.num_participants
                 print("Average Test NDCG = ",avg_ndcg)
                 sys.stdout.flush()
+                avg_mse = sum(self.mse_performances[round]) / self.num_participants
+                print("Average MSE on weights = ",avg_mse)
+                avg_acc = sum(self.accuracy_rank[round]) / self.num_participants
+                print("Average Accuracy of model ranking = ",avg_acc)
+                sys.stdout.flush()
                 if sync_:
                     wandb.log({"Average HR": avg_hr,"Average NDCG": avg_ndcg, "Round ": nb_rounds - round})
 
-        cdf(self.hit_ratios[1],"Local HR")      
-        cdf(self.ndcgs[1],"Local NDCG")
-        cdf(self.mse_performances[1],"MSE per node (Weights computed)")
-        cdf(self.accuracy_rank[1],"Ranking accuracy per node (After weight normalization)")
-        wandb.finish()
+        if sync_:
+            wandb.log({"Average MSE (weights delta)": avg_mse,
+                    "Average Accuracy (of model ranking)": avg_acc})
+            cdf(self.hit_ratios[1],"Local HR")      
+            cdf(self.ndcgs[1],"Local NDCG")
+            cdf(self.mse_performances[1],"MSE per node (weight difference)")
+            cdf(self.accuracy_rank[1],"Ranking accuracy per node (Normalized weight ranking)")
+            wandb.finish()
