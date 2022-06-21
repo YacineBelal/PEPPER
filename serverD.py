@@ -40,7 +40,7 @@ if  sync_:
                 "config": "B",
                 "dataset": dataset_,
                 "implementation": "TensorFlow",
-                "rounds": 350,
+                "rounds": 400,
                 "learning_rate": 0.01,
                 "epochs": 2,
                 "batch_size": "Full",
