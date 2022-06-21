@@ -21,6 +21,8 @@ from scipy.spatial.distance import cosine
 import multiprocessing as mp
 from numpy import linalg as LA
 from sklearn.metrics  import mean_squared_error
+from sklearn.preprocessing import normalize
+
 
 
 import time
@@ -142,7 +144,8 @@ def get_distribution_by_genre(vector):
     with open("u.item",'r', encoding="ISO-8859-1") as info:
         line = info.readline()
         while(line and line!=''):
-            arr = line.split("|")
+            arr = line.split("|")    embeddings = normalize(embeddings, axis = 1, norm="l2")
+
             temp = arr[-19:]
             infos.append(temp)
             line = info.readline()
@@ -392,6 +395,7 @@ class Node(cSimpleModule):
         sigma =  sensitivity * np.sqrt(2 * np.log(1.25 / delta)) / epsilon
         self.dp_model = self.get_model()
         norm = LA.norm(self.dp_model)
+        # self.dp_model = normalize(self.dp_model, axis = 1, norm="l2")
         self.dp_model = np.divide(self.dp_model, norm)     
         self.dp_model = np.add(self.dp_model,np.random.normal(loc = 0, scale = sigma, size = self.dp_model.shape))
 

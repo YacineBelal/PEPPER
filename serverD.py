@@ -37,9 +37,10 @@ def cdf(data, metric):
 
 if  sync_:
     wandb_config = {
+                "config": "B",
                 "dataset": dataset_,
                 "implementation": "TensorFlow",
-                "rounds": 600,
+                "rounds": 350,
                 "learning_rate": 0.01,
                 "epochs": 2,
                 "batch_size": "Full",
