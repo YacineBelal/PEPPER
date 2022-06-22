@@ -156,8 +156,7 @@ class Server(cSimpleModule):
             cdf(self.ndcgs[1],"Local NDCG")
             cdf(self.mse_performances[1],"MSE per node (weight difference)")
             cdf(self.accuracy_rank[1],"Ranking accuracy per node (Normalized weight ranking)")
-
-            # wandb.finish()
+            wandb.finish()
 
     
     def groundTruth_Clustering(self):
