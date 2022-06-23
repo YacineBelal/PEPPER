@@ -8,10 +8,10 @@ import utility as util
 import random
 import sys
 
+from evaluate import evaluate_model
 import multiprocessing as mp
 from numpy import linalg as LA
 from sklearn.preprocessing import normalize
-
 
 
 import time
@@ -278,7 +278,7 @@ class Node(cSimpleModule):
             weights = WeightsMessage('Performance')
         else:
             weights = WeightsMessage('FinalPerformance')
-            weights.mse_peformances = self.mse_ponderations
+            weights.mse_performances = self.mse_ponderations
             weights.accuracy_rank = self.accuracy_rank_ponderations
         weights.user_id = self.id_user
         weights.round = self.rounds
@@ -312,7 +312,6 @@ class Node(cSimpleModule):
         self.set_model(local_weights)
 
         self.update()
-        self.num_updates += 1
         self.item_input, self.labels, self.user_input = self.my_dataset()
 
         return 0
@@ -332,7 +331,6 @@ class Node(cSimpleModule):
         self.update()
         delta = time.process_time() - start_time
         self.time_update += delta
-        self.num_updates += 1
         self.item_input, self.labels, self.user_input = self.my_dataset()
 
         return delta
@@ -379,7 +377,6 @@ class Node(cSimpleModule):
         self.item_input, self.labels, self.user_input = self.my_dataset()
 
         self.update()
-        self.num_updates += 1
         
         return 0
         
