@@ -40,12 +40,12 @@ if  sync_:
                 "config": "B",
                 "dataset": dataset_,
                 "implementation": "TensorFlow",
-                "rounds": 400,
+                "rounds": 180,
                 "learning_rate": 0.01,
                 "epochs": 2,
                 "batch_size": "Full",
                 "topK": topK,
-                "Epsilon": "0.1",
+                "Epsilon": 10,
                 "Delta": 10e-5,
                 
                 }
@@ -89,11 +89,12 @@ class Server(cSimpleModule):
                 avg_ndcg = sum(self.ndcgs[round]) / self.num_participants
                 print("Average Test NDCG = ",avg_ndcg)
                 sys.stdout.flush()
-                avg_mse = sum(self.mse_performances[round]) / self.num_participants
-                print("Average MSE on weights = ",avg_mse)
-                avg_acc = sum(self.accuracy_rank[round]) / self.num_participants
-                print("Average Accuracy of model ranking = ",avg_acc)
-                sys.stdout.flush()
+                if round == 1:
+                    avg_mse = sum(self.mse_performances[round]) / self.num_participants
+                    print("Average MSE on weights = ",avg_mse)
+                    avg_acc = sum(self.accuracy_rank[round]) / self.num_participants
+                    print("Average Accuracy of model ranking = ",avg_acc)
+                    sys.stdout.flush()
                 if sync_:
                     wandb.log({"Average HR": avg_hr,"Average NDCG": avg_ndcg, "Round ": nb_rounds - round})
 
