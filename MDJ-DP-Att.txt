@@ -7,10 +7,4852 @@ Setting up Cmdenv...
 Loading NED files from .:  1
 
 Preparing for running configuration General, run #0...
-Assigned runID=General-0-20220623-22:57:09-426891
+Assigned runID=General-0-20220623-23:26:36-512791
 Setting up network "RandomGraph"...
 wandb: Tracking run with wandb version 0.12.19
 wandb: W&B syncing is set to `offline` in this directory.  
 wandb: Run `wandb online` or set WANDB_MODE=online to enable cloud syncing.
 Using Theano backend.
 WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
+Initializing...
+ml-100k
+ml-100k
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6901
+Node :  0
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  1
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  2
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  3
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  4
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  5
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6901
+Node :  6
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  7
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  8
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  9
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  10
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6902
+Node :  11
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6901
+Node :  12
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  13
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  14
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6901
+Node :  15
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6932
+Epoch 2/2
+0s - loss: 0.6901
+Node :  16
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  17
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6901
+Node :  18
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6932
+Epoch 2/2
+0s - loss: 0.6901
+Node :  19
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6902
+Node :  20
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6901
+Node :  21
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6901
+Node :  22
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  23
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6901
+Node :  24
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6899
+Node :  25
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6901
+Node :  26
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6901
+Node :  27
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6899
+Node :  28
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  29
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  30
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6901
+Node :  31
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  32
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  33
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6901
+Node :  34
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6932
+Epoch 2/2
+0s - loss: 0.6901
+Node :  35
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  36
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6932
+Epoch 2/2
+0s - loss: 0.6901
+Node :  37
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6932
+Epoch 2/2
+0s - loss: 0.6901
+Node :  38
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  39
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  40
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6901
+Node :  41
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  42
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6901
+Node :  43
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6900
+Node :  44
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6901
+Node :  45
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6901
+Node :  46
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6901
+Node :  47
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6931
+Epoch 2/2
+0s - loss: 0.6901
+Node :  48
+Rounds Left :  5
+Epoch 1/2
+0s - loss: 0.6932
+Epoch 2/2
+0s - loss: 0.6901
+Node :  49
+Rounds Left :  5
+
+Running simulation...
+** Event #0   t=0   Elapsed: 1.6e-05s (0m 00s)
+     Speed:     ev/sec=0   simsec/sec=0   ev/simsec=0
+     Messages:  created: 50   present: 50   in FES: 50
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6840
+Node :  37
+Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6839
+Node :  9
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6838
+Node :  17
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6870
+Epoch 2/2
+0s - loss: 0.6837
+Node :  5
+Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6872
+Epoch 2/2
+0s - loss: 0.6840
+Node :  29
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6870
+Epoch 2/2
+0s - loss: 0.6837
+Node :  25
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6872
+Epoch 2/2
+0s - loss: 0.6841
+Node :  31
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6838
+Node :  42
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6838
+Node :  14
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6872
+Epoch 2/2
+0s - loss: 0.6840
+Node :  32
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6838
+Node :  7
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6872
+Epoch 2/2
+0s - loss: 0.6839
+Node :  28
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6839
+Node :  1
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6810
+Epoch 2/2
+0s - loss: 0.6776
+Node :  25
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6870
+Epoch 2/2
+0s - loss: 0.6838
+Node :  39
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6840
+Node :  0
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6872
+Epoch 2/2
+0s - loss: 0.6840
+Node :  49
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6813
+Epoch 2/2
+0s - loss: 0.6782
+Node :  29
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6840
+Node :  45
+Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6872
+Epoch 2/2
+0s - loss: 0.6841
+Node :  47
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6840
+Node :  15
+Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6840
+Node :  21
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6840
+Node :  6
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6811
+Epoch 2/2
+0s - loss: 0.6779
+Node :  1
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6751
+Epoch 2/2
+0s - loss: 0.6717
+Node :  1
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6810
+Epoch 2/2
+0s - loss: 0.6775
+Node :  42
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6838
+Node :  44
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6747
+Epoch 2/2
+0s - loss: 0.6711
+Node :  25
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6811
+Epoch 2/2
+0s - loss: 0.6778
+Node :  0
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6814
+Epoch 2/2
+0s - loss: 0.6783
+Node :  47
+Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6686
+Epoch 2/2
+0s - loss: 0.6651
+Node :  1
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6810
+Epoch 2/2
+0s - loss: 0.6777
+Node :  15
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6753
+Epoch 2/2
+0s - loss: 0.6720
+Node :  29
+Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6814
+Epoch 2/2
+0s - loss: 0.6782
+Node :  14
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6839
+Node :  36
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6839
+Node :  23
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6753
+Epoch 2/2
+0s - loss: 0.6719
+Node :  14
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6811
+Epoch 2/2
+0s - loss: 0.6776
+Node :  44
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6620
+Epoch 2/2
+0s - loss: 0.6582
+Node :  1
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6872
+Epoch 2/2
+0s - loss: 0.6842
+Node :  19
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6872
+Epoch 2/2
+0s - loss: 0.6840
+Node :  30
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6872
+Epoch 2/2
+0s - loss: 0.6840
+Node :  27
+Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6748
+Epoch 2/2
+0s - loss: 0.6711
+Node :  42
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6811
+Epoch 2/2
+0s - loss: 0.6779
+Node :  6
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6872
+Epoch 2/2
+0s - loss: 0.6842
+Node :  11
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6840
+Node :  41
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6872
+Epoch 2/2
+0s - loss: 0.6842
+Node :  18
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6811
+Epoch 2/2
+0s - loss: 0.6778
+Node :  7
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6755
+Epoch 2/2
+0s - loss: 0.6722
+Node :  47
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6692
+Epoch 2/2
+0s - loss: 0.6658
+Node :  47
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6839
+Node :  22
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6840
+Node :  48
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6815
+Epoch 2/2
+0s - loss: 0.6782
+Node :  28
+Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6839
+Node :  12
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6840
+Node :  43
+Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6872
+Epoch 2/2
+0s - loss: 0.6841
+Node :  38
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6872
+Epoch 2/2
+0s - loss: 0.6840
+Node :  2
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6812
+Epoch 2/2
+0s - loss: 0.6781
+Node :  31
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6811
+Epoch 2/2
+0s - loss: 0.6778
+Node :  48
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6753
+Epoch 2/2
+0s - loss: 0.6719
+Node :  15
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6688
+Epoch 2/2
+0s - loss: 0.6650
+Node :  25
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6812
+Epoch 2/2
+0s - loss: 0.6782
+Node :  11
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6812
+Epoch 2/2
+0s - loss: 0.6780
+Node :  43
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6872
+Epoch 2/2
+0s - loss: 0.6841
+Node :  26
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6811
+Epoch 2/2
+0s - loss: 0.6777
+Node :  23
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6811
+Epoch 2/2
+0s - loss: 0.6778
+Node :  45
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6751
+Epoch 2/2
+0s - loss: 0.6717
+Node :  23
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6752
+Epoch 2/2
+0s - loss: 0.6718
+Node :  48
+Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6754
+Epoch 2/2
+0s - loss: 0.6721
+Node :  43
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6806
+Epoch 2/2
+0s - loss: 0.6770
+Node :  5
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6839
+Node :  10
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6752
+Epoch 2/2
+0s - loss: 0.6717
+Node :  6
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6686
+Epoch 2/2
+0s - loss: 0.6649
+Node :  23
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6626
+Epoch 2/2
+0s - loss: 0.6585
+Node :  25
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6627
+Epoch 2/2
+0s - loss: 0.6590
+Node :  47
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6754
+Epoch 2/2
+0s - loss: 0.6721
+Node :  31
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6563
+Epoch 2/2
+0s - loss: 0.6523
+Node :  1
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6812
+Epoch 2/2
+0s - loss: 0.6779
+Node :  2
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6811
+Epoch 2/2
+0s - loss: 0.6778
+Node :  30
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6814
+Epoch 2/2
+0s - loss: 0.6783
+Node :  38
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6872
+Epoch 2/2
+0s - loss: 0.6841
+Node :  46
+Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6570
+Epoch 2/2
+0s - loss: 0.6526
+Node :  25
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6687
+Epoch 2/2
+0s - loss: 0.6648
+Node :  42
+Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6811
+Epoch 2/2
+0s - loss: 0.6777
+Node :  10
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6694
+Epoch 2/2
+0s - loss: 0.6658
+Node :  14
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6810
+Epoch 2/2
+0s - loss: 0.6777
+Node :  12
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6752
+Epoch 2/2
+0s - loss: 0.6717
+Node :  0
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6520
+Epoch 2/2
+0s - loss: 0.6474
+Node :  25
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6872
+Epoch 2/2
+0s - loss: 0.6841
+Node :  35
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6635
+Epoch 2/2
+0s - loss: 0.6598
+Node :  14
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6813
+Epoch 2/2
+0s - loss: 0.6780
+Node :  36
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6812
+Epoch 2/2
+0s - loss: 0.6779
+Node :  22
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6814
+Epoch 2/2
+0s - loss: 0.6782
+Node :  32
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6809
+Epoch 2/2
+0s - loss: 0.6774
+Node :  17
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6753
+Epoch 2/2
+0s - loss: 0.6719
+Node :  22
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6696
+Epoch 2/2
+0s - loss: 0.6662
+Node :  29
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6757
+Epoch 2/2
+0s - loss: 0.6725
+Node :  38
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6625
+Epoch 2/2
+0s - loss: 0.6582
+Node :  42
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6555
+Epoch 2/2
+0s - loss: 0.6514
+Node :  47
+Rounds Left :  4
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6688
+Epoch 2/2
+0s - loss: 0.6649
+Node :  0
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6872
+Epoch 2/2
+0s - loss: 0.6841
+Node :  8
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6689
+Epoch 2/2
+0s - loss: 0.6653
+Node :  48
+Rounds Left :  4
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6840
+Node :  13
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6838
+Node :  3
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6748
+Epoch 2/2
+0s - loss: 0.6713
+Node :  30
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6813
+Epoch 2/2
+0s - loss: 0.6781
+Node :  27
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6752
+Epoch 2/2
+0s - loss: 0.6719
+Node :  36
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6627
+Epoch 2/2
+0s - loss: 0.6588
+Node :  23
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6749
+Epoch 2/2
+0s - loss: 0.6714
+Node :  12
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6813
+Epoch 2/2
+0s - loss: 0.6782
+Node :  26
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6812
+Epoch 2/2
+0s - loss: 0.6779
+Node :  9
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6810
+Epoch 2/2
+0s - loss: 0.6777
+Node :  37
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6748
+Epoch 2/2
+0s - loss: 0.6712
+Node :  17
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6738
+Epoch 2/2
+0s - loss: 0.6698
+Node :  5
+Rounds Left :  3
+** Event #256   t=0   Elapsed: 130.881s (2m 10s)
+     Speed:     ev/sec=1.96361   simsec/sec=0   ev/simsec=0
+     Messages:  created: 353   present: 198   in FES: 197
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6641
+Epoch 2/2
+0s - loss: 0.6606
+Node :  29
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6692
+Epoch 2/2
+0s - loss: 0.6658
+Node :  31
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6557
+Epoch 2/2
+0s - loss: 0.6511
+Node :  42
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6468
+Epoch 2/2
+0s - loss: 0.6419
+Node :  25
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6749
+Epoch 2/2
+0s - loss: 0.6714
+Node :  7
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6756
+Epoch 2/2
+0s - loss: 0.6724
+Node :  32
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6576
+Epoch 2/2
+0s - loss: 0.6536
+Node :  14
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6487
+Epoch 2/2
+0s - loss: 0.6444
+Node :  1
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6445
+Epoch 2/2
+0s - loss: 0.6393
+Node :  25
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6813
+Epoch 2/2
+0s - loss: 0.6781
+Node :  49
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6809
+Epoch 2/2
+0s - loss: 0.6776
+Node :  39
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6624
+Epoch 2/2
+0s - loss: 0.6582
+Node :  0
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6578
+Epoch 2/2
+0s - loss: 0.6540
+Node :  29
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6750
+Epoch 2/2
+0s - loss: 0.6716
+Node :  45
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6500
+Epoch 2/2
+0s - loss: 0.6457
+Node :  47
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6693
+Epoch 2/2
+0s - loss: 0.6656
+Node :  15
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6687
+Epoch 2/2
+0s - loss: 0.6649
+Node :  6
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6812
+Epoch 2/2
+0s - loss: 0.6779
+Node :  21
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6408
+Epoch 2/2
+0s - loss: 0.6359
+Node :  1
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6488
+Epoch 2/2
+0s - loss: 0.6437
+Node :  42
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6396
+Epoch 2/2
+0s - loss: 0.6350
+Node :  1
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6562
+Epoch 2/2
+0s - loss: 0.6516
+Node :  0
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6757
+Epoch 2/2
+0s - loss: 0.6722
+Node :  44
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6386
+Epoch 2/2
+0s - loss: 0.6331
+Node :  25
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6444
+Epoch 2/2
+0s - loss: 0.6398
+Node :  47
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6501
+Epoch 2/2
+0s - loss: 0.6456
+Node :  14
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6629
+Epoch 2/2
+0s - loss: 0.6590
+Node :  15
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6384
+Epoch 2/2
+0s - loss: 0.6337
+Node :  1
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6510
+Epoch 2/2
+0s - loss: 0.6469
+Node :  29
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6553
+Epoch 2/2
+0s - loss: 0.6510
+Node :  23
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6444
+Epoch 2/2
+0s - loss: 0.6396
+Node :  14
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6688
+Epoch 2/2
+0s - loss: 0.6652
+Node :  36
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6380
+Epoch 2/2
+0s - loss: 0.6329
+Node :  14
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6692
+Epoch 2/2
+0s - loss: 0.6653
+Node :  44
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6693
+Epoch 2/2
+0s - loss: 0.6657
+Node :  30
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6312
+Epoch 2/2
+0s - loss: 0.6261
+Node :  1
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6619
+Epoch 2/2
+0s - loss: 0.6579
+Node :  36
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6436
+Epoch 2/2
+0s - loss: 0.6382
+Node :  42
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6756
+Epoch 2/2
+0s - loss: 0.6724
+Node :  27
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6754
+Epoch 2/2
+0s - loss: 0.6723
+Node :  11
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6812
+Epoch 2/2
+0s - loss: 0.6779
+Node :  41
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6625
+Epoch 2/2
+0s - loss: 0.6584
+Node :  6
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6437
+Epoch 2/2
+0s - loss: 0.6392
+Node :  47
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6814
+Epoch 2/2
+0s - loss: 0.6783
+Node :  18
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6688
+Epoch 2/2
+0s - loss: 0.6651
+Node :  7
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6393
+Epoch 2/2
+0s - loss: 0.6346
+Node :  47
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6693
+Epoch 2/2
+0s - loss: 0.6657
+Node :  22
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6631
+Epoch 2/2
+0s - loss: 0.6592
+Node :  48
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6687
+Epoch 2/2
+0s - loss: 0.6650
+Node :  12
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6695
+Epoch 2/2
+0s - loss: 0.6661
+Node :  43
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6753
+Epoch 2/2
+0s - loss: 0.6721
+Node :  26
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6700
+Epoch 2/2
+0s - loss: 0.6668
+Node :  38
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6636
+Epoch 2/2
+0s - loss: 0.6600
+Node :  31
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6755
+Epoch 2/2
+0s - loss: 0.6721
+Node :  2
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6558
+Epoch 2/2
+0s - loss: 0.6514
+Node :  48
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6571
+Epoch 2/2
+0s - loss: 0.6530
+Node :  15
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6692
+Epoch 2/2
+0s - loss: 0.6659
+Node :  26
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6696
+Epoch 2/2
+0s - loss: 0.6665
+Node :  11
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6641
+Epoch 2/2
+0s - loss: 0.6606
+Node :  43
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6494
+Epoch 2/2
+0s - loss: 0.6448
+Node :  23
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6686
+Epoch 2/2
+0s - loss: 0.6651
+Node :  45
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6570
+Epoch 2/2
+0s - loss: 0.6530
+Node :  36
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6500
+Epoch 2/2
+0s - loss: 0.6453
+Node :  48
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6446
+Epoch 2/2
+0s - loss: 0.6397
+Node :  23
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6635
+Epoch 2/2
+0s - loss: 0.6595
+Node :  44
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6756
+Epoch 2/2
+0s - loss: 0.6723
+Node :  28
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6674
+Epoch 2/2
+0s - loss: 0.6631
+Node :  5
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6584
+Epoch 2/2
+0s - loss: 0.6546
+Node :  43
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6572
+Epoch 2/2
+0s - loss: 0.6528
+Node :  6
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6751
+Epoch 2/2
+0s - loss: 0.6716
+Node :  10
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6358
+Epoch 2/2
+0s - loss: 0.6302
+Node :  23
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6338
+Epoch 2/2
+0s - loss: 0.6280
+Node :  25
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6312
+Epoch 2/2
+0s - loss: 0.6259
+Node :  47
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6581
+Epoch 2/2
+0s - loss: 0.6544
+Node :  31
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6247
+Epoch 2/2
+0s - loss: 0.6192
+Node :  1
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6625
+Epoch 2/2
+0s - loss: 0.6586
+Node :  30
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6697
+Epoch 2/2
+0s - loss: 0.6662
+Node :  2
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6872
+Epoch 2/2
+0s - loss: 0.6840
+Node :  40
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6297
+Epoch 2/2
+0s - loss: 0.6236
+Node :  25
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6388
+Epoch 2/2
+0s - loss: 0.6330
+Node :  42
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6698
+Epoch 2/2
+0s - loss: 0.6661
+Node :  10
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6334
+Epoch 2/2
+0s - loss: 0.6278
+Node :  14
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6512
+Epoch 2/2
+0s - loss: 0.6463
+Node :  0
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6626
+Epoch 2/2
+0s - loss: 0.6586
+Node :  12
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6285
+Epoch 2/2
+0s - loss: 0.6225
+Node :  14
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6813
+Epoch 2/2
+0s - loss: 0.6782
+Node :  35
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6246
+Epoch 2/2
+0s - loss: 0.6180
+Node :  25
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6700
+Epoch 2/2
+0s - loss: 0.6667
+Node :  32
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6635
+Epoch 2/2
+0s - loss: 0.6597
+Node :  22
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6689
+Epoch 2/2
+0s - loss: 0.6650
+Node :  17
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6566
+Epoch 2/2
+0s - loss: 0.6524
+Node :  22
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6436
+Epoch 2/2
+0s - loss: 0.6391
+Node :  29
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6359
+Epoch 2/2
+0s - loss: 0.6298
+Node :  42
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6437
+Epoch 2/2
+0s - loss: 0.6381
+Node :  0
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6872
+Epoch 2/2
+0s - loss: 0.6841
+Node :  24
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6220
+Epoch 2/2
+0s - loss: 0.6161
+Node :  47
+Rounds Left :  3
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6437
+Epoch 2/2
+0s - loss: 0.6385
+Node :  48
+Rounds Left :  3
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6809
+Epoch 2/2
+0s - loss: 0.6776
+Node :  13
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6559
+Epoch 2/2
+0s - loss: 0.6517
+Node :  30
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6810
+Epoch 2/2
+0s - loss: 0.6776
+Node :  3
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6697
+Epoch 2/2
+0s - loss: 0.6663
+Node :  27
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6531
+Epoch 2/2
+0s - loss: 0.6490
+Node :  36
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6315
+Epoch 2/2
+0s - loss: 0.6257
+Node :  23
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6643
+Epoch 2/2
+0s - loss: 0.6609
+Node :  32
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6628
+Epoch 2/2
+0s - loss: 0.6592
+Node :  26
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6562
+Epoch 2/2
+0s - loss: 0.6518
+Node :  12
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6749
+Epoch 2/2
+0s - loss: 0.6714
+Node :  37
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6751
+Epoch 2/2
+0s - loss: 0.6717
+Node :  9
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6630
+Epoch 2/2
+0s - loss: 0.6590
+Node :  17
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6602
+Epoch 2/2
+0s - loss: 0.6554
+Node :  5
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6585
+Epoch 2/2
+0s - loss: 0.6549
+Node :  32
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6396
+Epoch 2/2
+0s - loss: 0.6349
+Node :  29
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6200
+Epoch 2/2
+0s - loss: 0.6131
+Node :  25
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6530
+Epoch 2/2
+0s - loss: 0.6491
+Node :  31
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6320
+Epoch 2/2
+0s - loss: 0.6254
+Node :  42
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6620
+Epoch 2/2
+0s - loss: 0.6580
+Node :  7
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6529
+Epoch 2/2
+0s - loss: 0.6492
+Node :  32
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6232
+Epoch 2/2
+0s - loss: 0.6167
+Node :  14
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6695
+Epoch 2/2
+0s - loss: 0.6660
+Node :  28
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6181
+Epoch 2/2
+0s - loss: 0.6109
+Node :  25
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6155
+Epoch 2/2
+0s - loss: 0.6094
+Node :  1
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6372
+Epoch 2/2
+0s - loss: 0.6311
+Node :  0
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6745
+Epoch 2/2
+0s - loss: 0.6709
+Node :  39
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6752
+Epoch 2/2
+0s - loss: 0.6718
+Node :  49
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6316
+Epoch 2/2
+0s - loss: 0.6263
+Node :  29
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6620
+Epoch 2/2
+0s - loss: 0.6583
+Node :  45
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6519
+Epoch 2/2
+0s - loss: 0.6474
+Node :  15
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6220
+Epoch 2/2
+0s - loss: 0.6160
+Node :  47
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6050
+Epoch 2/2
+0s - loss: 0.5981
+Node :  1
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6513
+Epoch 2/2
+0s - loss: 0.6466
+Node :  6
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6750
+Epoch 2/2
+0s - loss: 0.6715
+Node :  21
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6248
+Epoch 2/2
+0s - loss: 0.6176
+Node :  42
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6002
+Epoch 2/2
+0s - loss: 0.5927
+Node :  1
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6298
+Epoch 2/2
+0s - loss: 0.6229
+Node :  0
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6591
+Epoch 2/2
+0s - loss: 0.6550
+Node :  44
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6058
+Epoch 2/2
+0s - loss: 0.5979
+Node :  25
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6120
+Epoch 2/2
+0s - loss: 0.6052
+Node :  47
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6210
+Epoch 2/2
+0s - loss: 0.6142
+Node :  14
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5954
+Epoch 2/2
+0s - loss: 0.5872
+Node :  1
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6462
+Epoch 2/2
+0s - loss: 0.6414
+Node :  15
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6687
+Epoch 2/2
+0s - loss: 0.6651
+Node :  49
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6228
+Epoch 2/2
+0s - loss: 0.6169
+Node :  29
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6465
+Epoch 2/2
+0s - loss: 0.6425
+Node :  32
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6216
+Epoch 2/2
+0s - loss: 0.6145
+Node :  14
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6213
+Epoch 2/2
+0s - loss: 0.6147
+Node :  23
+Rounds Left :  2
+** Event #512   t=0   Elapsed: 291.899s (4m 51s)
+     Speed:     ev/sec=1.58988   simsec/sec=0   ev/simsec=0
+     Messages:  created: 545   present: 198   in FES: 197
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6126
+Epoch 2/2
+0s - loss: 0.6048
+Node :  14
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6626
+Epoch 2/2
+0s - loss: 0.6588
+Node :  49
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6519
+Epoch 2/2
+0s - loss: 0.6474
+Node :  44
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6485
+Epoch 2/2
+0s - loss: 0.6438
+Node :  30
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5814
+Epoch 2/2
+0s - loss: 0.5721
+Node :  1
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6816
+Epoch 2/2
+0s - loss: 0.6786
+Node :  19
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6633
+Epoch 2/2
+0s - loss: 0.6597
+Node :  27
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6155
+Epoch 2/2
+0s - loss: 0.6076
+Node :  42
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6486
+Epoch 2/2
+0s - loss: 0.6444
+Node :  36
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6439
+Epoch 2/2
+0s - loss: 0.6386
+Node :  6
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6638
+Epoch 2/2
+0s - loss: 0.6606
+Node :  11
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6752
+Epoch 2/2
+0s - loss: 0.6718
+Node :  41
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6560
+Epoch 2/2
+0s - loss: 0.6518
+Node :  7
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6756
+Epoch 2/2
+0s - loss: 0.6726
+Node :  18
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6110
+Epoch 2/2
+0s - loss: 0.6039
+Node :  47
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6507
+Epoch 2/2
+0s - loss: 0.6462
+Node :  22
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6397
+Epoch 2/2
+0s - loss: 0.6343
+Node :  48
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6128
+Epoch 2/2
+0s - loss: 0.6055
+Node :  47
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6510
+Epoch 2/2
+0s - loss: 0.6463
+Node :  12
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6528
+Epoch 2/2
+0s - loss: 0.6489
+Node :  43
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6560
+Epoch 2/2
+0s - loss: 0.6522
+Node :  26
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6416
+Epoch 2/2
+0s - loss: 0.6373
+Node :  32
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6460
+Epoch 2/2
+0s - loss: 0.6416
+Node :  31
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6632
+Epoch 2/2
+0s - loss: 0.6594
+Node :  2
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6355
+Epoch 2/2
+0s - loss: 0.6297
+Node :  48
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6425
+Epoch 2/2
+0s - loss: 0.6376
+Node :  15
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6038
+Epoch 2/2
+0s - loss: 0.5957
+Node :  25
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6473
+Epoch 2/2
+0s - loss: 0.6431
+Node :  43
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6494
+Epoch 2/2
+0s - loss: 0.6453
+Node :  26
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6581
+Epoch 2/2
+0s - loss: 0.6547
+Node :  11
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6098
+Epoch 2/2
+0s - loss: 0.6023
+Node :  23
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6448
+Epoch 2/2
+0s - loss: 0.6404
+Node :  36
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6551
+Epoch 2/2
+0s - loss: 0.6510
+Node :  45
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5965
+Epoch 2/2
+0s - loss: 0.5879
+Node :  23
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6292
+Epoch 2/2
+0s - loss: 0.6228
+Node :  48
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6440
+Epoch 2/2
+0s - loss: 0.6390
+Node :  44
+Rounds Left :  2
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6414
+Epoch 2/2
+0s - loss: 0.6368
+Node :  43
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6544
+Epoch 2/2
+0s - loss: 0.6493
+Node :  5
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6635
+Epoch 2/2
+0s - loss: 0.6596
+Node :  10
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6391
+Epoch 2/2
+0s - loss: 0.6334
+Node :  6
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5812
+Epoch 2/2
+0s - loss: 0.5715
+Node :  23
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6001
+Epoch 2/2
+0s - loss: 0.5914
+Node :  25
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6412
+Epoch 2/2
+0s - loss: 0.6366
+Node :  31
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5788
+Epoch 2/2
+0s - loss: 0.5688
+Node :  1
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6404
+Epoch 2/2
+0s - loss: 0.6352
+Node :  30
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6581
+Epoch 2/2
+0s - loss: 0.6542
+Node :  2
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6756
+Epoch 2/2
+0s - loss: 0.6726
+Node :  19
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6810
+Epoch 2/2
+0s - loss: 0.6777
+Node :  40
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5954
+Epoch 2/2
+0s - loss: 0.5861
+Node :  25
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6096
+Epoch 2/2
+0s - loss: 0.6009
+Node :  42
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6570
+Epoch 2/2
+0s - loss: 0.6527
+Node :  10
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6053
+Epoch 2/2
+0s - loss: 0.5969
+Node :  14
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6447
+Epoch 2/2
+0s - loss: 0.6395
+Node :  12
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6218
+Epoch 2/2
+0s - loss: 0.6141
+Node :  0
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6840
+Node :  34
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5884
+Epoch 2/2
+0s - loss: 0.5784
+Node :  25
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6041
+Epoch 2/2
+0s - loss: 0.5951
+Node :  14
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6452
+Epoch 2/2
+0s - loss: 0.6403
+Node :  22
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6371
+Epoch 2/2
+0s - loss: 0.6316
+Node :  22
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6126
+Epoch 2/2
+0s - loss: 0.6059
+Node :  29
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6567
+Epoch 2/2
+0s - loss: 0.6523
+Node :  17
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6159
+Epoch 2/2
+0s - loss: 0.6069
+Node :  42
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6813
+Epoch 2/2
+0s - loss: 0.6781
+Node :  24
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6170
+Epoch 2/2
+0s - loss: 0.6086
+Node :  0
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6075
+Epoch 2/2
+0s - loss: 0.5995
+Node :  47
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6217
+Epoch 2/2
+0s - loss: 0.6146
+Node :  48
+Rounds Left :  2
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6744
+Epoch 2/2
+0s - loss: 0.6708
+Node :  13
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6382
+Epoch 2/2
+0s - loss: 0.6330
+Node :  30
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6746
+Epoch 2/2
+0s - loss: 0.6711
+Node :  3
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6564
+Epoch 2/2
+0s - loss: 0.6524
+Node :  27
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5654
+Epoch 2/2
+0s - loss: 0.5545
+Node :  23
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6420
+Epoch 2/2
+0s - loss: 0.6375
+Node :  26
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6383
+Epoch 2/2
+0s - loss: 0.6326
+Node :  12
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6557
+Epoch 2/2
+0s - loss: 0.6516
+Node :  49
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6690
+Epoch 2/2
+0s - loss: 0.6653
+Node :  37
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6686
+Epoch 2/2
+0s - loss: 0.6649
+Node :  9
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6484
+Epoch 2/2
+0s - loss: 0.6429
+Node :  5
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6504
+Epoch 2/2
+0s - loss: 0.6457
+Node :  17
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6008
+Epoch 2/2
+0s - loss: 0.5931
+Node :  29
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5827
+Epoch 2/2
+0s - loss: 0.5718
+Node :  25
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6064
+Epoch 2/2
+0s - loss: 0.5966
+Node :  42
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6330
+Epoch 2/2
+0s - loss: 0.6278
+Node :  31
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6387
+Epoch 2/2
+0s - loss: 0.6344
+Node :  32
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5978
+Epoch 2/2
+0s - loss: 0.5881
+Node :  14
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6483
+Epoch 2/2
+0s - loss: 0.6436
+Node :  7
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6634
+Epoch 2/2
+0s - loss: 0.6598
+Node :  28
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6622
+Epoch 2/2
+0s - loss: 0.6585
+Node :  1
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5789
+Epoch 2/2
+0s - loss: 0.5670
+Node :  25
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6222
+Epoch 2/2
+0s - loss: 0.6143
+Node :  0
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6679
+Epoch 2/2
+0s - loss: 0.6642
+Node :  39
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6519
+Epoch 2/2
+0s - loss: 0.6478
+Node :  49
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5885
+Epoch 2/2
+0s - loss: 0.5799
+Node :  29
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6478
+Epoch 2/2
+0s - loss: 0.6433
+Node :  45
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6358
+Epoch 2/2
+0s - loss: 0.6303
+Node :  15
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6038
+Epoch 2/2
+0s - loss: 0.5953
+Node :  47
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6558
+Epoch 2/2
+0s - loss: 0.6517
+Node :  1
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6326
+Epoch 2/2
+0s - loss: 0.6262
+Node :  6
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6688
+Epoch 2/2
+0s - loss: 0.6651
+Node :  21
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6481
+Epoch 2/2
+0s - loss: 0.6437
+Node :  1
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5942
+Epoch 2/2
+0s - loss: 0.5832
+Node :  42
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6360
+Epoch 2/2
+0s - loss: 0.6303
+Node :  44
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6137
+Epoch 2/2
+0s - loss: 0.6049
+Node :  0
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5723
+Epoch 2/2
+0s - loss: 0.5595
+Node :  25
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6599
+Epoch 2/2
+0s - loss: 0.6565
+Node :  28
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5938
+Epoch 2/2
+0s - loss: 0.5834
+Node :  14
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5953
+Epoch 2/2
+0s - loss: 0.5863
+Node :  47
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6304
+Epoch 2/2
+0s - loss: 0.6244
+Node :  15
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6392
+Epoch 2/2
+0s - loss: 0.6342
+Node :  1
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6814
+Epoch 2/2
+0s - loss: 0.6783
+Node :  34
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5737
+Epoch 2/2
+0s - loss: 0.5639
+Node :  29
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6451
+Epoch 2/2
+0s - loss: 0.6406
+Node :  49
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5762
+Epoch 2/2
+0s - loss: 0.5654
+Node :  23
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6757
+Epoch 2/2
+0s - loss: 0.6726
+Node :  14
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6267
+Epoch 2/2
+0s - loss: 0.6204
+Node :  44
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6696
+Epoch 2/2
+0s - loss: 0.6662
+Node :  14
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6383
+Epoch 2/2
+0s - loss: 0.6335
+Node :  49
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6325
+Epoch 2/2
+0s - loss: 0.6272
+Node :  1
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6698
+Epoch 2/2
+0s - loss: 0.6669
+Node :  19
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5837
+Epoch 2/2
+0s - loss: 0.5717
+Node :  42
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6489
+Epoch 2/2
+0s - loss: 0.6446
+Node :  27
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6238
+Epoch 2/2
+0s - loss: 0.6166
+Node :  6
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6689
+Epoch 2/2
+0s - loss: 0.6653
+Node :  41
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6580
+Epoch 2/2
+0s - loss: 0.6546
+Node :  11
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6427
+Epoch 2/2
+0s - loss: 0.6378
+Node :  7
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6700
+Epoch 2/2
+0s - loss: 0.6669
+Node :  18
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5913
+Epoch 2/2
+0s - loss: 0.5816
+Node :  47
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6183
+Epoch 2/2
+0s - loss: 0.6106
+Node :  48
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6322
+Epoch 2/2
+0s - loss: 0.6264
+Node :  22
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5852
+Epoch 2/2
+0s - loss: 0.5749
+Node :  47
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6544
+Epoch 2/2
+0s - loss: 0.6511
+Node :  28
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6364
+Epoch 2/2
+0s - loss: 0.6315
+Node :  43
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6686
+Epoch 2/2
+0s - loss: 0.6648
+Node :  12
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6646
+Epoch 2/2
+0s - loss: 0.6613
+Node :  38
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6698
+Epoch 2/2
+0s - loss: 0.6668
+Node :  19
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6333
+Epoch 2/2
+0s - loss: 0.6283
+Node :  26
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6286
+Epoch 2/2
+0s - loss: 0.6231
+Node :  31
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6693
+Epoch 2/2
+0s - loss: 0.6657
+Node :  2
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6138
+Epoch 2/2
+0s - loss: 0.6055
+Node :  48
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5641
+Epoch 2/2
+0s - loss: 0.5516
+Node :  25
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6841
+Node :  15
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6522
+Epoch 2/2
+0s - loss: 0.6485
+Node :  11
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6327
+Epoch 2/2
+0s - loss: 0.6279
+Node :  26
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6308
+Epoch 2/2
+0s - loss: 0.6255
+Node :  43
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6398
+Epoch 2/2
+0s - loss: 0.6349
+Node :  45
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6406
+Epoch 2/2
+0s - loss: 0.6359
+Node :  36
+Rounds Left :  1
+** Event #768   t=0   Elapsed: 446.285s (7m 26s)
+     Speed:     ev/sec=1.65819   simsec/sec=0   ev/simsec=0
+     Messages:  created: 766   present: 227   in FES: 226
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6560
+Epoch 2/2
+0s - loss: 0.6518
+Node :  23
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6037
+Epoch 2/2
+0s - loss: 0.5944
+Node :  48
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6499
+Epoch 2/2
+0s - loss: 0.6453
+Node :  23
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6158
+Epoch 2/2
+0s - loss: 0.6087
+Node :  44
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6249
+Epoch 2/2
+0s - loss: 0.6191
+Node :  43
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6741
+Epoch 2/2
+0s - loss: 0.6701
+Node :  5
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6502
+Epoch 2/2
+0s - loss: 0.6454
+Node :  10
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6133
+Epoch 2/2
+0s - loss: 0.6051
+Node :  6
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6413
+Epoch 2/2
+0s - loss: 0.6361
+Node :  23
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5596
+Epoch 2/2
+0s - loss: 0.5458
+Node :  25
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5692
+Epoch 2/2
+0s - loss: 0.5578
+Node :  47
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6812
+Epoch 2/2
+0s - loss: 0.6781
+Node :  31
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6270
+Epoch 2/2
+0s - loss: 0.6214
+Node :  1
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6316
+Epoch 2/2
+0s - loss: 0.6257
+Node :  30
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6635
+Epoch 2/2
+0s - loss: 0.6597
+Node :  2
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6644
+Epoch 2/2
+0s - loss: 0.6614
+Node :  19
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6759
+Epoch 2/2
+0s - loss: 0.6727
+Node :  40
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5696
+Epoch 2/2
+0s - loss: 0.5562
+Node :  42
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5483
+Epoch 2/2
+0s - loss: 0.5331
+Node :  25
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6634
+Epoch 2/2
+0s - loss: 0.6598
+Node :  14
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6455
+Epoch 2/2
+0s - loss: 0.6404
+Node :  10
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6395
+Epoch 2/2
+0s - loss: 0.6350
+Node :  32
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6054
+Epoch 2/2
+0s - loss: 0.5957
+Node :  0
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6621
+Epoch 2/2
+0s - loss: 0.6579
+Node :  12
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6581
+Epoch 2/2
+0s - loss: 0.6543
+Node :  14
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5578
+Epoch 2/2
+0s - loss: 0.5417
+Node :  25
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6758
+Epoch 2/2
+0s - loss: 0.6726
+Node :  35
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6353
+Epoch 2/2
+0s - loss: 0.6306
+Node :  32
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6299
+Epoch 2/2
+0s - loss: 0.6238
+Node :  22
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6618
+Epoch 2/2
+0s - loss: 0.6581
+Node :  36
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6259
+Epoch 2/2
+0s - loss: 0.6194
+Node :  22
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5760
+Epoch 2/2
+0s - loss: 0.5660
+Node :  29
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6506
+Epoch 2/2
+0s - loss: 0.6459
+Node :  17
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6593
+Epoch 2/2
+0s - loss: 0.6560
+Node :  38
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5863
+Epoch 2/2
+0s - loss: 0.5735
+Node :  42
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5729
+Epoch 2/2
+0s - loss: 0.5607
+Node :  47
+Rounds Left :  1
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5951
+Epoch 2/2
+0s - loss: 0.5842
+Node :  0
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6753
+Epoch 2/2
+0s - loss: 0.6721
+Node :  24
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5977
+Epoch 2/2
+0s - loss: 0.5875
+Node :  48
+Rounds Left :  1
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6809
+Epoch 2/2
+0s - loss: 0.6776
+Node :  13
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6293
+Epoch 2/2
+0s - loss: 0.6234
+Node :  30
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6680
+Epoch 2/2
+0s - loss: 0.6642
+Node :  3
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6492
+Epoch 2/2
+0s - loss: 0.6448
+Node :  27
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6701
+Epoch 2/2
+0s - loss: 0.6668
+Node :  35
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6569
+Epoch 2/2
+0s - loss: 0.6530
+Node :  36
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6367
+Epoch 2/2
+0s - loss: 0.6315
+Node :  23
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6293
+Epoch 2/2
+0s - loss: 0.6243
+Node :  26
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6563
+Epoch 2/2
+0s - loss: 0.6518
+Node :  12
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6321
+Epoch 2/2
+0s - loss: 0.6271
+Node :  32
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6689
+Epoch 2/2
+0s - loss: 0.6651
+Node :  9
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6303
+Epoch 2/2
+0s - loss: 0.6249
+Node :  49
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6626
+Epoch 2/2
+0s - loss: 0.6586
+Node :  37
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  0
+Local HR =   0.7
+Local NDCG =   0.30118605209625365
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6438
+Epoch 2/2
+0s - loss: 0.6386
+Node :  17
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6814
+Epoch 2/2
+0s - loss: 0.6782
+Node :  8
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6673
+Epoch 2/2
+0s - loss: 0.6629
+Node :  5
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  1
+Local HR =   0.4
+Local NDCG =   0.11368385802413099
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6239
+Epoch 2/2
+0s - loss: 0.6182
+Node :  32
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6215
+Epoch 2/2
+0s - loss: 0.6155
+Node :  49
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5626
+Epoch 2/2
+0s - loss: 0.5516
+Node :  29
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  2
+Local HR =   0.1
+Local NDCG =   0.02890648263178878
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.5849
+Epoch 2/2
+0s - loss: 0.5711
+Node :  42
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5524
+Epoch 2/2
+0s - loss: 0.5347
+Node :  25
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6751
+Epoch 2/2
+0s - loss: 0.6717
+Node :  31
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  3
+Local HR =   0.3
+Local NDCG =   0.07260287552779851
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6526
+Epoch 2/2
+0s - loss: 0.6488
+Node :  14
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6197
+Epoch 2/2
+0s - loss: 0.6137
+Node :  32
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6339
+Epoch 2/2
+0s - loss: 0.6284
+Node :  7
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  4
+Local HR =   0.1
+Local NDCG =   0.02789429456511298
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.5216
+Epoch 2/2
+0s - loss: 0.5019
+Node :  25
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6206
+Epoch 2/2
+0s - loss: 0.6144
+Node :  1
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  5
+Local HR =   0.5
+Local NDCG =   0.14750966604405683
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6612
+Epoch 2/2
+0s - loss: 0.6571
+Node :  39
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6114
+Epoch 2/2
+0s - loss: 0.6047
+Node :  49
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5931
+Epoch 2/2
+0s - loss: 0.5815
+Node :  0
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  6
+Local HR =   0.4
+Local NDCG =   0.10223821428087987
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6328
+Epoch 2/2
+0s - loss: 0.6274
+Node :  45
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5706
+Epoch 2/2
+0s - loss: 0.5595
+Node :  29
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  7
+Local HR =   0.0
+Local NDCG =   0.0
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6811
+Epoch 2/2
+0s - loss: 0.6777
+Node :  15
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5728
+Epoch 2/2
+0s - loss: 0.5597
+Node :  47
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  8
+Local HR =   0.3
+Local NDCG =   0.22702381544273198
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6082
+Epoch 2/2
+0s - loss: 0.5993
+Node :  6
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6148
+Epoch 2/2
+0s - loss: 0.6082
+Node :  1
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6687
+Epoch 2/2
+0s - loss: 0.6649
+Node :  21
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  9
+Local HR =   0.4
+Local NDCG =   0.1952190055478549
+__del__ WeightsMessage FinalPerformance
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6119
+Epoch 2/2
+0s - loss: 0.6050
+Node :  1
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5718
+Epoch 2/2
+0s - loss: 0.5567
+Node :  42
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  10
+Local HR =   0.1
+Local NDCG =   0.03562071871080222
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.5779
+Epoch 2/2
+0s - loss: 0.5648
+Node :  0
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6160
+Epoch 2/2
+0s - loss: 0.6087
+Node :  44
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.4860
+Epoch 2/2
+0s - loss: 0.4639
+Node :  25
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  11
+Local HR =   0.3
+Local NDCG =   0.12660798863306094
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.5713
+Epoch 2/2
+0s - loss: 0.5575
+Node :  47
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6479
+Epoch 2/2
+0s - loss: 0.6440
+Node :  14
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6486
+Epoch 2/2
+0s - loss: 0.6452
+Node :  28
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  12
+Local HR =   0.4
+Local NDCG =   0.12473405351479736
+__del__ WeightsMessage FinalPerformance
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6093
+Epoch 2/2
+0s - loss: 0.6019
+Node :  1
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6748
+Epoch 2/2
+0s - loss: 0.6712
+Node :  15
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  13
+Local HR =   0.2
+Local NDCG =   0.0472320790815179
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.5536
+Epoch 2/2
+0s - loss: 0.5411
+Node :  29
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6107
+Epoch 2/2
+0s - loss: 0.6038
+Node :  32
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6000
+Epoch 2/2
+0s - loss: 0.5924
+Node :  49
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  14
+Local HR =   0.2
+Local NDCG =   0.05916161004746604
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6538
+Epoch 2/2
+0s - loss: 0.6499
+Node :  36
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6447
+Epoch 2/2
+0s - loss: 0.6408
+Node :  14
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6267
+Epoch 2/2
+0s - loss: 0.6208
+Node :  23
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  15
+Local HR =   0.0
+Local NDCG =   0.0
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6376
+Epoch 2/2
+0s - loss: 0.6335
+Node :  14
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5886
+Epoch 2/2
+0s - loss: 0.5801
+Node :  49
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6040
+Epoch 2/2
+0s - loss: 0.5956
+Node :  44
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  16
+Local HR =   0.1
+Local NDCG =   0.02890648263178878
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6592
+Epoch 2/2
+0s - loss: 0.6561
+Node :  19
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6275
+Epoch 2/2
+0s - loss: 0.6214
+Node :  30
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6054
+Epoch 2/2
+0s - loss: 0.5976
+Node :  1
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  17
+Local HR =   0.4
+Local NDCG =   0.16315383204994988
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6406
+Epoch 2/2
+0s - loss: 0.6355
+Node :  27
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5610
+Epoch 2/2
+0s - loss: 0.5445
+Node :  42
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  18
+Local HR =   0.1
+Local NDCG =   0.025
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6623
+Epoch 2/2
+0s - loss: 0.6583
+Node :  41
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6452
+Epoch 2/2
+0s - loss: 0.6412
+Node :  11
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5993
+Epoch 2/2
+0s - loss: 0.5893
+Node :  6
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  19
+Local HR =   0.2
+Local NDCG =   0.09642630869047908
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6289
+Epoch 2/2
+0s - loss: 0.6230
+Node :  7
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6645
+Epoch 2/2
+0s - loss: 0.6614
+Node :  18
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5672
+Epoch 2/2
+0s - loss: 0.5521
+Node :  47
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  20
+Local HR =   0.3
+Local NDCG =   0.11412509123823464
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6191
+Epoch 2/2
+0s - loss: 0.6119
+Node :  22
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5657
+Epoch 2/2
+0s - loss: 0.5497
+Node :  47
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6691
+Epoch 2/2
+0s - loss: 0.6654
+Node :  48
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  21
+Local HR =   0.6
+Local NDCG =   0.1868320133356322
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6425
+Epoch 2/2
+0s - loss: 0.6391
+Node :  28
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6871
+Epoch 2/2
+0s - loss: 0.6839
+Node :  33
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  22
+Local HR =   0.4
+Local NDCG =   0.12323909194284743
+__del__ WeightsMessage FinalPerformance
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6177
+Epoch 2/2
+0s - loss: 0.6113
+Node :  43
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6506
+Epoch 2/2
+0s - loss: 0.6457
+Node :  12
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  23
+Local HR =   0.8
+Local NDCG =   0.24417889977633536
+__del__ WeightsMessage FinalPerformance
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6532
+Epoch 2/2
+0s - loss: 0.6499
+Node :  19
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  24
+Local HR =   0.4
+Local NDCG =   0.12844529308843733
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6215
+Epoch 2/2
+0s - loss: 0.6159
+Node :  26
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6003
+Epoch 2/2
+0s - loss: 0.5924
+Node :  32
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  25
+Local HR =   0.3
+Local NDCG =   0.08196375555109903
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6695
+Epoch 2/2
+0s - loss: 0.6659
+Node :  31
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6566
+Epoch 2/2
+0s - loss: 0.6524
+Node :  2
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  26
+Local HR =   0.3
+Local NDCG =   0.1856207187108022
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.5363
+Epoch 2/2
+0s - loss: 0.5130
+Node :  25
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6628
+Epoch 2/2
+0s - loss: 0.6587
+Node :  48
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6688
+Epoch 2/2
+0s - loss: 0.6651
+Node :  15
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  27
+Local HR =   0.2
+Local NDCG =   0.09319597492354385
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6145
+Epoch 2/2
+0s - loss: 0.6077
+Node :  43
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6134
+Epoch 2/2
+0s - loss: 0.6072
+Node :  26
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6380
+Epoch 2/2
+0s - loss: 0.6336
+Node :  11
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  28
+Local HR =   0.5
+Local NDCG =   0.14148068559243288
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6167
+Epoch 2/2
+0s - loss: 0.6103
+Node :  23
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6508
+Epoch 2/2
+0s - loss: 0.6468
+Node :  36
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6305
+Epoch 2/2
+0s - loss: 0.6252
+Node :  45
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  29
+Local HR =   0.4
+Local NDCG =   0.1886887778381273
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6564
+Epoch 2/2
+0s - loss: 0.6521
+Node :  48
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5912
+Epoch 2/2
+0s - loss: 0.5818
+Node :  44
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6165
+Epoch 2/2
+0s - loss: 0.6099
+Node :  23
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  30
+Local HR =   0.2
+Local NDCG =   0.08586000022684104
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6085
+Epoch 2/2
+0s - loss: 0.6009
+Node :  43
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6599
+Epoch 2/2
+0s - loss: 0.6550
+Node :  5
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  31
+Local HR =   0.7
+Local NDCG =   0.41145445903194233
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6371
+Epoch 2/2
+0s - loss: 0.6314
+Node :  10
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5905
+Epoch 2/2
+0s - loss: 0.5794
+Node :  6
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  32
+Local HR =   0.2
+Local NDCG =   0.06368528072345417
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.5293
+Epoch 2/2
+0s - loss: 0.5042
+Node :  25
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6045
+Epoch 2/2
+0s - loss: 0.5970
+Node :  23
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  33
+Local HR =   0.3
+Local NDCG =   0.07334673617704701
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.5917
+Epoch 2/2
+0s - loss: 0.5826
+Node :  1
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6629
+Epoch 2/2
+0s - loss: 0.6590
+Node :  31
+Rounds Left :  0
+__del__ WeightsMessage Model
+** Event #1024   t=0   Elapsed: 591.031s (9m 51s)
+     Speed:     ev/sec=1.76861   simsec/sec=0   ev/simsec=0
+     Messages:  created: 850   present: 110   in FES: 75
+__del__ WeightsMessage Model
+node :  34
+Local HR =   0.3
+Local NDCG =   0.07692627293852763
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6469
+Epoch 2/2
+0s - loss: 0.6434
+Node :  19
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6182
+Epoch 2/2
+0s - loss: 0.6114
+Node :  30
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6513
+Epoch 2/2
+0s - loss: 0.6468
+Node :  2
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  35
+Local HR =   0.1
+Local NDCG =   0.027023815442731976
+__del__ WeightsMessage FinalPerformance
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6699
+Epoch 2/2
+0s - loss: 0.6666
+Node :  40
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  36
+Local HR =   0.1
+Local NDCG =   0.02313782131597592
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.5405
+Epoch 2/2
+0s - loss: 0.5224
+Node :  42
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5302
+Epoch 2/2
+0s - loss: 0.5031
+Node :  25
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  37
+Local HR =   0.3
+Local NDCG =   0.07975505054981388
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.5902
+Epoch 2/2
+0s - loss: 0.5813
+Node :  32
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6303
+Epoch 2/2
+0s - loss: 0.6259
+Node :  14
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6324
+Epoch 2/2
+0s - loss: 0.6263
+Node :  10
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  38
+Local HR =   0.3
+Local NDCG =   0.13770711884305792
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6466
+Epoch 2/2
+0s - loss: 0.6413
+Node :  12
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5764
+Epoch 2/2
+0s - loss: 0.5623
+Node :  0
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6752
+Epoch 2/2
+0s - loss: 0.6719
+Node :  34
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  39
+Local HR =   0.2
+Local NDCG =   0.06487982101190622
+__del__ WeightsMessage FinalPerformance
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5442
+Epoch 2/2
+0s - loss: 0.5149
+Node :  25
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6234
+Epoch 2/2
+0s - loss: 0.6187
+Node :  14
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  40
+Local HR =   0.4
+Local NDCG =   0.11876688558329593
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6438
+Epoch 2/2
+0s - loss: 0.6395
+Node :  36
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5777
+Epoch 2/2
+0s - loss: 0.5676
+Node :  32
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6113
+Epoch 2/2
+0s - loss: 0.6034
+Node :  22
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  41
+Local HR =   0.2
+Local NDCG =   0.04940277481969527
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.5315
+Epoch 2/2
+0s - loss: 0.5175
+Node :  29
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6073
+Epoch 2/2
+0s - loss: 0.5987
+Node :  22
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6354
+Epoch 2/2
+0s - loss: 0.6295
+Node :  17
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  42
+Local HR =   0.1
+Local NDCG =   0.023540891336663823
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.5316
+Epoch 2/2
+0s - loss: 0.5118
+Node :  42
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6544
+Epoch 2/2
+0s - loss: 0.6510
+Node :  38
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+node :  43
+Local HR =   0.0
+Local NDCG =   0.0
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6696
+Epoch 2/2
+0s - loss: 0.6662
+Node :  24
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5682
+Epoch 2/2
+0s - loss: 0.5511
+Node :  47
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5689
+Epoch 2/2
+0s - loss: 0.5535
+Node :  0
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  44
+Local HR =   0.2
+Local NDCG =   0.06704890246415245
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.5613
+Epoch 2/2
+0s - loss: 0.5498
+Node :  32
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6757
+Epoch 2/2
+0s - loss: 0.6725
+Node :  8
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6513
+Epoch 2/2
+0s - loss: 0.6468
+Node :  48
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  45
+Local HR =   0.1
+Local NDCG =   0.025
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6814
+Epoch 2/2
+0s - loss: 0.6782
+Node :  33
+Rounds Left :  0
+__del__ WeightsMessage Model
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6744
+Epoch 2/2
+0s - loss: 0.6708
+Node :  13
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  46
+Local HR =   0.2
+Local NDCG =   0.05636795307011747
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.6072
+Epoch 2/2
+0s - loss: 0.5995
+Node :  30
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6439
+Epoch 2/2
+0s - loss: 0.6394
+Node :  27
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6613
+Epoch 2/2
+0s - loss: 0.6572
+Node :  3
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  47
+Local HR =   0.3
+Local NDCG =   0.16759176335524295
+__del__ WeightsMessage FinalPerformance
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.5925
+Epoch 2/2
+0s - loss: 0.5843
+Node :  23
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6370
+Epoch 2/2
+0s - loss: 0.6327
+Node :  36
+Rounds Left :  0
+__del__ WeightsMessage Model
+node :  48
+Local HR =   0.3
+Local NDCG =   0.18175293653079344
+__del__ WeightsMessage FinalPerformance
+Epoch 1/2
+0s - loss: 0.5432
+Epoch 2/2
+0s - loss: 0.5303
+Node :  32
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6022
+Epoch 2/2
+0s - loss: 0.5951
+Node :  26
+Rounds Left :  0
+__del__ WeightsMessage Model
+Epoch 1/2
+0s - loss: 0.6402
+Epoch 2/2
+0s - loss: 0.6344
+Node :  12
+Rounds Left :  0
+** Event #1100   t=0   Elapsed: 630.283s (10m 30s)
+     Speed:     ev/sec=1.91073   simsec/sec=0   ev/simsec=0
+     Messages:  created: 850   present: 50   in FES: 0
+
+<!> No more events, simulation completed -- at t=0s, event #1100
+
+Calling finish() at end of Run #0...
+__del__ WeightsMessage Model
+Profiles Found 
+
+[(0, 0.0), (2, 0.0), (6, 0.0), (14, 0.0), (16, 0.0)]
+round =  1
+Average Test HR =  0.21599999999999991
+Average Test NDCG =  0.08254319571729196
+Average MSE on weights =  0.39925491339987834
+Average Accuracy of model ranking =  1.0608131256988778
+True cluster : [33, 46]
+Cluster found: [0, 2, 6, 14, 16]
+Intersection:  set()
+2
+0
+Accuracy : 0.0
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.000 MB of 0.000 MB uploaded (0.000 MB deduped)wandb: \ 0.000 MB of 0.000 MB uploaded (0.000 MB deduped)wandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:                     Attack Accuracy ▁
+wandb: Average Accuracy (of model ranking) ▁
+wandb:                          Average HR ▁
+wandb:         Average MSE (weights delta) ▁
+wandb:                        Average NDCG ▁
+wandb:                              Round  ▁
+wandb: 
+wandb: Run summary:
+wandb:                     Attack Accuracy 0.0
+wandb: Average Accuracy (of model ranking) 1.06081
+wandb:                          Average HR 0.216
+wandb:         Average MSE (weights delta) 0.39925
+wandb:                        Average NDCG 0.08254
+wandb:                              Round  0
+wandb: 
+wandb: You can sync this run to the cloud by running:
+wandb: wandb sync /home/yacine/git/PersonalizedGL/wandb/offline-run-20220623_232638-18hwbxph
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+wandb: Find logs at: ./wandb/offline-run-20220623_232638-18hwbxph/logs
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+undisposed object: (omnetpp::cMessage) RandomGraph.Noeuds.period_message -- check module destructor
+
+End.

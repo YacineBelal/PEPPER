@@ -11,7 +11,7 @@ import wandb
 import os 
 
 sync_ = 1
-name_ = "Performance-Based TensorFlow Attacked"
+name_ = "Performance-Based Attacked"
 dataset_ = "ml-100k" #foursquareNYC   
 topK = 20
 clustersK= 9
@@ -194,8 +194,11 @@ class Server(cSimpleModule):
         print("Cluster found:", self.cluster_found)
         intersection = set(cluster_knn) & set(self.cluster_found)
         print("Intersection: ", intersection)
+        print(len(cluster_knn))
+        print(len(intersection))
         acc = len(intersection)/ len(cluster_knn)
         print("Accuracy :", acc)
+        sys.stdout.flush()
 
         return acc
 

@@ -19,7 +19,7 @@ from numpy import linalg as LA
 import time
 
 # attack parameters
-clustersK= 7
+clustersK= 9
 attacker_id = 49
 
 topK = 20
@@ -165,7 +165,7 @@ def jaccard_similarity(list1, list2):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 2
+        self.rounds = 90
         self.current_round = 0
         self.mse_ponderations = 0
         self.nb_mse = 0
@@ -220,7 +220,7 @@ class Node(cSimpleModule):
                     self.diffuse_to_server(lhr,lndcg)
 
                 self.diffuse_to_peer()
-                if self.rounds % 10 == 0:
+                if self.rounds % 9 == 0:
                     # self.peer_sampling()
                     self.peer_sampling_enhanced()
                
@@ -249,7 +249,7 @@ class Node(cSimpleModule):
             # dt = self.merge(msg)
             self.current_round += 1
             dt = self.DKL_mergeJ(msg)
-            if self.id_user == attacker_id and self.current_round > 50:
+            if self.id_user == attacker_id and self.current_round > 10:
                     self.find_profiles(msg)
                 
             self.delete(msg)
