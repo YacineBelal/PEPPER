@@ -8,7 +8,7 @@ import wandb
 import os 
 
 sync_ = 1
-name_ = "Performance-Based TensorFlow"
+name_ = "Performance-Based TensorFlow-DP"
 dataset_ = "ml-100k" #foursquareNYC   
 topK = 20
 
@@ -40,12 +40,12 @@ if  sync_:
                 "config": "B",
                 "dataset": dataset_,
                 "implementation": "TensorFlow",
-                "rounds": 400,
+                "rounds": 180,
                 "learning_rate": 0.01,
                 "epochs": 2,
                 "batch_size": "Full",
                 "topK": topK,
-                "Epsilon": "0.1",
+                "Epsilon": 1,
                 "Delta": 10e-5,
                 
                 }

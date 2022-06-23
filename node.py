@@ -5,6 +5,7 @@ from keras.optimizers import Adam, SGD
 from Dataset import Dataset
 from WeightsMessage import WeightsMessage
 import utility as util
+from evaluate import evaluate_model
 import random
 import sys
 
@@ -83,7 +84,7 @@ def get_user_test_set(testRatings,testNegatives,user):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 400
+        self.rounds = 180
         self.init_rounds = 0
 
         self.mse_ponderations = 0
@@ -195,7 +196,7 @@ class Node(cSimpleModule):
 
     def add_noise(self):
         sensitivity = 2
-        epsilon = 0.1
+        epsilon = 1
         delta = 10e-5  
         sigma =  sensitivity * np.sqrt(2 * np.log(1.25 / delta)) / epsilon
         self.dp_model = self.get_model()
@@ -299,7 +300,6 @@ class Node(cSimpleModule):
         self.age = self.age + 1
         print("Node : ",self.getIndex())
         print("Rounds Left : ",self.rounds)
-        # self.training_rounds -= 1
         sys.stdout.flush()
 
         self.add_noise()
