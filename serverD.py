@@ -8,7 +8,7 @@ import wandb
 import os 
 
 sync_ = 1
-name_ = "Performance-Based TensorFlow"
+name_ = "Performance-Based TensorFlow-DP"
 dataset_ = "ml-100k" #foursquareNYC   
 topK = 20
 

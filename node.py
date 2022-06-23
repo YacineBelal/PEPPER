@@ -5,6 +5,7 @@ from keras.optimizers import Adam, SGD
 from Dataset import Dataset
 from WeightsMessage import WeightsMessage
 import utility as util
+from evaluate import evaluate_model
 import random
 import sys
 
@@ -83,7 +84,7 @@ def get_user_test_set(testRatings,testNegatives,user):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 400
+        self.rounds = 180
         self.init_rounds = 0
 
         self.mse_ponderations = 0
@@ -278,7 +279,7 @@ class Node(cSimpleModule):
             weights = WeightsMessage('Performance')
         else:
             weights = WeightsMessage('FinalPerformance')
-            weights.mse_peformances = self.mse_ponderations
+            weights.mse_performances = self.mse_ponderations
             weights.accuracy_rank = self.accuracy_rank_ponderations
         weights.user_id = self.id_user
         weights.round = self.rounds
@@ -299,7 +300,6 @@ class Node(cSimpleModule):
         self.age = self.age + 1
         print("Node : ",self.getIndex())
         print("Rounds Left : ",self.rounds)
-        # self.training_rounds -= 1
         sys.stdout.flush()
 
         self.add_noise()
@@ -312,7 +312,6 @@ class Node(cSimpleModule):
         self.set_model(local_weights)
 
         self.update()
-        self.num_updates += 1
         self.item_input, self.labels, self.user_input = self.my_dataset()
 
         return 0
@@ -332,7 +331,6 @@ class Node(cSimpleModule):
         self.update()
         delta = time.process_time() - start_time
         self.time_update += delta
-        self.num_updates += 1
         self.item_input, self.labels, self.user_input = self.my_dataset()
 
         return delta
@@ -379,7 +377,6 @@ class Node(cSimpleModule):
         self.item_input, self.labels, self.user_input = self.my_dataset()
 
         self.update()
-        self.num_updates += 1
         
         return 0
         
