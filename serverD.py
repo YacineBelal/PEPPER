@@ -1,5 +1,3 @@
-from cProfile import label
-import enum
 from re import X
 from pyopp import cSimpleModule
 import sys 
@@ -7,16 +5,16 @@ from sklearn.cluster import KMeans
 from scipy.spatial.distance import euclidean
 from collections import defaultdict
 # import matplotlib.pyplot as plt 
-import Dataset
+from Dataset import Dataset
 import numpy as np
 import wandb
 import os 
 
 sync_ = 1
-name_ = "Performance-Based TensorFlow"
+name_ = "Performance-Based TensorFlow Attacked"
 dataset_ = "ml-100k" #foursquareNYC   
 topK = 20
-clustersK= 7
+clustersK= 9
 attacker_id = 49
 
 
@@ -86,12 +84,12 @@ if  sync_:
                 "config": "B",
                 "dataset": dataset_,
                 "implementation": "TensorFlow",
-                "rounds": 400,
+                "rounds": 90,
                 "learning_rate": 0.01,
                 "epochs": 2,
                 "batch_size": "Full",
                 "topK": topK,
-                "Epsilon": "0.1",
+                "Epsilon": "50",
                 "Delta": 10e-5,
                 "Number of clusters": clustersK,
                 "Attacker id": attacker_id
@@ -122,7 +120,7 @@ class Server(cSimpleModule):
             self.hit_ratios[msg.round].append(msg.hit_ratio) # hit ratio ~ recall for recsys 
             self.ndcgs[msg.round].append(msg.ndcg) # ~ accuracy
             self.accuracy_rank[msg.round].append(msg.accuracy_rank)
-            self.mse_performances[msg.round].append(msg.mse_performances)     
+            self.mse_performances[msg.round].append(msg.mse_performances)   
             if msg.cluster_found != None:
                 self.cluster_found = msg.cluster_found  
 
@@ -140,13 +138,15 @@ class Server(cSimpleModule):
                 avg_ndcg = sum(self.ndcgs[round]) / self.num_participants
                 print("Average Test NDCG = ",avg_ndcg)
                 sys.stdout.flush()
-                avg_mse = sum(self.mse_performances[round]) / self.num_participants
-                print("Average MSE on weights = ",avg_mse)
-                avg_acc = sum(self.accuracy_rank[round]) / self.num_participants
-                print("Average Accuracy of model ranking = ",avg_acc)
-                sys.stdout.flush()
+
                 if sync_:
                     wandb.log({"Average HR": avg_hr,"Average NDCG": avg_ndcg, "Round ": nb_rounds - round})
+                    if round == 1:
+                        avg_mse = sum(self.mse_performances[round]) / self.num_participants
+                        print("Average MSE on weights = ",avg_mse)
+                        avg_acc = sum(self.accuracy_rank[round]) / self.num_participants
+                        print("Average Accuracy of model ranking = ",avg_acc)
+                        sys.stdout.flush()
 
         acc = self.groundTruth_Clustering()
         if sync_:
@@ -161,7 +161,7 @@ class Server(cSimpleModule):
     
     def groundTruth_Clustering(self):
         users = []
-        for u in range(self.all_participants):
+        for u in range(len(self.all_participants)):
             vector = get_user_vector(u)
             users.append(get_distribution_by_genre(vector))
 

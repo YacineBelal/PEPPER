@@ -12,7 +12,6 @@ import heapq # for retrieval topK
 import multiprocessing
 import numpy as np
 from scipy.spatial.distance import jensenshannon
-from collections import defaultdict
 import random
 #from numba import jit, autojit
 

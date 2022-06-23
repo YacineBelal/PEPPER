@@ -1,27 +1,18 @@
-from collections import defaultdict
-
-
-
 from sklearn import neighbors
 
-from pyopp import cSimpleModule, cMessage, EV, simTime
 import numpy as np
-import random
+from pyopp import cSimpleModule, cMessage, simTime
 from keras.optimizers import Adam, SGD
-from keras.regularizers import l2
 from Dataset import Dataset
 from WeightsMessage import WeightsMessage
 import utility as util
 import random
-import math
 import sys
-from evaluate import evaluate_model, User_Popularity_Deviation
+from evaluate import evaluate_model
 from scipy.spatial.distance import cosine
 
 import multiprocessing as mp
 from numpy import linalg as LA
-from sklearn.metrics  import mean_squared_error
-from sklearn.preprocessing import normalize
 
 
 
@@ -46,27 +37,10 @@ number_peers = 3
 genre = 1 # action
 
 
-def get_items_per_class_file():
-    with open("H_"+dataset_name+".txt","r") as input, open("M_"+dataset_name+".txt","r") as input1, open("T_"+dataset_name+".txt","r") as input2:
-        H = input.readlines()
-        H = [ i.strip() for i in H]
-        M = input1.readlines()
-        M = [ i.strip() for i in M]
-        T = input2.readlines()
-        T = [ i.strip() for i in T]
-
-    
-    return H, M, T
-
 def get_user_vector(train,user = 0):
-    positive_instances = []
-    # nb_user = 0
-    # last_u = list(train.keys())[0]
-    
+    positive_instances = []    
     for (u,i) in train.keys():
-        # if(u != last_u):
-        #     nb_user +=1
-        #     last_u = u
+       
         if u == user:
             positive_instances.append(i)
         if u  > user :
@@ -191,8 +165,7 @@ def jaccard_similarity(list1, list2):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 400
-        attacker_id = 49 
+        self.rounds = 2
         self.current_round = 0
         self.mse_ponderations = 0
         self.nb_mse = 0
@@ -213,13 +186,6 @@ class Node(cSimpleModule):
         self.testRatings, self.testNegatives = get_user_test_set(testRatings,testNegatives,self.id_user)
         self.validationRatings, self.validationNegatives = get_user_test_set(validationRatings,validationNegatives,self.id_user)
         
-
-        self.time_update = 0
-        self.num_updates = 0 
-        self.aggregation_time = 0
-        self.transfer = 0
-        self.peer_sampling_time = 0
-
         self.positives_nums = len(self.vector)
         self.received = 0
 
@@ -245,10 +211,10 @@ class Node(cSimpleModule):
         # periodic self sent message used as a timer by each node to diffuse its model 
         if msg.getName() == 'period_message':
             if self.rounds > 0 :
-                if self.rounds != 1:
+                if self.rounds != 1 and self.rounds % 10 == 0:
                     lhr, lndcg = self.evaluate_local_model(False,False)
                     self.diffuse_to_server(lhr, lndcg)
-                else:
+                elif self.rounds == 1:
                     self.model.set_weights(self.best_model)
                     lhr, lndcg = self.evaluate_local_model(False, False)
                     self.diffuse_to_server(lhr,lndcg)
@@ -330,7 +296,7 @@ class Node(cSimpleModule):
 
     def add_noise(self):
         sensitivity = 2
-        epsilon = 0.1
+        epsilon = 50
         delta = 10e-5  
         sigma =  sensitivity * np.sqrt(2 * np.log(1.25 / delta)) / epsilon
         self.dp_model = self.get_model()
@@ -408,12 +374,12 @@ class Node(cSimpleModule):
             weights = WeightsMessage('Performance')
         else:
             weights = WeightsMessage('FinalPerformance')
-            weights.mse_peformances = self.mse_ponderations
+            weights.mse_performances = self.mse_ponderations
             weights.accuracy_rank = self.accuracy_rank_ponderations             
             if self.id_user == attacker_id:
                 neighbours = list(self.neighbours.items())
                 neighbours.sort(key= lambda x:x[1])
-                weights.cluster_found = [x[0] for x in neighbors[:clustersK]]
+                weights.cluster_found = [x[0] for x in neighbours[:clustersK]]
 
         weights.user_id = self.id_user
         weights.round = self.rounds
@@ -447,7 +413,6 @@ class Node(cSimpleModule):
         self.set_model(local_weights)
 
         self.update()
-        self.num_updates += 1
         self.item_input, self.labels, self.user_input = self.my_dataset()
 
         return 0
@@ -467,7 +432,6 @@ class Node(cSimpleModule):
         self.update()
         delta = time.process_time() - start_time
         self.time_update += delta
-        self.num_updates += 1
         self.item_input, self.labels, self.user_input = self.my_dataset()
 
         return delta
@@ -512,7 +476,6 @@ class Node(cSimpleModule):
         self.item_input, self.labels, self.user_input = self.my_dataset()
 
         self.update()
-        self.num_updates += 1
         
         return 0
     def my_dataset(self,num_negatives = 4):
