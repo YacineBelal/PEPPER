@@ -135,10 +135,11 @@ class Node(cSimpleModule):
         # periodic self sent message used as a timer by each node to diffuse its model 
         if msg.getName() == 'period_message':
             if self.rounds > 0 :
-                if self.rounds != 1:
+                
+                if self.rounds != 1 and self.rounds % 10 == 0:
                     lhr, lndcg = self.evaluate_local_model(False,False)
                     self.diffuse_to_server(lhr, lndcg)
-                else:
+                elif self.rounds == 1:
                     self.model.set_weights(self.best_model)
                     lhr, lndcg = self.evaluate_local_model(False, False)
                     self.diffuse_to_server(lhr,lndcg)
@@ -279,6 +280,10 @@ class Node(cSimpleModule):
             weights = WeightsMessage('Performance')
         else:
             weights = WeightsMessage('FinalPerformance')
+            if self.nb_mse != 0:
+                self.mse_ponderations =  self.mse_ponderations / self.nb_mse
+                self.accuracy_rank_ponderations = self.accuracy_rank_ponderations / self.nb_accuracy_rank
+            
             weights.mse_performances = self.mse_ponderations
             weights.accuracy_rank = self.accuracy_rank_ponderations
         weights.user_id = self.id_user
@@ -349,7 +354,7 @@ class Node(cSimpleModule):
         hr, _ = self.evaluate_local_model()
         
         self.nb_mse += 1        
-        self.mse_ponderations +=  (dp_hr - hr) ** 2 / self.nb_mse 
+        self.mse_ponderations +=  (dp_hr - hr) ** 2
         
         # mse or something to compare weights with and without DP
 
@@ -368,7 +373,7 @@ class Node(cSimpleModule):
         
         self.nb_accuracy_rank += 1
         if (hr > lhr and dp_hr > lhr) or (hr < lhr and dp_hr < lhr) or (hr == dp_hr == lhr):
-            self.accuracy_rank_ponderations += 1 / self.nb_accuracy_rank 
+            self.accuracy_rank_ponderations += 1 
 
 
         # average weights
