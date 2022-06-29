@@ -89,7 +89,7 @@ if  sync_:
                 "epochs": 2,
                 "batch_size": "Full",
                 "topK": topK,
-                "Epsilon": "50",
+                "Epsilon": "500",
                 "Delta": 10e-5,
                 "Number of clusters": clustersK,
                 "Attacker id": attacker_id

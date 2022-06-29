@@ -296,7 +296,7 @@ class Node(cSimpleModule):
 
     def add_noise(self):
         sensitivity = 2
-        epsilon = 50
+        epsilon = 500
         delta = 10e-5  
         sigma =  sensitivity * np.sqrt(2 * np.log(1.25 / delta)) / epsilon
         self.dp_model = self.get_model()
