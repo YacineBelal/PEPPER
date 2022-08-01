@@ -77,8 +77,8 @@ endif
 # User-supplied makefile fragment(s)
 # >>>
 # inserted from file 'makefrag':
-INCLUDE_PATH += $(shell python3 -m pybind11 --include) -I$(OMNETPY_ROOT)/include
-LIBS = -lomnetpy $(shell python3-config --libs --embed| cut -d" " -f1)
+INCLUDE_PATH += $(shell python3.8 -m pybind11 --include) -I$(OMNETPY_ROOT)/include
+LIBS = -lomnetpy $(shell python3.8-config --libs --embed| cut -d" " -f1)
 LDFLAGS += -L$(OMNETPY_ROOT)/lib
 
 # <<<

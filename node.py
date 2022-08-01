@@ -22,9 +22,7 @@ from evaluate import evaluate_model, User_Popularity_Deviation
 from scipy.spatial.distance import cosine
 from sklearn.metrics import jaccard_score
 
-import pydp as dp
 
-from pydp.algorithms.laplacian import BoundedMean
 import time
 
 
@@ -238,7 +236,7 @@ class Node(cSimpleModule):
         self.best_ndcg = 0.0
         self.best_model = []
 
-        self.init_rounds = 500
+        self.init_rounds = 800
         self.training_rounds = self.init_rounds
         self.update()
         self.peers = []
