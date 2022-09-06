@@ -1,5 +1,3 @@
-from sklearn import neighbors
-
 import numpy as np
 from pyopp import cSimpleModule, cMessage, simTime
 from keras.optimizers import Adam, SGD
@@ -30,7 +28,7 @@ testRatings = testRatings[:1000] #  2453 1000
 testNegatives= testNegatives[:1000]
 
 epochs = 2
-number_peers = 6
+number_peers = 3
 # batch_size = 32s
 genre = 1 # action
 
@@ -181,7 +179,6 @@ class Node(cSimpleModule):
         self.validationRatings, self.validationNegatives = get_user_test_set(validationRatings,validationNegatives,self.id_user)
         
         self.positives_nums = len(self.vector)
-        self.received = 0
 
         self.item_input, self.labels, self.user_input = self.my_dataset()
         self.model = util.get_model(self.num_items,self.num_users) # each node initialize its own model 
@@ -197,7 +194,6 @@ class Node(cSimpleModule):
     
         self.peer_sampling()
         self.performances = {}
-        self.average = 0
         self.scheduleAt(simTime() + self.period,self.period_message)
 
 
@@ -239,8 +235,7 @@ class Node(cSimpleModule):
             self.current_round += 1
             # dt = self.DKL_mergeJ(msg)
             # self.id_user == attacker_id 
-            if self.current_round > 10:
-                    self.find_profiles(msg)
+            self.find_profiles(msg)
                 
             ## added the pull possibility
             self.diffuse_to_specific_peer(msg.id)
@@ -251,12 +246,13 @@ class Node(cSimpleModule):
         pass
         
     def find_profiles(self, msg):
-        items_embeddings = msg.weights
-        self_items_embeddings = self.get_model()
+        items_embeddings = msg.weights[0]
+        self_items_embeddings = self.get_model()[0]
         distance = 0
+
         for i in range(len(self_items_embeddings)):
             if i in self.vector: # added to consider only items in the local set of the user
-                distance += abs(cosine(self_items_embeddings[i],items_embeddings[i]))
+                distance += abs(cosine(self_items_embeddings[i], items_embeddings[i]))
         
         distance /= len(self.vector)
         if(self.neighbours.get(msg.id) == None):
@@ -286,23 +282,24 @@ class Node(cSimpleModule):
         self.model.get_layer("item_embedding").set_weights(weights)
         # self.model.set_weights(weights)
 
-    def peer_sampling(self):
-        size = self.gateSize("no") - 1
-        old_peers = self.peers.copy()
-        self.peers = []
-        for _ in range(number_peers):
-            p = random.randint(0,size - 1)
-            while(p in self.peers or p in old_peers):
-                p = random.randint(0,size - 1)
-            self.peers.append(p)
-
-
     def get_gate(self, peer):
         idx = self.getIndex()
         if peer < idx:
             return peer
         else:
             return peer - 1 
+
+    def peer_sampling(self):
+        size = self.gateSize("no") - 1
+        old_peers = self.peers.copy()
+        self.peers = []
+        for _ in range(number_peers):
+            p = random.randint(0,size - 1)
+            while(p in self.peers or p in old_peers or p == self.id_user):
+                p = random.randint(0,size - 1)
+            self.peers.append(p)
+
+
 
     def peer_sampling_enhanced(self):       
         size = self.gateSize("no") - 1 
@@ -336,7 +333,8 @@ class Node(cSimpleModule):
         weights.age = self.age       
         weights.samples = self.positives_nums 
         weights.id = self.getIndex()
-        self.send(weights, 'no$o', id)
+
+        self.send(weights, 'no$o', self.get_gate(id))
     
     # select a random peer and send its model weights and its age to it  
     def diffuse_to_peer(self,nb_peers = 3):
@@ -347,8 +345,8 @@ class Node(cSimpleModule):
             weights.weights = self.get_model()
             weights.age = self.age       
             weights.samples = self.positives_nums 
-            weights.id = self.getIndex()
-            self.send(weights, 'no$o',peers[peer])
+            weights.id = self.id_user
+            self.send(weights, 'no$o',self.get_gate(peers[peer]))
             peers.pop(peer)
 
     def diffuse_to_server(self,hr,ndcg):

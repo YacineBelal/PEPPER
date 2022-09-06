@@ -1,20 +1,17 @@
-from re import X
 from pyopp import cSimpleModule
 import sys 
 from sklearn.cluster import KMeans
-from scipy.spatial.distance import euclidean
 from collections import defaultdict
-# import matplotlib.pyplot as plt 
 from Dataset import Dataset
 import numpy as np
 import wandb
 import os 
 
 sync_ = 1
-name_ = "Performance-Based Attacked"
+name_ = "Model_Age_Based Attacked"
 dataset_ = "ml-100k" #foursquareNYC   
 topK = 20
-clustersK= 9
+clustersK= 7
 
 
 dataset = Dataset("ml-100k")
@@ -193,6 +190,8 @@ class Server(cSimpleModule):
         return _labels
     
     def Accuracy_Clustering_Attack(self, clusters, attacker_id, idx):
+        if idx > len(self.cluster_found[attacker_id]):
+            return 1 , 0 
         cluster_user = []
         for u,c in enumerate(clusters):
             # find the cluster of attacker_id and users that belong to it

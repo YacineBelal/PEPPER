@@ -8,7 +8,7 @@ simple Node
 {
     gates:
         inout no[50];
-        inout nl[];
+        inout nl[1];
 
 }
 
