@@ -12,15 +12,13 @@ from evaluate import evaluate_model
 from scipy.spatial.distance import cosine
 
 import multiprocessing as mp
-from numpy import linalg as LA
 
 
 
 import time
 
 # attack parameters
-clustersK= 9
-attacker_id = 49
+# attacker_id = 49
 
 topK = 20
 dataset_name = "ml-100k" #foursquareNYC   ml-1m_version 
@@ -32,7 +30,7 @@ testRatings = testRatings[:1000] #  2453 1000
 testNegatives= testNegatives[:1000]
 
 epochs = 2
-number_peers = 3
+number_peers = 6
 # batch_size = 32s
 genre = 1 # action
 
@@ -165,12 +163,8 @@ def jaccard_similarity(list1, list2):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 90
+        self.rounds = 200
         self.current_round = 0
-        self.mse_ponderations = 0
-        self.nb_mse = 0
-        self.accuracy_rank_ponderations = 0
-        self.nb_accuracy_rank = 0
         self.vector = np.empty(0)
         self.labels = np.empty(0)
         self.item_input = np.empty(0)
@@ -211,7 +205,7 @@ class Node(cSimpleModule):
         # periodic self sent message used as a timer by each node to diffuse its model 
         if msg.getName() == 'period_message':
             if self.rounds > 0 :
-                if self.rounds != 1 and self.rounds % 10 == 0:
+                if self.rounds != 1 and self.rounds % 20 == 0:
                     lhr, lndcg = self.evaluate_local_model(False,False)
                     self.diffuse_to_server(lhr, lndcg)
                 elif self.rounds == 1:
@@ -220,38 +214,36 @@ class Node(cSimpleModule):
                     self.diffuse_to_server(lhr,lndcg)
 
                 self.diffuse_to_peer()
-                if self.rounds % 9 == 0:
-                    # self.peer_sampling()
-                    self.peer_sampling_enhanced()
+                if self.rounds % 5 == 0:
+                    self.peer_sampling()
+                    # self.peer_sampling_enhanced()
                
 
                 self.rounds = self.rounds - 1
                 self.scheduleAt(simTime() + self.period,self.period_message)
             
-            elif self.rounds == 0: # if number of rounds has been acheived, we can evaluate the model both locally and globally
-                if self.id_user != attacker_id:
+            elif self.rounds == 0: # if number of rounds has been acheived, we can evaluate the model both locally
                     hr, ndcg = self.evaluate_local_model(False,False)
                     print('node : ',self.id_user)
                     print('Local HR =  ', hr)
                     print('Local NDCG =  ',ndcg)
-                    sys.stdout.flush()
-
-                # print("My Correspondance = ",get_genreattacked_prop(self.vector))
-            
-                else:
                     print("Profiles Found \n")
                     best_profiles = sorted(list(self.neighbours.items()),key=lambda x: x[1]) 
                     print(best_profiles)
-
+                    sys.stdout.flush()
+             
                 
              
         elif msg.getName() == 'Model': 
-            # dt = self.merge(msg)
+            dt = self.merge(msg)
             self.current_round += 1
-            dt = self.DKL_mergeJ(msg)
-            if self.id_user == attacker_id and self.current_round > 10:
+            # dt = self.DKL_mergeJ(msg)
+            # self.id_user == attacker_id 
+            if self.current_round > 10:
                     self.find_profiles(msg)
                 
+            ## added the pull possibility
+            self.diffuse_to_specific_peer(msg.id)
             self.delete(msg)
             
 
@@ -259,7 +251,6 @@ class Node(cSimpleModule):
         pass
         
     def find_profiles(self, msg):
-
         items_embeddings = msg.weights
         self_items_embeddings = self.get_model()
         distance = 0
@@ -290,34 +281,18 @@ class Node(cSimpleModule):
     def get_model(self):
         return self.model.get_layer("item_embedding").get_weights().copy()
         # return self.model.get_weights().copy()
-    
-    def get_DP_model(self):
-        return self.dp_model 
-
-    def add_noise(self):
-        sensitivity = 2
-        epsilon = 500
-        delta = 10e-5  
-        sigma =  sensitivity * np.sqrt(2 * np.log(1.25 / delta)) / epsilon
-        self.dp_model = self.get_model()
-        norm = LA.norm(self.dp_model)
-        # self.dp_model = normalize(self.dp_model, axis = 1, norm="l2")
-        self.dp_model = np.divide(self.dp_model, norm)     
-        self.dp_model = np.add(self.dp_model,np.random.normal(loc = 0, scale = sigma, size = self.dp_model.shape))
-
-        return self.dp_model
-    
-    
+       
     def set_model(self, weights):
         self.model.get_layer("item_embedding").set_weights(weights)
         # self.model.set_weights(weights)
 
     def peer_sampling(self):
         size = self.gateSize("no") - 1
+        old_peers = self.peers.copy()
         self.peers = []
         for _ in range(number_peers):
             p = random.randint(0,size - 1)
-            while(p in self.peers):
+            while(p in self.peers or p in old_peers):
                 p = random.randint(0,size - 1)
             self.peers.append(p)
 
@@ -355,6 +330,14 @@ class Node(cSimpleModule):
         
         sys.stdout.flush()
 
+    def diffuse_to_specific_peer(self, id):
+        weights = WeightsMessage('Model')
+        weights.weights = self.get_model()
+        weights.age = self.age       
+        weights.samples = self.positives_nums 
+        weights.id = self.getIndex()
+        self.send(weights, 'no$o', id)
+    
     # select a random peer and send its model weights and its age to it  
     def diffuse_to_peer(self,nb_peers = 3):
         peers = self.peers.copy()
@@ -362,7 +345,6 @@ class Node(cSimpleModule):
             peer = random.randint(0,len(peers)-1)
             weights = WeightsMessage('Model')
             weights.weights = self.get_model()
-            weights.dp_weights = self.get_DP_model()
             weights.age = self.age       
             weights.samples = self.positives_nums 
             weights.id = self.getIndex()
@@ -374,13 +356,11 @@ class Node(cSimpleModule):
             weights = WeightsMessage('Performance')
         else:
             weights = WeightsMessage('FinalPerformance')
-            weights.mse_performances = self.mse_ponderations
-            weights.accuracy_rank = self.accuracy_rank_ponderations             
-            if self.id_user == attacker_id:
-                neighbours = list(self.neighbours.items())
-                neighbours.sort(key= lambda x:x[1])
-                weights.cluster_found = [x[0] for x in neighbours[:clustersK]]
+          # if self.id_user == attacker_id:
 
+        neighbours = list(self.neighbours.items())
+        neighbours.sort(key= lambda x:x[1])
+        weights.cluster_found = [x[0] for x in neighbours]
         weights.user_id = self.id_user
         weights.round = self.rounds
         weights.hit_ratio = hr
@@ -402,7 +382,6 @@ class Node(cSimpleModule):
         print("Rounds Left : ",self.rounds)
         sys.stdout.flush()
 
-        self.add_noise()
 
         
     def merge(self,message_weights):
@@ -437,22 +416,14 @@ class Node(cSimpleModule):
         return delta
 
     def DKL_mergeJ(self,message_weights):  
-        local = self.get_model()
+        local = self.get_model().copy()
         hrs = []
         lhr, _ =self.evaluate_local_model()
         hrs.append(lhr)
-        self.set_model(message_weights.dp_weights)
-        dp_hr, _ = self.evaluate_local_model()
-        self.performances[message_weights.id] = dp_hr
-        hrs.append(dp_hr)
-
         self.set_model(message_weights.weights)
         hr, _ = self.evaluate_local_model()
-        
-        self.nb_mse += 1        
-        self.mse_ponderations +=  (dp_hr - hr) ** 2 / self.nb_mse 
-        
-        # mse or something to compare weights with and without DP
+        self.performances[message_weights.id] = hr
+        hrs.append(hr)
 
         hrs_total = sum(hrs)
         
@@ -466,15 +437,9 @@ class Node(cSimpleModule):
         local[:] = [w * norm[0] for w in local]
         message_weights.weights[:] = [w * norm[1] for w in message_weights.weights]
         
-        self.nb_accuracy_rank += 1
-        if (hr > lhr and dp_hr > lhr) or (hr < lhr and dp_hr < lhr) or (hr == dp_hr == lhr):
-            self.accuracy_rank_ponderations += 1 / self.nb_accuracy_rank 
-
-
         local[:] = [a + b for a,b in zip(local,message_weights.weights)]
         self.set_model(local)
         self.item_input, self.labels, self.user_input = self.my_dataset()
-
         self.update()
         
         return 0

@@ -15,7 +15,6 @@ name_ = "Performance-Based Attacked"
 dataset_ = "ml-100k" #foursquareNYC   
 topK = 20
 clustersK= 9
-attacker_id = 49
 
 
 dataset = Dataset("ml-100k")
@@ -30,6 +29,7 @@ def get_user_vector(user):
             break
 
     return positive_instances
+
 def get_distribution_by_genre(vector):
     infos = []
     with open("u.item",'r', encoding="ISO-8859-1") as info:
@@ -43,12 +43,13 @@ def get_distribution_by_genre(vector):
     dist = [0 for _ in range(19)]
     for item in vector:
         for i in range(len(dist)):
-            dist[i] += int(infos[item][i]) 
+            dist[i] += int(infos[item - 1][i]) 
         
     summ = sum(dist)
     dist = [elem / summ for elem in dist]
     
     return dist
+
 
 def indic(data):
     max = np.max(data, axis=1)
@@ -81,18 +82,18 @@ def cdf(data, metric):
 
 if  sync_:
     wandb_config = {
-                "config": "B",
-                "dataset": dataset_,
-                "implementation": "TensorFlow",
-                "rounds": 90,
-                "learning_rate": 0.01,
-                "epochs": 2,
-                "batch_size": "Full",
-                "topK": topK,
-                "Epsilon": "500",
-                "Delta": 10e-5,
+                "Dataset": dataset_,
+                "Implementation": "TensorFlow",
+                "Rounds": 200,
+                "Learning_rate": 0.01,
+                "Epochs": 2,
+                "Batch_size": "Full",
+                "TopK": topK,
+                "Epsilon": np.inf,
+                "Delta": np.inf,
                 "Number of clusters": clustersK,
-                "Attacker id": attacker_id
+                "Attacker id": "all",
+                "Distance_Metric": "cosine"
                 }
 
     os.environ["WANDB_API_KEY"] = "334fd1cd4a03c95f4655357b92cdba2b7d706d4c"
@@ -108,21 +109,17 @@ class Server(cSimpleModule):
         self.num_participants = len(self.all_participants)
         self.hit_ratios = defaultdict(list)
         self.ndcgs = defaultdict(list)
-        self.accuracy_rank = defaultdict(list)
-        self.mse_performances = defaultdict(list)
-        self.cluster_found = []
-    
+        self.cluster_found = defaultdict(list)
+        self.att_acc = defaultdict(list)
+        self.att_recall = defaultdict(list)
+
     def handleMessage(self, msg):
-        if msg.getName() == "Performance":            
-            self.hit_ratios[msg.round].append(msg.hit_ratio) # hit ratio ~ recall for recsys 
-            self.ndcgs[msg.round].append(msg.ndcg) # ~ accuracy
-        elif msg.getName() == "FinalPerformance":
-            self.hit_ratios[msg.round].append(msg.hit_ratio) # hit ratio ~ recall for recsys 
-            self.ndcgs[msg.round].append(msg.ndcg) # ~ accuracy
-            self.accuracy_rank[msg.round].append(msg.accuracy_rank)
-            self.mse_performances[msg.round].append(msg.mse_performances)   
-            if msg.cluster_found != None:
-                self.cluster_found = msg.cluster_found  
+        self.hit_ratios[msg.round].append(msg.hit_ratio) # hit ratio ~ recall for recsys 
+        self.ndcgs[msg.round].append(msg.ndcg) # ~ accuracy
+        self.cluster_found[msg.user_id].append(msg.cluster_found[:clustersK])
+        
+        # if msg.getName() == "Performance":            
+        # elif msg.getName() == "FinalPerformance":
 
         self.delete(msg)
             
@@ -130,8 +127,8 @@ class Server(cSimpleModule):
     def finish(self):
         global wandb
         nb_rounds = max(self.hit_ratios.keys())
-        for round in self.hit_ratios.keys():
-            if(len(self.hit_ratios[round]) == self.num_participants): # if we receive all the users' model we evaluate them and then compute an average perf
+        for round in self.hit_ratios.keys():               
+            if(len(self.hit_ratios[round]) == self.num_participants):
                 print("round = ", round)
                 avg_hr = sum(self.hit_ratios[round]) / self.num_participants
                 print("Average Test HR = ",avg_hr)
@@ -141,21 +138,36 @@ class Server(cSimpleModule):
 
                 if sync_:
                     wandb.log({"Average HR": avg_hr,"Average NDCG": avg_ndcg, "Round ": nb_rounds - round})
-                    if round == 1:
-                        avg_mse = sum(self.mse_performances[round]) / self.num_participants
-                        print("Average MSE on weights = ",avg_mse)
-                        avg_acc = sum(self.accuracy_rank[round]) / self.num_participants
-                        print("Average Accuracy of model ranking = ",avg_acc)
-                        sys.stdout.flush()
+        
+        nb_rounds = max(self.hit_ratios.keys())
+        clusters = self.groundTruth_Clustering()
+        idx_round = 0
+        for round in self.hit_ratios.keys(): 
+            avg_acc = 0
+            avg_recall = 0
+            for attacker in self.cluster_found.keys():
+                acc, recall = self.Accuracy_Clustering_Attack(clusters, attacker, idx_round)
+                self.att_acc[round].append(acc)
+                self.att_recall[round].append(recall)
+                avg_acc += acc
+                avg_recall += recall
+            idx +=1
+            avg_acc = avg_acc / self.num_participants
+            avg_recall = avg_recall / self.num_participants
+             
+            if sync_:
+                    wandb.log({"Average Accuracy": avg_acc ,"Average Recall": avg_recall,
+                     "Round ": nb_rounds - round})
 
-        acc = self.groundTruth_Clustering()
+
+        
+        
         if sync_:
-            wandb.log({"Average MSE (weights delta)": avg_mse,
-                    "Average Accuracy (of model ranking)": avg_acc, "Attack Accuracy": acc})
             cdf(self.hit_ratios[1],"Local HR")      
             cdf(self.ndcgs[1],"Local NDCG")
-            cdf(self.mse_performances[1],"MSE per node (weight difference)")
-            cdf(self.accuracy_rank[1],"Ranking accuracy per node (Normalized weight ranking)")
+            cdf(self.att_acc[1],"Attack accuracy in the last round")
+            cdf(self.att_recall[1],"Attack recall in the last round")
+            
             wandb.finish()
 
     
@@ -166,43 +178,36 @@ class Server(cSimpleModule):
             users.append(get_distribution_by_genre(vector))
 
         users = np.array(users)
-
-        ### kelbow_visualizer(KMeans(random_state = 0),users,k=(2,30))
-
         model = KMeans(n_clusters=clustersK,random_state = 0).fit(users) 
         _labels = list(model.labels_)
-        centroids = model.cluster_centers_
-        users_distances = []
-        for i,u in enumerate(users):
-            users_distances.append(euclidean(centroids[_labels[i]],u))
+        # centroids = model.cluster_centers_  
+        # print("True cluster :",cluster_knn)
+        # print("Cluster found:", self.cluster_found)
+        # print("Intersection: ", intersection)
+        # print(len(cluster_knn))
+        # print(len(intersection))
+        # acc = len(intersection)/ len(cluster_knn)
+        # print("Accuracy :", acc)
+        # sys.stdout.flush()
 
-        ## putting outliers in a cluster
-        
-        # threshold_users_keep = 0.9
-        # threshold_max_distance = (sorted(users_distances, reverse=True)[int((1-threshold_users_keep) * len(users_distances)):])[0]
-        # outliers =[x for x in range(len(users)) if users_distances[x] > threshold_max_distance]
-        # for x in outliers:x
-        #     model.labels_[x] = clustersK
+        return _labels
+    
+    def Accuracy_Clustering_Attack(self, clusters, attacker_id, idx):
+        cluster_user = []
+        for u,c in enumerate(clusters):
+            # find the cluster of attacker_id and users that belong to it
+            if c == clusters[attacker_id] and u!= attacker_id:
+                cluster_user.append(u)
+       
+        intersection = set(cluster_user) & set(self.cluster_found[attacker_id][idx])
+        if len(intersection == 0):
+            acc = 1
+            recall = 0
+        else:
+            acc = len(intersection) / len(self.cluster_found[attacker_id][idx]) 
+            recall = len(intersection) / len(cluster_user)
 
-
-        cluster_knn = []
-        for u,c in enumerate(_labels):
-            if c == _labels[attacker_id] and u!= attacker_id:
-                cluster_knn.append(u)
-        
-        print("True cluster :",cluster_knn)
-        print("Cluster found:", self.cluster_found)
-        intersection = set(cluster_knn) & set(self.cluster_found)
-        print("Intersection: ", intersection)
-        print(len(cluster_knn))
-        print(len(intersection))
-        acc = len(intersection)/ len(cluster_knn)
-        print("Accuracy :", acc)
-        sys.stdout.flush()
-
-        return acc
-
-
+        return acc, recall
         
 
 
