@@ -81,7 +81,7 @@ if  sync_:
     wandb_config = {
                 "Dataset": dataset_,
                 "Implementation": "TensorFlow",
-                "Rounds": 200,
+                "Rounds": 40,
                 "Learning_rate": 0.01,
                 "Epochs": 2,
                 "Batch_size": "Full",
@@ -192,6 +192,7 @@ class Server(cSimpleModule):
     def Accuracy_Clustering_Attack(self, clusters, attacker_id, idx):
         if idx > len(self.cluster_found[attacker_id]):
             return 1 , 0 
+            
         cluster_user = []
         for u,c in enumerate(clusters):
             # find the cluster of attacker_id and users that belong to it

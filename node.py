@@ -27,9 +27,7 @@ train ,testRatings, testNegatives,validationRatings, validationNegatives = datas
 testRatings = testRatings[:1000] #  2453 1000
 testNegatives= testNegatives[:1000]
 
-epochs = 2
 number_peers = 3
-# batch_size = 32s
 genre = 1 # action
 
 
@@ -161,7 +159,7 @@ def jaccard_similarity(list1, list2):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 200
+        self.rounds = 40
         self.current_round = 0
         self.vector = np.empty(0)
         self.labels = np.empty(0)
@@ -184,11 +182,8 @@ class Node(cSimpleModule):
         self.model = util.get_model(self.num_items,self.num_users) # each node initialize its own model 
         self.model.compile(optimizer=Adam(lr=0.01), loss='binary_crossentropy')
         self.period_message = cMessage('period_message')
-        self.best_hr = 0.0
-        self.best_ndcg = 0.0
-        self.best_model = []
 
-        self.update()
+        self.update(epochs= 2, batch_size = 32)
         self.peers = []
         self.neighbours = dict()
     
@@ -201,16 +196,16 @@ class Node(cSimpleModule):
         # periodic self sent message used as a timer by each node to diffuse its model 
         if msg.getName() == 'period_message':
             if self.rounds > 0 :
-                if self.rounds != 1 and self.rounds % 20 == 0:
+                if self.rounds == 1 or self.rounds % 25 == 0:
                     lhr, lndcg = self.evaluate_local_model(False,False)
                     self.diffuse_to_server(lhr, lndcg)
-                elif self.rounds == 1:
-                    self.model.set_weights(self.best_model)
-                    lhr, lndcg = self.evaluate_local_model(False, False)
-                    self.diffuse_to_server(lhr,lndcg)
+                # elif self.rounds == 1:
+                #     self.model.set_weights(self.best_model)
+                #     lhr, lndcg = self.evaluate_local_model(False, False)
+                #     self.diffuse_to_server(lhr,lndcg)
 
                 self.diffuse_to_peer()
-                if self.rounds % 5 == 0:
+                if self.rounds % 10 == 0:
                     self.peer_sampling()
                     # self.peer_sampling_enhanced()
                
@@ -225,7 +220,7 @@ class Node(cSimpleModule):
                     print('Local NDCG =  ',ndcg)
                     print("Profiles Found \n")
                     best_profiles = sorted(list(self.neighbours.items()),key=lambda x: x[1]) 
-                    print(best_profiles)
+                    # print(best_profiles)
                     sys.stdout.flush()
              
                 
@@ -238,7 +233,9 @@ class Node(cSimpleModule):
             self.find_profiles(msg)
                 
             ## added the pull possibility
-            self.diffuse_to_specific_peer(msg.id)
+            if msg.type == "push":
+                self.diffuse_to_specific_peer(msg.id)
+            
             self.delete(msg)
             
 
@@ -332,6 +329,7 @@ class Node(cSimpleModule):
         weights.weights = self.get_model()
         weights.age = self.age       
         weights.samples = self.positives_nums 
+        weights.type = "pull"
         weights.id = self.getIndex()
 
         self.send(weights, 'no$o', self.get_gate(id))
@@ -346,6 +344,7 @@ class Node(cSimpleModule):
             weights.age = self.age       
             weights.samples = self.positives_nums 
             weights.id = self.id_user
+            weights.type = "push"
             self.send(weights, 'no$o',self.get_gate(peers[peer]))
             peers.pop(peer)
 
@@ -365,15 +364,16 @@ class Node(cSimpleModule):
         weights.ndcg = ndcg
         self.send(weights, 'nl$o',0)
     
-    def update(self):
+    def update(self, epochs = 2, batch_size = None):
+        batch_size = len(self.labels) if not batch_size else batch_size
         hist = self.model.fit([self.user_input, self.item_input], #input
                         np.array(self.labels), # labels 
-                        batch_size=len(self.labels), nb_epoch=epochs, verbose=2, shuffle=True) 
+                        batch_size= batch_size, nb_epoch=epochs, verbose=2, shuffle=True) 
         
-        hr, _ = self.evaluate_local_model()
-        if hr >= self.best_hr:
-            self.best_hr = hr
-            self.best_model = self.model.get_weights().copy()
+        # hr, _ = self.evaluate_local_model()
+        # if hr >= self.best_hr:
+            # self.best_hr = hr
+            # self.best_model = self.model.get_weights().copy()
         
         self.age = self.age + 1
         print("Node : ",self.getIndex())
