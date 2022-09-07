@@ -65,12 +65,14 @@ users = np.array(users)
 
 model = KMeans(n_clusters=11,random_state = 0).fit(users) 
 _labels = list(model.labels_)
+print("labeeels = ",_labels)
 
 # print("labels :",_labels)
 
 centroids = model.cluster_centers_
 
 users_distances = []
+
 
 for i,u in enumerate(users):
     users_distances.append(euclidean(centroids[_labels[i]],u))

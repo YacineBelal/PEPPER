@@ -118,7 +118,7 @@ def get_distribution_by_genre(vector):
     dist = [0 for _ in range(19)]
     for item in vector:
         for i in range(len(dist)):
-            dist[i] += int(infos[item][i]) 
+            dist[i] += int(infos[item - 1][i]) 
         
     summ = sum(dist)
     dist = [elem / summ for elem in dist]
@@ -227,7 +227,6 @@ class Node(cSimpleModule):
              
         elif msg.getName() == 'Model': 
             dt = self.merge(msg)
-            self.current_round += 1
             # dt = self.DKL_mergeJ(msg)
             # self.id_user == attacker_id 
             self.find_profiles(msg)
@@ -235,6 +234,8 @@ class Node(cSimpleModule):
             ## added the pull possibility
             if msg.type == "push":
                 self.diffuse_to_specific_peer(msg.id)
+                self.current_round += 1
+
             
             self.delete(msg)
             
@@ -365,7 +366,7 @@ class Node(cSimpleModule):
         self.send(weights, 'nl$o',0)
     
     def update(self, epochs = 2, batch_size = None):
-        batch_size = len(self.labels) if not batch_size else batch_size
+        batch_size = len(self.labels) if batch_size == None else batch_size
         hist = self.model.fit([self.user_input, self.item_input], #input
                         np.array(self.labels), # labels 
                         batch_size= batch_size, nb_epoch=epochs, verbose=2, shuffle=True) 

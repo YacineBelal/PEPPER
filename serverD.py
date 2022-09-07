@@ -1,6 +1,10 @@
+from random import sample
 from pyopp import cSimpleModule
 import sys 
 from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_samples, silhouette_score
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.preprocessing import StandardScaler
 from collections import defaultdict
 from Dataset import Dataset
 import numpy as np
@@ -11,10 +15,12 @@ sync_ = 1
 name_ = "Model_Age_Based Attacked"
 dataset_ = "ml-100k" #foursquareNYC   
 topK = 20
+topK_clustering = 10
 clustersK= 7
 
 
 dataset = Dataset("ml-100k")
+
 
 def get_user_vector(user):
     positive_instances = []
@@ -42,8 +48,8 @@ def get_distribution_by_genre(vector):
         for i in range(len(dist)):
             dist[i] += int(infos[item - 1][i]) 
         
-    summ = sum(dist)
-    dist = [elem / summ for elem in dist]
+    # summ = sum(dist)
+    # dist = [elem / summ for elem in dist]
     
     return dist
 
@@ -54,7 +60,7 @@ def indic(data):
     return max, std
 
 
-def cdf(data, metric):
+def cdf(data, metric, topK = topK):
     data_size=len(data)
      
     # Set bins edges
@@ -72,10 +78,16 @@ def cdf(data, metric):
     cdf = np.cumsum(counts)    
     idx = np.arange(cdf.shape[0])
     data = [[x, y] for (x, y) in zip(bin_edges[idx], cdf[idx])]
-    table = wandb.Table(data=data, columns = [metric+"@"+str(topK), "CDF"])
-    wandb.log({metric+"@"+"CDF" : wandb.plot.line(table, metric+"@"+str(topK), "CDF", stroke="dash",
-           title = metric+"@"+str(topK)+" cumulative distribution")})
+    if topK == None:
+        table = wandb.Table(data=data, columns = [metric+" CDF"])
+        wandb.log({metric+"@"+"CDF" : wandb.plot.line(table, metric+"@"+str(topK), "CDF", stroke="dash",
+               title = metric+"@"+str(topK)+" cumulative distribution")})
 
+    else: 
+        table = wandb.Table(data=data, columns = [metric+"@"+str(topK), "CDF"])
+        wandb.log({metric + "CDF" : wandb.plot.line(table, metric, "CDF", stroke="dash",
+               title = metric +" cumulative distribution")})
+    
 
 if  sync_:
     wandb_config = {
@@ -113,7 +125,7 @@ class Server(cSimpleModule):
     def handleMessage(self, msg):
         self.hit_ratios[msg.round].append(msg.hit_ratio) # hit ratio ~ recall for recsys 
         self.ndcgs[msg.round].append(msg.ndcg) # ~ accuracy
-        self.cluster_found[msg.user_id].append(msg.cluster_found[:clustersK])
+        self.cluster_found[msg.user_id].append(msg.cluster_found)
         
         # if msg.getName() == "Performance":            
         # elif msg.getName() == "FinalPerformance":
@@ -148,13 +160,12 @@ class Server(cSimpleModule):
                 self.att_recall[round].append(recall)
                 avg_acc += acc
                 avg_recall += recall
-            idx +=1
+            idx_round +=1
             avg_acc = avg_acc / self.num_participants
             avg_recall = avg_recall / self.num_participants
              
             if sync_:
-                    wandb.log({"Average Accuracy": avg_acc ,"Average Recall": avg_recall,
-                     "Round ": nb_rounds - round})
+                    wandb.log({"Average Accuracy": avg_acc ,"Average Recall": avg_recall})
 
 
         
@@ -162,31 +173,36 @@ class Server(cSimpleModule):
         if sync_:
             cdf(self.hit_ratios[1],"Local HR")      
             cdf(self.ndcgs[1],"Local NDCG")
-            cdf(self.att_acc[1],"Attack accuracy in the last round")
-            cdf(self.att_recall[1],"Attack recall in the last round")
+            print("************* problem for att acc graph here?", self.att_acc.items())
+            sys.stdout.flush()
+            cdf(self.att_acc[1],"Attack accuracy (Last round)", topK_clustering)
+            cdf(self.att_recall[1],"Attack recall (Last round)", topK_clustering)
             
             wandb.finish()
 
-    
     def groundTruth_Clustering(self):
         users = []
         for u in range(len(self.all_participants)):
             vector = get_user_vector(u)
             users.append(get_distribution_by_genre(vector))
-
+             
         users = np.array(users)
-        model = KMeans(n_clusters=clustersK,random_state = 0).fit(users) 
-        _labels = list(model.labels_)
-        # centroids = model.cluster_centers_  
-        # print("True cluster :",cluster_knn)
-        # print("Cluster found:", self.cluster_found)
-        # print("Intersection: ", intersection)
-        # print(len(cluster_knn))
-        # print(len(intersection))
-        # acc = len(intersection)/ len(cluster_knn)
-        # print("Accuracy :", acc)
-        # sys.stdout.flush()
+        scaler = StandardScaler(with_mean=False)
+        users = scaler.fit_transform(users)
 
+        model = KMeans(n_clusters = clustersK, init="k-means++", random_state=1245).fit(users) 
+        _labels = list(model.labels_)
+        
+        self.silhouette_avg = silhouette_score(users, _labels)
+        print("For n_clusters = ", clustersK, "Average silhouette score is ", self.silhouette_avg)
+        sample_silhouette_values = silhouette_samples(users, _labels)
+        print("Silhouette values :", sample_silhouette_values)
+        sys.stdout.flush()
+
+        if sync_:
+            cdf(sample_silhouette_values,"Silhouette score value", topK = None)
+        
+        
         return _labels
     
     def Accuracy_Clustering_Attack(self, clusters, attacker_id, idx):
@@ -199,13 +215,17 @@ class Server(cSimpleModule):
             if c == clusters[attacker_id] and u!= attacker_id:
                 cluster_user.append(u)
        
-        intersection = set(cluster_user) & set(self.cluster_found[attacker_id][idx])
-        if len(intersection == 0):
-            acc = 1
-            recall = 0
+        interacted_with_fair_recall = []
+        for u in cluster_user:
+            if u in cluster_user and u in self.cluster_found[attacker_id][idx]:
+                interacted_with_fair_recall.append(u) 
+
+        found_and_relevant = set(cluster_user) & set(self.cluster_found[attacker_id][idx][:topK_clustering])
+        acc = len(found_and_relevant) / len(self.cluster_found[attacker_id][idx][:topK_clustering])
+        if len(interacted_with_fair_recall) == 0:
+            recall = 1
         else:
-            acc = len(intersection) / len(self.cluster_found[attacker_id][idx]) 
-            recall = len(intersection) / len(cluster_user)
+            recall = len(found_and_relevant) / len(interacted_with_fair_recall)
 
         return acc, recall
         
