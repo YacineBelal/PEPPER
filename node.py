@@ -159,7 +159,7 @@ def jaccard_similarity(list1, list2):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 40
+        self.rounds = 199
         self.current_round = 0
         self.vector = np.empty(0)
         self.labels = np.empty(0)
@@ -195,8 +195,8 @@ class Node(cSimpleModule):
     def handleMessage(self, msg):
         # periodic self sent message used as a timer by each node to diffuse its model 
         if msg.getName() == 'period_message':
-            if self.rounds > 0 :
-                if self.rounds == 1 or self.rounds % 25 == 0:
+            if self.rounds >= 0 :
+                if  self.rounds % 25 == 0:
                     lhr, lndcg = self.evaluate_local_model(False,False)
                     self.diffuse_to_server(lhr, lndcg)
                 # elif self.rounds == 1:
@@ -206,8 +206,8 @@ class Node(cSimpleModule):
 
                 self.diffuse_to_peer()
                 if self.rounds % 10 == 0:
-                    self.peer_sampling()
-                    # self.peer_sampling_enhanced()
+                    # self.peer_sampling()
+                    self.peer_sampling_enhanced()
                
 
                 self.rounds = self.rounds - 1
@@ -226,8 +226,8 @@ class Node(cSimpleModule):
                 
              
         elif msg.getName() == 'Model': 
-            dt = self.merge(msg)
-            # dt = self.DKL_mergeJ(msg)
+            # dt = self.merge(msg)
+            dt = self.DKL_mergeJ(msg)
             # self.id_user == attacker_id 
             self.find_profiles(msg)
                 
@@ -300,6 +300,8 @@ class Node(cSimpleModule):
 
 
     def peer_sampling_enhanced(self):       
+        print("****** f le peer sampling enhanced")
+
         size = self.gateSize("no") - 1 
         self.peers = []
         exploitation_peers = int(number_peers * (1 - self.alpha))
@@ -308,21 +310,21 @@ class Node(cSimpleModule):
         i = 0
 
         while i < exploitation_peers and i < len(keys):
-            p = keys[i]
-            p = self.get_gate(p)
+            p = self.get_gate(keys[i])
             self.peers.append(p)
             i += 1
                 
         self.performances = {}
-       
+
         exploration_peers = number_peers - i
 
         for _ in range(exploration_peers):
             p = random.randint(0,size - 1)
-            while(p in self.peers):
+            while(self.get_gate(p) in self.peers):
                 p = random.randint(0,size - 1)
             self.peers.append(p)
-        
+
+        print("****** ani kharedj")
         sys.stdout.flush()
 
     def diffuse_to_specific_peer(self, id):

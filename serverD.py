@@ -16,7 +16,7 @@ name_ = "Model_Age_Based Attacked"
 dataset_ = "ml-100k" #foursquareNYC   
 topK = 20
 topK_clustering = 10
-clustersK= 7
+clustersK= 5
 
 
 dataset = Dataset("ml-100k")
@@ -79,28 +79,30 @@ def cdf(data, metric, topK = topK):
     idx = np.arange(cdf.shape[0])
     data = [[x, y] for (x, y) in zip(bin_edges[idx], cdf[idx])]
     if topK == None:
-        table = wandb.Table(data=data, columns = [metric+" CDF"])
-        wandb.log({metric+"@"+"CDF" : wandb.plot.line(table, metric+"@"+str(topK), "CDF", stroke="dash",
-               title = metric+"@"+str(topK)+" cumulative distribution")})
+        table = wandb.Table(data=data, columns = [metric, "CDF"])
+        wandb.log({metric +" CDF " : wandb.plot.line(table, metric, "CDF", stroke="dash",
+               title = metric + " last round cumulative distribution")})
 
     else: 
         table = wandb.Table(data=data, columns = [metric+"@"+str(topK), "CDF"])
-        wandb.log({metric + "CDF" : wandb.plot.line(table, metric, "CDF", stroke="dash",
-               title = metric +" cumulative distribution")})
+        wandb.log({metric+"@"+str(topK_clustering)+" CDF" : wandb.plot.line(table, metric, "CDF", stroke="dash",
+               title = metric +" last round cumulative distribution")})
     
 
 if  sync_:
     wandb_config = {
                 "Dataset": dataset_,
                 "Implementation": "TensorFlow",
-                "Rounds": 40,
+                "Rounds": 200,
                 "Learning_rate": 0.01,
                 "Epochs": 2,
                 "Batch_size": "Full",
                 "TopK": topK,
+                "TopK_Clustering": topK_clustering,
                 "Epsilon": np.inf,
                 "Delta": np.inf,
                 "Number of clusters": clustersK,
+    
                 "Attacker id": "all",
                 "Distance_Metric": "cosine"
                 }
@@ -147,6 +149,9 @@ class Server(cSimpleModule):
 
                 if sync_:
                     wandb.log({"Average HR": avg_hr,"Average NDCG": avg_ndcg, "Round ": nb_rounds - round})
+                    if round == 0:
+                        wandb.log({"Final Average HR": avg_hr,"Final Average NDCG": avg_ndcg})
+                    
         
         nb_rounds = max(self.hit_ratios.keys())
         clusters = self.groundTruth_Clustering()
@@ -165,18 +170,22 @@ class Server(cSimpleModule):
             avg_recall = avg_recall / self.num_participants
              
             if sync_:
-                    wandb.log({"Average Accuracy": avg_acc ,"Average Recall": avg_recall})
+                    wandb.log({"Average Attack Accuracy": avg_acc ,"Average Attack Recall": avg_recall, "Round ": nb_rounds - round})
+                    if round == 0:
+                        wandb.log({"Final Average Accuracy": avg_acc ,"Final Average Recall": avg_recall})
+                    
+
 
 
         
         
         if sync_:
-            cdf(self.hit_ratios[1],"Local HR")      
-            cdf(self.ndcgs[1],"Local NDCG")
+            cdf(self.hit_ratios[0],"Local HR")      
+            cdf(self.ndcgs[0],"Local NDCG")
             print("************* problem for att acc graph here?", self.att_acc.items())
             sys.stdout.flush()
-            cdf(self.att_acc[1],"Attack accuracy (Last round)", topK_clustering)
-            cdf(self.att_recall[1],"Attack recall (Last round)", topK_clustering)
+            cdf(self.att_acc[0],"Attack accuracy", topK_clustering)
+            cdf(self.att_recall[0],"Attack recall", topK_clustering)
             
             wandb.finish()
 
@@ -194,12 +203,12 @@ class Server(cSimpleModule):
         _labels = list(model.labels_)
         
         self.silhouette_avg = silhouette_score(users, _labels)
-        print("For n_clusters = ", clustersK, "Average silhouette score is ", self.silhouette_avg)
+        # print("For n_clusters = ", clustersK, "Average silhouette score is ", self.silhouette_avg)
+   
         sample_silhouette_values = silhouette_samples(users, _labels)
-        print("Silhouette values :", sample_silhouette_values)
-        sys.stdout.flush()
 
         if sync_:
+            wandb.log({"Average silhouette score": self.silhouette_avg})
             cdf(sample_silhouette_values,"Silhouette score value", topK = None)
         
         
