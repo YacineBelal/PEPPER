@@ -1,9 +1,9 @@
-from random import sample
+from audioop import avg
 from pyopp import cSimpleModule
 import sys 
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_samples, silhouette_score
-from sklearn.metrics.pairwise import cosine_similarity
+from scipy.spatial.distance import cosine, euclidean
 from sklearn.preprocessing import StandardScaler
 from collections import defaultdict
 from Dataset import Dataset
@@ -12,12 +12,12 @@ import wandb
 import os 
 
 sync_ = 1
-name_ = "Model_Age_Based Attacked"
+name_ = "Pepper Attacked" #"Model_Age_Based Attacked"
 dataset_ = "ml-100k" #foursquareNYC   
 topK = 20
-topK_clustering = 10
-clustersK= 5
-
+topK_clustering = 20
+clustersK= 10
+ground_truth_type = "topk" # None
 
 dataset = Dataset("ml-100k")
 
@@ -48,8 +48,6 @@ def get_distribution_by_genre(vector):
         for i in range(len(dist)):
             dist[i] += int(infos[item - 1][i]) 
         
-    # summ = sum(dist)
-    # dist = [elem / summ for elem in dist]
     
     return dist
 
@@ -94,6 +92,7 @@ if  sync_:
                 "Dataset": dataset_,
                 "Implementation": "TensorFlow",
                 "Rounds": 200,
+                "Nodes": 100,
                 "Learning_rate": 0.01,
                 "Epochs": 2,
                 "Batch_size": "Full",
@@ -102,9 +101,10 @@ if  sync_:
                 "Epsilon": np.inf,
                 "Delta": np.inf,
                 "Number of clusters": clustersK,
-    
+                "Ground_Truth_type": ground_truth_type,
                 "Attacker id": "all",
-                "Distance_Metric": "cosine"
+                "Distance_Metric": "Cosine",
+                "Distance computed on": "user_embeddings"
                 }
 
     os.environ["WANDB_API_KEY"] = "334fd1cd4a03c95f4655357b92cdba2b7d706d4c"
@@ -122,9 +122,13 @@ class Server(cSimpleModule):
         self.ndcgs = defaultdict(list)
         self.cluster_found = defaultdict(list)
         self.att_acc = defaultdict(list)
+        self.att_acc_bound = defaultdict(list)
         self.att_recall = defaultdict(list)
-
+        # self.clusters = self.groundTruth_Clustering()
+        self.clusters = self.groundTruth_TopK()
+    
     def handleMessage(self, msg):
+    
         self.hit_ratios[msg.round].append(msg.hit_ratio) # hit ratio ~ recall for recsys 
         self.ndcgs[msg.round].append(msg.ndcg) # ~ accuracy
         self.cluster_found[msg.user_id].append(msg.cluster_found)
@@ -138,56 +142,85 @@ class Server(cSimpleModule):
     def finish(self):
         global wandb
         nb_rounds = max(self.hit_ratios.keys())
-        for round in self.hit_ratios.keys():               
-            if(len(self.hit_ratios[round]) == self.num_participants):
-                print("round = ", round)
-                avg_hr = sum(self.hit_ratios[round]) / self.num_participants
-                print("Average Test HR = ",avg_hr)
-                avg_ndcg = sum(self.ndcgs[round]) / self.num_participants
-                print("Average Test NDCG = ",avg_ndcg)
-                sys.stdout.flush()
-
-                if sync_:
-                    wandb.log({"Average HR": avg_hr,"Average NDCG": avg_ndcg, "Round ": nb_rounds - round})
-                    if round == 0:
-                        wandb.log({"Final Average HR": avg_hr,"Final Average NDCG": avg_ndcg})
-                    
-        
-        nb_rounds = max(self.hit_ratios.keys())
-        clusters = self.groundTruth_Clustering()
         idx_round = 0
-        for round in self.hit_ratios.keys(): 
+        for round in self.hit_ratios.keys():
             avg_acc = 0
-            avg_recall = 0
-            for attacker in self.cluster_found.keys():
-                acc, recall = self.Accuracy_Clustering_Attack(clusters, attacker, idx_round)
-                self.att_acc[round].append(acc)
-                self.att_recall[round].append(recall)
-                avg_acc += acc
-                avg_recall += recall
-            idx_round +=1
-            avg_acc = avg_acc / self.num_participants
-            avg_recall = avg_recall / self.num_participants
-             
-            if sync_:
-                    wandb.log({"Average Attack Accuracy": avg_acc ,"Average Attack Recall": avg_recall, "Round ": nb_rounds - round})
-                    if round == 0:
-                        wandb.log({"Final Average Accuracy": avg_acc ,"Final Average Recall": avg_recall})
-                    
-
-
-
+            avg_acc_bound = 0
+            avg_recall = 0               
+            print("round = ", round)
+            avg_hr = sum(self.hit_ratios[round]) / self.num_participants
+            print("Average Test HR = ",avg_hr)
+            avg_ndcg = sum(self.ndcgs[round]) / self.num_participants
+            print("Average Test NDCG = ",avg_ndcg)
+            sys.stdout.flush()
+            if ground_truth_type =="kmeans":
+                for attacker in self.cluster_found.keys():
+                    acc, recall = self.Accuracy_Clustering_Attack(self.clusters, attacker, idx_round)
+                    self.att_acc[round].append(acc)
+                    self.att_recall[round].append(recall)
+                    avg_acc += acc
+                    avg_recall += recall
+                idx_round +=1
+                avg_acc = avg_acc / self.num_participants
+                avg_recall = avg_recall / self.num_participants
+            
+            elif ground_truth_type == "topk":
+                for attacker in self.cluster_found.keys():
+                    acc, acc_bound = self.Accuracy_Topk_Attack(self.clusters, attacker, idx_round)
+                    self.att_acc[round].append(acc)
+                    self.att_acc_bound[round].append(acc_bound)
+                    avg_acc += acc
+                    avg_acc_bound += acc_bound
+                idx_round +=1
+                avg_acc = avg_acc / self.num_participants
+                avg_acc_bound = avg_acc_bound / self.num_participants
+           
+            if sync_ and ground_truth_type == "topk":
+                wandb.log({"Average HR": avg_hr,"Average NDCG": avg_ndcg, "Average Attack Acc": avg_acc ,"Average Attack Acc Bound": avg_acc_bound,
+                 "Round ": nb_rounds - round})
+                if round == 0:
+                    wandb.log({"Final Average HR": avg_hr,"Final Average NDCG": avg_ndcg,
+                    "Final Average Attack Acc": avg_acc ,"Final Average Attack Acc Bound": avg_acc_bound})
+            
+            elif sync_  and ground_truth_type == "kmeans":
+                wandb.log({"Average HR": avg_hr,"Average NDCG": avg_ndcg, "Average Attack Precision": avg_acc ,"Average Attack Recall": avg_recall,
+                 "Round ": nb_rounds - round})
+                if round == 0:
+                    wandb.log({"Final Average HR": avg_hr,"Final Average NDCG": avg_ndcg,
+                    "Final Attack Average Precision": avg_acc ,"Final Attack Average Recall": avg_recall})
+                
         
-        
-        if sync_:
+        if sync_ and ground_truth_type == "topk":
             cdf(self.hit_ratios[0],"Local HR")      
             cdf(self.ndcgs[0],"Local NDCG")
-            print("************* problem for att acc graph here?", self.att_acc.items())
-            sys.stdout.flush()
-            cdf(self.att_acc[0],"Attack accuracy", topK_clustering)
-            cdf(self.att_recall[0],"Attack recall", topK_clustering)
-            
+            cdf(self.att_acc[0],"Attack Acc", topK_clustering)
+            cdf(self.att_acc_bound[0],"Attack Acc bound", topK_clustering)
             wandb.finish()
+        elif sync_ and ground_truth_type == "kmeans":
+            cdf(self.hit_ratios[0],"Local HR")      
+            cdf(self.ndcgs[0],"Local NDCG")
+            cdf(self.att_acc[0],"Attack Precision", topK_clustering)
+            cdf(self.att_recall[0],"Attack Recall", topK_clustering)
+            wandb.finish()
+
+    def groundTruth_TopK(self):
+        users = []
+        for u in range(len(self.all_participants)):
+            vector = get_user_vector(u)
+            users.append(get_distribution_by_genre(vector))
+             
+        users_topk = defaultdict(list)
+        for u1 in range(len(self.all_participants)):
+            for u2 in range(len(self.all_participants)):
+                if u1 != u2 :
+                    users_topk[u1].append((u2, abs(euclidean(users[u1],users[u2]))))
+        
+        for u in range(len(self.all_participants)):
+            neighbours = list(users_topk[u])
+            neighbours.sort(key= lambda x:x[1])
+            users_topk[u] = [ x[0] for x in neighbours][:topK_clustering]
+
+        return users_topk
 
     def groundTruth_Clustering(self):
         users = []
@@ -196,15 +229,15 @@ class Server(cSimpleModule):
             users.append(get_distribution_by_genre(vector))
              
         users = np.array(users)
-        scaler = StandardScaler(with_mean=False)
-        users = scaler.fit_transform(users)
+        # scaler = StandardScaler(with_mean=False)
+        # users = scaler.fit_transform(users)
 
-        model = KMeans(n_clusters = clustersK, init="k-means++", random_state=1245).fit(users) 
+        model = KMeans(n_clusters = clustersK, random_state=1245).fit(users) 
         _labels = list(model.labels_)
         
         self.silhouette_avg = silhouette_score(users, _labels)
-        # print("For n_clusters = ", clustersK, "Average silhouette score is ", self.silhouette_avg)
-   
+        print("For n_clusters = ", clustersK, "Average silhouette score is ", self.silhouette_avg)
+        sys.stdout.flush()
         sample_silhouette_values = silhouette_samples(users, _labels)
 
         if sync_:
@@ -213,14 +246,29 @@ class Server(cSimpleModule):
         
         
         return _labels
-    
+
+    def Accuracy_Topk_Attack(self,users_topk, attacker_id, idx):
+        interacted_with_fair_recall = []
+        for u in users_topk[attacker_id]:
+            if u in self.cluster_found[attacker_id][idx]:
+                interacted_with_fair_recall.append(u)
+
+        found_and_relevant = set(users_topk[attacker_id]) & set(self.cluster_found[attacker_id][idx][:topK_clustering])
+        acc = len(found_and_relevant) / len(self.cluster_found[attacker_id][idx][:topK_clustering])   
+
+        if len(interacted_with_fair_recall) == 0:
+            acc_bound = 0
+        else:
+            acc_bound = len(found_and_relevant) / len(interacted_with_fair_recall)
+
+        return acc, acc_bound
+
     def Accuracy_Clustering_Attack(self, clusters, attacker_id, idx):
         if idx > len(self.cluster_found[attacker_id]):
             return 1 , 0 
             
         cluster_user = []
         for u,c in enumerate(clusters):
-            # find the cluster of attacker_id and users that belong to it
             if c == clusters[attacker_id] and u!= attacker_id:
                 cluster_user.append(u)
        
@@ -230,13 +278,19 @@ class Server(cSimpleModule):
                 interacted_with_fair_recall.append(u) 
 
         found_and_relevant = set(cluster_user) & set(self.cluster_found[attacker_id][idx][:topK_clustering])
-        acc = len(found_and_relevant) / len(self.cluster_found[attacker_id][idx][:topK_clustering])
-        if len(interacted_with_fair_recall) == 0:
+        
+        acc = len(found_and_relevant) / len(self.cluster_found[attacker_id][idx][:topK_clustering])        
+        if len(cluster_user) == 0:
             recall = 1
         else:
-            recall = len(found_and_relevant) / len(interacted_with_fair_recall)
+            recall = len(found_and_relevant) / len(cluster_user)
 
-        return acc, recall
+        if len(interacted_with_fair_recall) == 0:
+            recall_bound = 1
+        else:
+            recall_bound = len(found_and_relevant) / len(interacted_with_fair_recall)
+
+        return acc, recall, recall_bound
         
 
 

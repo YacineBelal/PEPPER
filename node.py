@@ -159,8 +159,8 @@ def jaccard_similarity(list1, list2):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 199
-        self.current_round = 0
+        self.rounds = 249
+        self.training_rounds = 600
         self.vector = np.empty(0)
         self.labels = np.empty(0)
         self.item_input = np.empty(0)
@@ -175,15 +175,22 @@ class Node(cSimpleModule):
         self.vector = get_user_vector(train,self.id_user)
         self.testRatings, self.testNegatives = get_user_test_set(testRatings,testNegatives,self.id_user)
         self.validationRatings, self.validationNegatives = get_user_test_set(validationRatings,validationNegatives,self.id_user)
-        
+        self.best_hr = 0.0
+        self.best_ndcg = 0.0
+        self.best_model = []
+
         self.positives_nums = len(self.vector)
 
         self.item_input, self.labels, self.user_input = self.my_dataset()
         self.model = util.get_model(self.num_items,self.num_users) # each node initialize its own model 
         self.model.compile(optimizer=Adam(lr=0.01), loss='binary_crossentropy')
+        
         self.period_message = cMessage('period_message')
-
+        init_model = self.get_model()
         self.update(epochs= 2, batch_size = 32)
+        self.attack_model = self.get_model()
+        self.model.set_weights(init_model)
+        self.update()
         self.peers = []
         self.neighbours = dict()
     
@@ -195,15 +202,11 @@ class Node(cSimpleModule):
     def handleMessage(self, msg):
         # periodic self sent message used as a timer by each node to diffuse its model 
         if msg.getName() == 'period_message':
-            if self.rounds >= 0 :
-                if  self.rounds % 25 == 0:
+            if self.rounds > 0 :
+                if self.rounds % 25 == 0:
                     lhr, lndcg = self.evaluate_local_model(False,False)
                     self.diffuse_to_server(lhr, lndcg)
-                # elif self.rounds == 1:
-                #     self.model.set_weights(self.best_model)
-                #     lhr, lndcg = self.evaluate_local_model(False, False)
-                #     self.diffuse_to_server(lhr,lndcg)
-
+                
                 self.diffuse_to_peer()
                 if self.rounds % 10 == 0:
                     # self.peer_sampling()
@@ -214,54 +217,65 @@ class Node(cSimpleModule):
                 self.scheduleAt(simTime() + self.period,self.period_message)
             
             elif self.rounds == 0: # if number of rounds has been acheived, we can evaluate the model both locally
-                    hr, ndcg = self.evaluate_local_model(False,False)
+                    lhr, lndcg = self.evaluate_local_model(False, False)                    
                     print('node : ',self.id_user)
-                    print('Local HR =  ', hr)
-                    print('Local NDCG =  ',ndcg)
-                    print("Profiles Found \n")
-                    best_profiles = sorted(list(self.neighbours.items()),key=lambda x: x[1]) 
-                    # print(best_profiles)
+                    print('Local HR =  ', lhr)
+                    print('Local NDCG =  ',lndcg)
                     sys.stdout.flush()
-             
-                
-             
-        elif msg.getName() == 'Model': 
-            # dt = self.merge(msg)
-            dt = self.DKL_mergeJ(msg)
-            # self.id_user == attacker_id 
-            self.find_profiles(msg)
-                
-            ## added the pull possibility
-            if msg.type == "push":
-                self.diffuse_to_specific_peer(msg.id)
-                self.current_round += 1
+                    self.diffuse_to_server(lhr, lndcg)
 
-            
+
+                
+             
+        elif msg.getName() == 'Model':
+            if self.training_rounds > 0:
+                # dt = self.merge(msg)
+                dt = self.DKL_mergeJ(msg)
+                # self.id_user == attacker_id 
+                self.find_profiles(msg)
+                    
+                ## added the pull possibility
+                if msg.type == "push":
+                    self.diffuse_to_specific_peer(msg.id)
+                
             self.delete(msg)
             
 
     def finish(self):
         pass
         
-    def find_profiles(self, msg):
-        items_embeddings = msg.weights[0]
-        self_items_embeddings = self.get_model()[0]
-        distance = 0
+    def find_profiles(self, msg, consider_user_embeddings = True):
+        if consider_user_embeddings:
+            self_user_embeddings = self.get_attack_model()[1]
+            user_embeddings = msg.weights[1]
+            distance = 0
+            for i in range(len(user_embeddings)):
+                distance += abs(cosine(self_user_embeddings[self.id_user], user_embeddings[msg.id]))        
 
-        for i in range(len(self_items_embeddings)):
-            if i in self.vector: # added to consider only items in the local set of the user
-                distance += abs(cosine(self_items_embeddings[i], items_embeddings[i]))
-        
-        distance /= len(self.vector)
-        if(self.neighbours.get(msg.id) == None):
-            self.neighbours[msg.id] = distance
-        else:
-            self.neighbours[msg.id] = distance  if distance  < self.neighbours[msg.id] else self.neighbours[msg.id]
+
+            if(self.neighbours.get(msg.id) == None):
+                self.neighbours[msg.id] = distance
+            else:
+                self.neighbours[msg.id] = distance  if distance  < self.neighbours[msg.id] else self.neighbours[msg.id]
+
+        else: # consider item embeddings for the case where user embeddings are not shared            
+            self_items_embeddings = self.get_attack_model()[0] 
+            items_embeddings = msg.weights[0]
+            distance = 0
+            for i in range(len(self_items_embeddings)):
+                if i in self.vector: # added to consider only items in the local set of the user
+                    distance += abs(cosine(self_items_embeddings[i], items_embeddings[i]))
+            
+            distance /= len(self.vector)
+            if(self.neighbours.get(msg.id) == None):
+                self.neighbours[msg.id] = distance
+            else:
+                self.neighbours[msg.id] = distance  if distance  < self.neighbours[msg.id] else self.neighbours[msg.id]
 
 
 
     def evaluate_local_model(self,all_dataset = False, validation=True, topK = topK):
-        evaluation_threads = mp.cpu_count()
+        evaluation_threads = 2 #mp.cpu_count()
         if not all_dataset:
             if validation :
                 (hits, ndcgs) = evaluate_model(self.model, self.validationRatings, self.validationNegatives, topK, evaluation_threads)               
@@ -273,12 +287,15 @@ class Node(cSimpleModule):
         return hr, ndcg
 
     def get_model(self):
-        return self.model.get_layer("item_embedding").get_weights().copy()
-        # return self.model.get_weights().copy()
+        # return self.model.get_layer("item_embedding").get_weights().copy()
+        return self.model.get_weights().copy()
+
+    def get_attack_model(self):
+        return self.attack_model
        
     def set_model(self, weights):
-        self.model.get_layer("item_embedding").set_weights(weights)
-        # self.model.set_weights(weights)
+        # self.model.get_layer("item_embedding").set_weights(weights)
+        self.model.set_weights(weights)
 
     def get_gate(self, peer):
         idx = self.getIndex()
@@ -300,18 +317,16 @@ class Node(cSimpleModule):
 
 
     def peer_sampling_enhanced(self):       
-        print("****** f le peer sampling enhanced")
 
         size = self.gateSize("no") - 1 
         self.peers = []
         exploitation_peers = int(number_peers * (1 - self.alpha))
-        self.performances = sorted(self.performances.items(), key=lambda x: x[1],reverse=True)  
+        self.performances = sorted(self.performances.items(), key= lambda x: x[1] ,reverse=True)  
         keys = [x[0] for x in self.performances]
         i = 0
 
         while i < exploitation_peers and i < len(keys):
-            p = self.get_gate(keys[i])
-            self.peers.append(p)
+            self.peers.append(keys[i])
             i += 1
                 
         self.performances = {}
@@ -320,14 +335,13 @@ class Node(cSimpleModule):
 
         for _ in range(exploration_peers):
             p = random.randint(0,size - 1)
-            while(self.get_gate(p) in self.peers):
+            while(p in self.peers or p == self.id_user):
                 p = random.randint(0,size - 1)
             self.peers.append(p)
 
-        print("****** ani kharedj")
-        sys.stdout.flush()
 
     def diffuse_to_specific_peer(self, id):
+
         weights = WeightsMessage('Model')
         weights.weights = self.get_model()
         weights.age = self.age       
@@ -350,13 +364,14 @@ class Node(cSimpleModule):
             weights.type = "push"
             self.send(weights, 'no$o',self.get_gate(peers[peer]))
             peers.pop(peer)
+                
+
 
     def diffuse_to_server(self,hr,ndcg):
         if self.rounds != 1:
             weights = WeightsMessage('Performance')
         else:
             weights = WeightsMessage('FinalPerformance')
-          # if self.id_user == attacker_id:
 
         neighbours = list(self.neighbours.items())
         neighbours.sort(key= lambda x:x[1])
@@ -372,18 +387,15 @@ class Node(cSimpleModule):
         hist = self.model.fit([self.user_input, self.item_input], #input
                         np.array(self.labels), # labels 
                         batch_size= batch_size, nb_epoch=epochs, verbose=2, shuffle=True) 
-        
-        # hr, _ = self.evaluate_local_model()
-        # if hr >= self.best_hr:
-            # self.best_hr = hr
-            # self.best_model = self.model.get_weights().copy()
-        
+   
         self.age = self.age + 1
+        
+        self.training_rounds -= 1
+
         print("Node : ",self.getIndex())
-        print("Rounds Left : ",self.rounds)
+        print("Training Rounds Left : ",self.training_rounds)
         sys.stdout.flush()
-
-
+        
         
     def merge(self,message_weights):
         weights = message_weights.weights
