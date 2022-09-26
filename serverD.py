@@ -1,4 +1,5 @@
 from audioop import avg
+import random
 from pyopp import cSimpleModule
 import sys 
 from sklearn.cluster import KMeans
@@ -12,13 +13,12 @@ import wandb
 import os 
 
 sync_ = 1
-name_ = "Pepper Attacked" #"Model_Age_Based Attacked"
+name_ =  "DPepper" # "Model_Age_Based Attacked" #  "Pepper Attacked"
 dataset_ = "ml-100k" #foursquareNYC   
 topK = 20
-topK_clustering = 20
+topK_clustering = 5
 clustersK= 10
 ground_truth_type = "topk" # None
-
 dataset = Dataset("ml-100k")
 
 
@@ -46,7 +46,7 @@ def get_distribution_by_genre(vector):
     dist = [0 for _ in range(19)]
     for item in vector:
         for i in range(len(dist)):
-            dist[i] += int(infos[item - 1][i]) 
+            dist[i] += int(infos[item][i]) 
         
     
     return dist
@@ -91,7 +91,7 @@ if  sync_:
     wandb_config = {
                 "Dataset": dataset_,
                 "Implementation": "TensorFlow",
-                "Rounds": 200,
+                "Rounds": 150,
                 "Nodes": 100,
                 "Learning_rate": 0.01,
                 "Epochs": 2,
@@ -103,15 +103,28 @@ if  sync_:
                 "Number of clusters": clustersK,
                 "Ground_Truth_type": ground_truth_type,
                 "Attacker id": "all",
-                "Distance_Metric": "Cosine",
-                "Distance computed on": "user_embeddings"
-                }
+                "Distance_Metric": "cosine_similarity",
+                "Distance computed on": "both user and items embeddings"
+                }   
 
     os.environ["WANDB_API_KEY"] = "334fd1cd4a03c95f4655357b92cdba2b7d706d4c"
     os.environ["WANDB_MODE"] = "offline"
     os.environ["WANDB_START_METHOD"] = "thread"
     wandb.init(project="DecentralizedGL", entity="drimfederatedlearning", name = name_, config = wandb_config)
    
+
+
+def cosine_similarity(list1, list2):
+        return 1 - cosine(list1,list2)
+
+
+# hypergeometric law!
+ # a elements respect the criteria; N population size, echantillon;
+def RandomBoundAccuracy(N, a = topK_clustering, n = topK_clustering):
+        p = a / N 
+        Expected_value = n * p 
+        return Expected_value / n
+
 
 class Server(cSimpleModule):
     
@@ -124,15 +137,16 @@ class Server(cSimpleModule):
         self.att_acc = defaultdict(list)
         self.att_acc_bound = defaultdict(list)
         self.att_recall = defaultdict(list)
+        self.att_random_bound = defaultdict(list) 
         # self.clusters = self.groundTruth_Clustering()
         self.clusters = self.groundTruth_TopK()
-    
+        
     def handleMessage(self, msg):
     
         self.hit_ratios[msg.round].append(msg.hit_ratio) # hit ratio ~ recall for recsys 
         self.ndcgs[msg.round].append(msg.ndcg) # ~ accuracy
         self.cluster_found[msg.user_id].append(msg.cluster_found)
-        
+                 
         # if msg.getName() == "Performance":            
         # elif msg.getName() == "FinalPerformance":
 
@@ -143,10 +157,12 @@ class Server(cSimpleModule):
         global wandb
         nb_rounds = max(self.hit_ratios.keys())
         idx_round = 0
+        rand_acc = RandomBoundAccuracy(N = self.num_participants)
         for round in self.hit_ratios.keys():
             avg_acc = 0
             avg_acc_bound = 0
-            avg_recall = 0               
+            avg_recall = 0 
+            avg_random_bound = 0              
             print("round = ", round)
             avg_hr = sum(self.hit_ratios[round]) / self.num_participants
             print("Average Test HR = ",avg_hr)
@@ -166,17 +182,23 @@ class Server(cSimpleModule):
             
             elif ground_truth_type == "topk":
                 for attacker in self.cluster_found.keys():
-                    acc, acc_bound = self.Accuracy_Topk_Attack(self.clusters, attacker, idx_round)
+                    acc, acc_bound, rand_bound = self.Accuracy_Topk_Attack(self.clusters, attacker, idx_round)
                     self.att_acc[round].append(acc)
                     self.att_acc_bound[round].append(acc_bound)
+                    self.att_random_bound[round].append(rand_bound)
                     avg_acc += acc
                     avg_acc_bound += acc_bound
+                    avg_random_bound += rand_bound
+
                 idx_round +=1
                 avg_acc = avg_acc / self.num_participants
                 avg_acc_bound = avg_acc_bound / self.num_participants
+                avg_random_bound =  avg_random_bound / self.num_participants
+
            
             if sync_ and ground_truth_type == "topk":
-                wandb.log({"Average HR": avg_hr,"Average NDCG": avg_ndcg, "Average Attack Acc": avg_acc ,"Average Attack Acc Bound": avg_acc_bound,
+                wandb.log({"Average HR": avg_hr,"Average NDCG": avg_ndcg, "Average Attack Acc": avg_acc ,"Average Attack Acc Bound": avg_acc_bound, 
+                "Average Random Bound": rand_acc , "Average Crossed Random Bound" : avg_random_bound,
                  "Round ": nb_rounds - round})
                 if round == 0:
                     wandb.log({"Final Average HR": avg_hr,"Final Average NDCG": avg_ndcg,
@@ -203,22 +225,54 @@ class Server(cSimpleModule):
             cdf(self.att_recall[0],"Attack Recall", topK_clustering)
             wandb.finish()
 
+
+   
+
+
+    def generateRandomCluster(self):
+        return random.sample(range(self.num_participants), topK_clustering)
+
+
+    def generateRandomBoundAccuracy(self, users_topk):
+        rand_bound = []
+        rand_accuracies = []
+        for u in range(self.num_participants):
+            rand_bound.append(self.generateRandomCluster())
+            found_and_relevant = set(users_topk[u]) & set(rand_bound[u])
+            acc = len(found_and_relevant) / len(users_topk[u])
+            rand_accuracies.append(acc)
+
+
+
+        return rand_accuracies
+
     def groundTruth_TopK(self):
         users = []
         for u in range(len(self.all_participants)):
             vector = get_user_vector(u)
-            users.append(get_distribution_by_genre(vector))
-             
+            dist = get_distribution_by_genre(vector)
+            s = sum(dist)
+            dist = [x/s for x in dist]
+            users.append(dist)
+        
+        
+        # scaler = StandardScaler(with_mean=False)
+        # users = scaler.fit_transform(users) 
         users_topk = defaultdict(list)
         for u1 in range(len(self.all_participants)):
             for u2 in range(len(self.all_participants)):
                 if u1 != u2 :
-                    users_topk[u1].append((u2, abs(euclidean(users[u1],users[u2]))))
+                    users_topk[u1].append((u2, cosine_similarity(users[u1],users[u2])))
         
         for u in range(len(self.all_participants)):
             neighbours = list(users_topk[u])
-            neighbours.sort(key= lambda x:x[1])
-            users_topk[u] = [ x[0] for x in neighbours][:topK_clustering]
+            neighbours.sort(key= lambda x:x[1], reverse = True)
+            users_topk[u] = [ x[0] for x in neighbours]
+            users_topk[u] = users_topk[u][:topK_clustering]
+            print("User ", u, " has true cluster@K :", users_topk[u])
+
+
+        sys.stdout.flush()
 
         return users_topk
 
@@ -249,20 +303,27 @@ class Server(cSimpleModule):
 
     def Accuracy_Topk_Attack(self,users_topk, attacker_id, idx):
         interacted_with_fair_recall = []
+        
         for u in users_topk[attacker_id]:
-            if u in self.cluster_found[attacker_id][idx]:
+            if u in self.cluster_found[attacker_id][len(self.cluster_found[attacker_id]) - 1]:
                 interacted_with_fair_recall.append(u)
 
         found_and_relevant = set(users_topk[attacker_id]) & set(self.cluster_found[attacker_id][idx][:topK_clustering])
-        acc = len(found_and_relevant) / len(self.cluster_found[attacker_id][idx][:topK_clustering])   
+        
+        size = len(self.cluster_found[attacker_id][idx])
+        acc = len(found_and_relevant) / len(users_topk[attacker_id])
 
         if len(interacted_with_fair_recall) == 0:
             acc_bound = 0
         else:
-            acc_bound = len(found_and_relevant) / len(interacted_with_fair_recall)
+            acc_bound = len(interacted_with_fair_recall) / len(users_topk[attacker_id])
 
-        return acc, acc_bound
+        random_acc = RandomBoundAccuracy(len(self.cluster_found[attacker_id]), len(interacted_with_fair_recall))
 
+        return acc, acc_bound, random_acc
+
+    
+    
     def Accuracy_Clustering_Attack(self, clusters, attacker_id, idx):
         if idx > len(self.cluster_found[attacker_id]):
             return 1 , 0 
