@@ -1,4 +1,3 @@
-from os import cpu_count
 import numpy as np
 from pyopp import cSimpleModule, cMessage, simTime
 from keras.optimizers import Adam, SGD
@@ -23,7 +22,9 @@ topK = 20
 dataset_name = "ml-100k" #foursquareNYC   ml-1m_version 
 num_items =  1682 # 38333  
 dataset = Dataset(dataset_name)
-train ,testRatings, testNegatives,validationRatings, validationNegatives = dataset.trainMatrix, dataset.testRatings, dataset.testNegatives,dataset.validationRatings, dataset.validationNegatives
+train ,testRatings, testNegatives, trainNegatives, \
+validationRatings, validationNegatives = dataset.trainMatrix, dataset.testRatings, dataset.testNegatives, \
+    dataset.trainNegatives, dataset.validationRatings, dataset.validationNegatives
 
 testRatings = testRatings[:1000] #  2453 1000
 testNegatives= testNegatives[:1000]
@@ -35,7 +36,6 @@ genre = 1 # action
 def get_user_vector(train,user = 0):
     positive_instances = []    
     for (u,i) in train.keys():
-       
         if u == user:
             positive_instances.append(i)
         if u  > user :
@@ -169,13 +169,32 @@ def mykey(el1, el2):
         
         return -1
 
+def get_training_as_list(train):
+    trainingList = []
+    for (u, i) in train.keys():
+        trainingList.append([u, i])
+    return trainingList
+
+def get_individual_set(user, ratings, negatives):
+    personal_Ratings = []
+    personal_Negatives = []
+
+    for i in range(len(ratings)):
+        idx = ratings[i][0]
+        if idx == user:
+            personal_Ratings.append(ratings[i].copy())
+            personal_Negatives.append(negatives[i].copy())
+        elif idx > user:
+            break
+
+    return personal_Ratings, personal_Negatives
 
 
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 100
-        self.training_rounds = 600
+        self.rounds = 250 #250
+        self.training_rounds = 1600 #800
         self.all_models = []  
         self.vector = np.empty(0)
         self.labels = np.empty(0)
@@ -183,12 +202,13 @@ class Node(cSimpleModule):
         self.age = 1
         self.alpha = 0.4
         self.num_items = num_items #train.shape[1] #1682 #3900  TO DO automate this, doesn't work since the validation data has been added because one item is present there and not in training
-        self.num_users = train.shape[0] #100 
+        self.num_users = 100 # train.shape[0] #100 
         self.id_user = self.getIndex()  
         self.period = 0 # np.random.exponential(0.1)
 
         # used to create fake profile here
         self.vector = get_user_vector(train,self.id_user)
+        self.trainRatings, self.trainNegatives = get_individual_set(self.id_user, get_training_as_list(train), trainNegatives)
         self.testRatings, self.testNegatives = get_user_test_set(testRatings,testNegatives,self.id_user)
         self.validationRatings, self.validationNegatives = get_user_test_set(validationRatings,validationNegatives,self.id_user)
         self.best_hr = 0.0
@@ -203,11 +223,11 @@ class Node(cSimpleModule):
         self.scaler = StandardScaler(with_mean=False)
         
         self.period_message = cMessage('period_message')
-        init_model = self.model.get_weights().copy()
-        # self.update(epochs= 1, batch_size = 32)
-        self.attack_model = self.model.get_weights()
+        # init_model = self.model.get_weights().copy()
+        # self.update(epochs= 25, batch_size = 64)
+        # self.attack_model = self.model.get_weights().copy()
         # self.all_models.append(self.attack_model)
-        self.model.set_weights(init_model)
+        # self.model.set_weights(init_model)
         self.update()
         self.all_models.append(self.get_model())
         
@@ -227,15 +247,21 @@ class Node(cSimpleModule):
         # periodic self sent message used as a timer by each node to diffuse its model 
         if msg.getName() == 'period_message':
             if self.rounds > 0 :
-                if self.rounds % 10 == 0:
-                    lhr, lndcg = self.evaluate_local_model(False,False)
+                if self.rounds % 10 == 0 or self.rounds == 1:
+                    if len(self.best_model) > 0:
+                        local = self.get_model()
+                        self.model.set_weights(self.best_model)
+                        lhr, lndcg = self.evaluate_local_model(False,False)
+                        self.model.set_weights(local)
+                    else:
+                        lhr, lndcg = self.evaluate_local_model(False,False)
                     self.diffuse_to_server(lhr, lndcg)
-                
+
                 self.diffuse_to_peer()
                 # self.broadcast()
                 if self.rounds % 10 == 0:
-                    self.peer_sampling()
-                    # self.peer_sampling_enhanced()
+                    # self.peer_sampling()
+                    self.peer_sampling_enhanced()
                
 
                 self.rounds = self.rounds - 1
@@ -255,17 +281,28 @@ class Node(cSimpleModule):
         elif msg.getName() == 'Model':
             # if self.rounds % 5 == 0:
                 # self.all_models.append(self.get_model())
-
             self.find_profiles(msg)
+
+            if self.training_rounds > 0:
             # dt = self.merge(msg)
-            dt = self.FullAvg(msg)
-            # dt = self.DKL_mergeJ(msg)
-            
-                
-            ## added the pull possibility
-            if msg.type == "push":
-                self.diffuse_to_specific_peer(msg.id)
+                # dt = self.FullAvg(msg)
+                dt = self.DKL_mergeJ(msg)
         
+
+                hr, ndcg = self.evaluate_local_model(False, True)
+                if hr >= self.best_hr:
+                    self.best_hr = hr
+                    self.best_ndcg = ndcg
+                    self.best_model = self.model.get_weights().copy()
+            # else:
+            #     print("Node ", self.id_user , " (hr,best_hr) = (", hr," , ", self.best_hr, ")")
+            #     sys.stdout.flush()
+
+
+            ## added the pull possibility
+            # if msg.type == "pull":
+            #     self.diffuse_to_specific_peer(msg.id)
+    
 
             self.delete(msg)
             
@@ -277,48 +314,67 @@ class Node(cSimpleModule):
     
             # 
     
-    def find_profiles(self, msg, consider_user_embeddings = True, average_distance = False):
-        # local_model = self.get_model()
-        # self.set_model(msg.weights)
-        # self.neighbours[msg.id] =  self.evaluate_local_model()
-        # self.set_model(local_model)
+    def find_profiles(self, msg, fine_tuned_model = True, distance_based = False):
         
-        # return 0
-        if average_distance:
-            average_similarity = 0
-            for j in range(len(self.all_models)):
-                similarity = 0
-                for i in range(2):
-                    received_embeddings = msg.weights[i]
-                    local_embeddings =  self.all_models[j][i]
-                    for k in range(len(received_embeddings)):
-                        if i == 0:
-                            if k in self.vector:
-                                similarity += cosine_similarity(local_embeddings[k], received_embeddings[k])
-                        elif i == 1:
-                            similarity /= len(self.vector)
-                            similarity = similarity / 2 + cosine_similarity(local_embeddings[self.id_user], received_embeddings[msg.id]) / 2
-                            average_similarity += similarity
-                            break
-            average_similarity /= len(self.all_models)
-            self.neighbours[msg.id] = (average_similarity, 0)
         
-        else:
-            similarity = 0
-            for i in range(2): # user and items embeddings
-                local_embeddings =  self.get_model()[i]
-                received_embeddings = msg.weights[i]
-
-                for j in self.vector:
-                    if i == 0:
-                        similarity = cosine_similarity(local_embeddings[j], received_embeddings[j])
-                    if i == 1:
-                        similarity /= len(self.vector)
-                        similarity = similarity / 2 + cosine_similarity(local_embeddings[self.id_user], received_embeddings[msg.id]) / 2
-                        break
-
-            self.neighbours[msg.id] = ( similarity, 0)
+        if not distance_based:
+            # just evaluating the items embeddings
+            local_items_embeddings = self.model.get_layer('item_embedding').get_weights()
+            self.model.get_layer('item_embedding').set_weights([msg.weights[0]])
             
+            _, ndcg = self.evaluate_on_train()
+            
+            self.neighbours[msg.id] = (ndcg, 1)
+
+            # if self.neighbours.get(msg.id) is None:
+            #     self.neighbours[msg.id] = (ndcg, 1)
+            # else:
+            #     # similarity = ( similarity + self.neighbours[msg.id][1] * self.neighbours[msg.id][0] ) / ( self.neighbours[msg.id][1] + 1) 
+            #     # self.neighbours[msg.id] = (similarity, self.neighbours[msg.id][1] + 1)  
+            #     self.neighbours[msg.id] = (ndcg, self.neighbours[msg.id][1]) if ndcg > self.neighbours[msg.id][0] else self.neighbours[msg.id]
+
+            self.model.get_layer('item_embedding').set_weights(local_items_embeddings)
+        else:
+        
+            similarity = 0
+            if fine_tuned_model:
+                
+                for i in range(2): # user and items embeddings
+                    local_embeddings =  self.get_model()[i]
+                    received_embeddings = msg.weights[i]
+                    for j in self.vector:
+                        if i == 0:
+                            similarity += euclidean(local_embeddings[j], received_embeddings[j])
+                        if i == 1:
+                            similarity /= len(self.vector)
+                            similarity = similarity / 2 + euclidean(local_embeddings[self.id_user], received_embeddings[msg.id]) / 2
+                            break
+
+               
+                
+            else:
+                for i in range(2): # user and items embeddings
+                    local_embeddings =  self.get_model()[i]
+                    received_embeddings = msg.weights[i]
+                    for j in self.vector:
+                        if i == 0:
+                            similarity += euclidean(local_embeddings[j], received_embeddings[j])
+                        if i == 1:
+                            similarity /= len(self.vector)
+                            similarity = similarity / 2 + euclidean(local_embeddings[self.id_user], received_embeddings[msg.id]) / 2
+                            break
+
+                
+            # *************** incermental averaging here 
+            if self.neighbours.get(msg.id) is None:
+                self.neighbours[msg.id] = (similarity, 1)
+            else:
+                similarity = ( similarity + self.neighbours[msg.id][1] * self.neighbours[msg.id][0] ) / ( self.neighbours[msg.id][1] + 1) 
+                self.neighbours[msg.id] = (similarity, self.neighbours[msg.id][1] + 1)  
+                # self.neighbours[msg.id] = (similarity, 0) 
+                # if similarity > self.neighbours[msg.id][0] else self.neighbours[msg.id]
+
+
             # topk = sorted(list(self.neighbours.items()), key= lambda x:x[1][0], reverse = True)[:20]
             # for k in self.neighbours.keys():
             #     if k in topk:
@@ -329,6 +385,12 @@ class Node(cSimpleModule):
 
           
            
+    def evaluate_on_train(self):
+        evaluation_threads = 2 #mp.cpu_count()
+        (hits, ndcgs) = evaluate_model(self.model, self.trainRatings, self.trainNegatives, topK, evaluation_threads)               
+        hr, ndcg = np.array(hits).mean(), np.array(ndcgs).mean()
+        return hr, ndcg
+
     def evaluate_local_model(self,all_dataset = False, validation=True, topK = topK):
         evaluation_threads = 2 #mp.cpu_count()
         if not all_dataset:
@@ -360,7 +422,6 @@ class Node(cSimpleModule):
             return peer - 1 
 
     def peer_sampling(self):
-        # return 
         size = self.gateSize("no") - 1
         old_peers = self.peers.copy()
         self.peers = []
@@ -373,7 +434,6 @@ class Node(cSimpleModule):
 
 
     def peer_sampling_enhanced(self):       
-
         size = self.gateSize("no") - 1 
         self.peers = []
         exploitation_peers = int(number_peers * (1 - self.alpha))
@@ -402,7 +462,7 @@ class Node(cSimpleModule):
         weights.weights = self.get_model()
         weights.age = self.age       
         weights.samples = self.positives_nums 
-        weights.type = "pull"
+        weights.type = "push"
         weights.id = self.getIndex()
 
         self.send(weights, 'no$o', self.get_gate(id))
@@ -414,11 +474,11 @@ class Node(cSimpleModule):
             weights.age = self.age       
             weights.samples = self.positives_nums 
             weights.id = self.id_user
-            weights.type = "push"
+            weights.type = "pull"
             self.send(weights, 'no$o',self.get_gate(p))
 
     # select random peers and send its model weights and its age to it  
-    def diffuse_to_peer(self,nb_peers = 3): 
+    def diffuse_to_peer(self,nb_peers = 3, type = "pull"): 
         peers = self.peers.copy()
         for _ in range(nb_peers):
             peer = random.randint(0,len(peers)-1)
@@ -427,7 +487,7 @@ class Node(cSimpleModule):
             weights.age = self.age       
             weights.samples = self.positives_nums 
             weights.id = self.id_user
-            weights.type = "push"
+            weights.type = type
             self.send(weights, 'no$o',self.get_gate(peers[peer]))
             peers.pop(peer)
                 
@@ -437,13 +497,13 @@ class Node(cSimpleModule):
             weights = WeightsMessage('Performance')
         else:
             weights = WeightsMessage('FinalPerformance')
+            weights.model = self.get_model()
+            weights.vector = self.vector
+
 
         neighbours = list(self.neighbours.items())
         neighbours.sort(key= lambda x:x[1][0], reverse = True)
         weights.cluster_found = [x[0] for x in neighbours]
-        print("I'm node ", self.id_user, "and my neighbours are :", self.neighbours.items())
-        print("I'm node ", self.id_user, "and my cluster is :", weights.cluster_found[:20])
-        sys.stdout.flush()
         weights.user_id = self.id_user
         weights.round = self.rounds
         weights.hit_ratio = hr
@@ -455,14 +515,14 @@ class Node(cSimpleModule):
         batch_size = len(self.labels) if batch_size == None else batch_size
         hist = self.model.fit([self.user_input, self.item_input], #input
                         np.array(self.labels), # labels 
-                        batch_size= batch_size, nb_epoch=epochs, verbose=2, shuffle=True) 
+                        batch_size= batch_size, nb_epoch=epochs, verbose=0, shuffle=True) 
    
         self.age = self.age + 1
         
         self.training_rounds -= 1
 
         print("Node : ",self.getIndex())
-        print("Rounds Left : ",self.rounds)
+        print("Rounds Left : ",self.training_rounds)
         sys.stdout.flush()
         
         
@@ -497,24 +557,30 @@ class Node(cSimpleModule):
 
         return 0
 
-    def DKL_mergeJ(self,message_weights):  
-        local = self.get_model()
-        # user_embedding = local[1][self.id_user].copy()
-        hrs = []
-        lhr, _ =self.evaluate_local_model()
-        hrs.append(lhr)
-        self.set_model(message_weights.weights)
-        hr, _ = self.evaluate_local_model()
-        self.performances[message_weights.id] = hr
-        hrs.append(hr)
-
-        hrs_total = sum(hrs)
+    def DKL_mergeJ(self,message_weights): 
         
-        if(hrs_total) == 0:
+        if len(self.validationRatings) < 2:
+            self.simple_merge(message_weights.weights)
+            self.item_input, self.labels, self.user_input = self.my_dataset()
+            self.update()
+            return 0
+         
+        local = self.get_model()
+        ndcgs = []
+        lhr,lndcg =self.evaluate_local_model()
+        ndcgs.append(lhr * lndcg)
+        self.set_model(message_weights.weights)
+        hr, ndcg = self.evaluate_local_model()
+        self.performances[message_weights.id] = hr * ndcg
+        ndcgs.append(hr * ndcg)
+
+        ndcg_total = sum(ndcgs)
+        
+        if(ndcg_total) == 0:
             self.set_model(local)
             return 0
 
-        norm = [ (float(i))/hrs_total for i in hrs]
+        norm = [ (float(i))/ndcg_total for i in ndcgs]
             
 
         local[:] = [w * norm[0] for w in local]
