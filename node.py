@@ -193,8 +193,8 @@ def get_individual_set(user, ratings, negatives):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 250 #250
-        self.training_rounds = 1600 #800
+        self.rounds = 300 #250
+        self.training_rounds = 1000 #800
         self.all_models = []  
         self.vector = np.empty(0)
         self.labels = np.empty(0)
@@ -206,7 +206,6 @@ class Node(cSimpleModule):
         self.id_user = self.getIndex()  
         self.period = 0 # np.random.exponential(0.1)
 
-        # used to create fake profile here
         self.vector = get_user_vector(train,self.id_user)
         self.trainRatings, self.trainNegatives = get_individual_set(self.id_user, get_training_as_list(train), trainNegatives)
         self.testRatings, self.testNegatives = get_user_test_set(testRatings,testNegatives,self.id_user)
@@ -220,21 +219,13 @@ class Node(cSimpleModule):
         self.item_input, self.labels, self.user_input = self.my_dataset()
         self.model = util.get_model(self.num_items,self.num_users) # each node initialize its own model 
         self.model.compile(optimizer=Adam(lr=0.01), loss='binary_crossentropy')
-        self.scaler = StandardScaler(with_mean=False)
+        # self.scaler = StandardScaler(with_mean=False)
         
         self.period_message = cMessage('period_message')
-        # init_model = self.model.get_weights().copy()
-        # self.update(epochs= 25, batch_size = 64)
-        # self.attack_model = self.model.get_weights().copy()
-        # self.all_models.append(self.attack_model)
-        # self.model.set_weights(init_model)
         self.update()
         self.all_models.append(self.get_model())
         
         self.peers =  []
-        # for i in range(100):
-            # self.peers.append(i)
-        # self.peers.remove(self.id_user)
         
         self.neighbours = dict()
         
@@ -247,15 +238,19 @@ class Node(cSimpleModule):
         # periodic self sent message used as a timer by each node to diffuse its model 
         if msg.getName() == 'period_message':
             if self.rounds > 0 :
-                if self.rounds % 10 == 0 or self.rounds == 1:
-                    if len(self.best_model) > 0:
-                        local = self.get_model()
-                        self.model.set_weights(self.best_model)
-                        lhr, lndcg = self.evaluate_local_model(False,False)
-                        self.model.set_weights(local)
-                    else:
-                        lhr, lndcg = self.evaluate_local_model(False,False)
-                    self.diffuse_to_server(lhr, lndcg)
+
+                if self.rounds % 10 == 0:
+                    lhr, lndcg = self.evaluate_local_model(False,False)   
+                elif self.rounds == 1:
+                    self.model.set_weights(self.best_model)
+                    lhr, lndcg = self.evaluate_local_model(False,False)
+                
+                print('node : ',self.id_user)
+                print('Local HR =  ', lhr)
+                print('Local NDCG =  ',lndcg)
+                print('Round left = ', self.rounds)
+                sys.stdout.flush()
+                self.diffuse_to_server(lhr, lndcg)
 
                 self.diffuse_to_peer()
                 # self.broadcast()
@@ -272,7 +267,8 @@ class Node(cSimpleModule):
                     print('node : ',self.id_user)
                     print('Local HR =  ', lhr)
                     print('Local NDCG =  ',lndcg)
-                    sys.stdout.flush()
+                    print('Round left = ', self.rounds)
+                    sys.stdout.flush() 
                     self.diffuse_to_server(lhr, lndcg)
 
 
@@ -283,17 +279,17 @@ class Node(cSimpleModule):
                 # self.all_models.append(self.get_model())
             self.find_profiles(msg)
 
-            if self.training_rounds > 0:
+            # if self.training_rounds > 0:
             # dt = self.merge(msg)
                 # dt = self.FullAvg(msg)
-                dt = self.DKL_mergeJ(msg)
+            dt = self.DKL_mergeJ(msg)
         
 
-                hr, ndcg = self.evaluate_local_model(False, True)
-                if hr >= self.best_hr:
-                    self.best_hr = hr
-                    self.best_ndcg = ndcg
-                    self.best_model = self.model.get_weights().copy()
+            hr, ndcg = self.evaluate_local_model(False, True)
+            if hr >= self.best_hr:
+                self.best_hr = hr
+                self.best_ndcg = ndcg
+                self.best_model = self.model.get_weights().copy()
             # else:
             #     print("Node ", self.id_user , " (hr,best_hr) = (", hr," , ", self.best_hr, ")")
             #     sys.stdout.flush()
@@ -481,15 +477,15 @@ class Node(cSimpleModule):
     def diffuse_to_peer(self,nb_peers = 3, type = "pull"): 
         peers = self.peers.copy()
         for _ in range(nb_peers):
-            peer = random.randint(0,len(peers)-1)
+            peer = random.choice(self.peers)
             weights = WeightsMessage('Model')
             weights.weights = self.get_model()
             weights.age = self.age       
             weights.samples = self.positives_nums 
             weights.id = self.id_user
             weights.type = type
-            self.send(weights, 'no$o',self.get_gate(peers[peer]))
-            peers.pop(peer)
+            self.send(weights, 'no$o',self.get_gate(peer))
+            peers.remove(peer)
                 
 
     def diffuse_to_server(self,hr,ndcg):

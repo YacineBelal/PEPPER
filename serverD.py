@@ -108,7 +108,7 @@ if sync_:
     wandb_config = {
         "Dataset": dataset_,
         "Implementation": "TensorFlow",
-        "Rounds": 350,
+        "Rounds": 300,
         "Nodes": 100,
         "Learning_rate": 0.01,
         "Epochs": 2,
