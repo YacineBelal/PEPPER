@@ -193,7 +193,7 @@ def get_individual_set(user, ratings, negatives):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 300 #250
+        self.rounds = 500 #250
         self.training_rounds = 1000 #800
         self.all_models = []  
         self.vector = np.empty(0)
