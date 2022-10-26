@@ -1,0 +1,16 @@
+2022-10-26 12:53:40,141 INFO    StreamThr :2857306 [internal.py:wandb_internal():88] W&B internal server running at pid: 2857306, started at: 2022-10-26 12:53:40.141222
+2022-10-26 12:53:40,143 DEBUG   HandlerThread:2857306 [handler.py:handle_request():138] handle_request: status
+2022-10-26 12:53:40,143 DEBUG   SenderThread:2857306 [sender.py:send_request():315] send_request: status
+2022-10-26 12:53:40,144 INFO    WriterThread:2857306 [datastore.py:open_for_write():75] open: /home/yacine/git/PersonalizedGL/wandb/offline-run-20221026_125340-3c1ttom1/run-3c1ttom1.wandb
+2022-10-26 12:53:40,167 DEBUG   HandlerThread:2857306 [handler.py:handle_request():138] handle_request: run_start
+2022-10-26 12:53:42,072 DEBUG   HandlerThread:2857306 [meta.py:__init__():34] meta init
+2022-10-26 12:53:42,072 DEBUG   HandlerThread:2857306 [meta.py:__init__():49] meta init done
+2022-10-26 12:53:42,072 DEBUG   HandlerThread:2857306 [meta.py:probe():215] probe
+2022-10-26 12:53:42,075 DEBUG   HandlerThread:2857306 [meta.py:_setup_git():205] setup git
+2022-10-26 12:53:42,079 DEBUG   HandlerThread:2857306 [meta.py:_setup_git():212] setup git done
+2022-10-26 12:53:42,079 DEBUG   HandlerThread:2857306 [meta.py:_save_pip():53] save pip
+2022-10-26 12:53:42,079 DEBUG   HandlerThread:2857306 [meta.py:_save_pip():67] save pip done
+2022-10-26 12:53:42,079 DEBUG   HandlerThread:2857306 [meta.py:probe():253] probe done
+2022-10-26 12:53:49,151 WARNING StreamThr :2857306 [internal.py:is_dead():385] Internal process exiting, parent pid 2857259 disappeared
+2022-10-26 12:53:49,151 ERROR   StreamThr :2857306 [internal.py:wandb_internal():147] Internal process shutdown.
+2022-10-26 12:53:49,169 INFO    MainThread:2857306 [internal.py:handle_exit():78] Internal process exited

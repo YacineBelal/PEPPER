@@ -1,0 +1,14 @@
+2022-10-26 12:56:07,662 INFO    StreamThr :2857771 [internal.py:wandb_internal():88] W&B internal server running at pid: 2857771, started at: 2022-10-26 12:56:07.661880
+2022-10-26 12:56:07,665 DEBUG   HandlerThread:2857771 [handler.py:handle_request():138] handle_request: status
+2022-10-26 12:56:07,665 DEBUG   SenderThread:2857771 [sender.py:send_request():315] send_request: status
+2022-10-26 12:56:07,666 INFO    WriterThread:2857771 [datastore.py:open_for_write():75] open: /home/yacine/git/PersonalizedGL/wandb/offline-run-20221026_125607-1ymjatse/run-1ymjatse.wandb
+2022-10-26 12:56:07,689 DEBUG   HandlerThread:2857771 [handler.py:handle_request():138] handle_request: run_start
+2022-10-26 12:56:07,692 DEBUG   HandlerThread:2857771 [meta.py:__init__():34] meta init
+2022-10-26 12:56:07,692 DEBUG   HandlerThread:2857771 [meta.py:__init__():49] meta init done
+2022-10-26 12:56:07,692 DEBUG   HandlerThread:2857771 [meta.py:probe():215] probe
+2022-10-26 12:56:07,693 DEBUG   HandlerThread:2857771 [meta.py:_setup_git():205] setup git
+2022-10-26 12:56:07,696 DEBUG   HandlerThread:2857771 [meta.py:_setup_git():212] setup git done
+2022-10-26 12:56:07,696 DEBUG   HandlerThread:2857771 [meta.py:_save_pip():53] save pip
+2022-10-26 12:56:07,696 DEBUG   HandlerThread:2857771 [meta.py:_save_pip():67] save pip done
+2022-10-26 12:56:07,696 DEBUG   HandlerThread:2857771 [meta.py:probe():253] probe done
+2022-10-26 12:56:12,689 INFO    MainThread:2857771 [internal.py:handle_exit():78] Internal process exited

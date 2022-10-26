@@ -239,18 +239,19 @@ class Node(cSimpleModule):
         if msg.getName() == 'period_message':
             if self.rounds > 0 :
 
-                if self.rounds % 10 == 0:
-                    lhr, lndcg = self.evaluate_local_model(False,False)   
-                elif self.rounds == 1:
-                    self.model.set_weights(self.best_model)
-                    lhr, lndcg = self.evaluate_local_model(False,False)
+                if self.rounds % 10 == 0 or self.rounds == 1:
+                    if self.rounds % 10 == 0:
+                        lhr, lndcg = self.evaluate_local_model(False,False)   
+                    else:
+                        self.model.set_weights(self.best_model)
+                        lhr, lndcg = self.evaluate_local_model(False,False)
                 
-                print('node : ',self.id_user)
-                print('Local HR =  ', lhr)
-                print('Local NDCG =  ',lndcg)
-                print('Round left = ', self.rounds)
-                sys.stdout.flush()
-                self.diffuse_to_server(lhr, lndcg)
+                    print('node : ',self.id_user)
+                    print('Local HR =  ', lhr)
+                    print('Local NDCG =  ',lndcg)
+                    print('Round left = ', self.rounds)
+                    sys.stdout.flush()
+                    self.diffuse_to_server(lhr, lndcg)
 
                 self.diffuse_to_peer()
                 # self.broadcast()
@@ -477,7 +478,7 @@ class Node(cSimpleModule):
     def diffuse_to_peer(self,nb_peers = 3, type = "pull"): 
         peers = self.peers.copy()
         for _ in range(nb_peers):
-            peer = random.choice(self.peers)
+            peer = random.choice(peers)
             weights = WeightsMessage('Model')
             weights.weights = self.get_model()
             weights.age = self.age       
