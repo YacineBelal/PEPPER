@@ -7,56 +7,9 @@ Setting up Cmdenv...
 Loading NED files from .:  1
 
 Preparing for running configuration General, run #0...
-Assigned runID=General-0-20221026-01:26:27-1136002
+Assigned runID=General-0-20221026-12:56:04-2857731
 Setting up network "RandomGraph"...
 wandb: Tracking run with wandb version 0.13.3
 wandb: W&B syncing is set to `offline` in this directory.  
 wandb: Run `wandb online` or set WANDB_MODE=online to enable cloud syncing.
 Initializing...
-Using Theano backend.
-WARNING (theano.tensor.blas): We did not find a dynamic library in the library_dir of the library we use for blas. If you use ATLAS, make sure to compile it with dynamics library.
-ml-100k
-ml-100k
-Node :  0
-Rounds Left :  999
-size = 99
-
-[Warning: Program was compiled without debug info, you might not be able to debug.]
-
-RUNTIME ERROR. A cRuntimeError exception is about to be thrown, and you
-requested (by setting debug-on-errors=true in the ini file) that errors
-abort execution and break into the debugger.
-
-You should now probably be running the simulation under gdb or another
-debugger. The simulation kernel will now raise a SIGINT signal which will
-get you into the debugger. If you are not running under a debugger, you can
-still use the core dump for post-mortem debugging. Once in the debugger,
-view the call stack (in gdb: "bt" command) to see the context of the
-runtime error.
-
-<!> pybind11::error_already_set: SystemExit: 1
-
-At:
-  /usr/lib/python3.8/_sitebuiltins.py(26): __call__
-  /home/yacine/git/PersonalizedGL/node.py(428): peer_sampling
-  /home/yacine/git/PersonalizedGL/node.py(241): initialize
- -- in module (PycSimpleModule) RandomGraph.Noeuds[0] (id=3), during network initialization
-
-TRAPPING on the exception above, due to a debug-on-errors=true configuration option. Is your debugger ready?
-Exception in thread MsgRouterThr:
-Traceback (most recent call last):
-  File "/usr/lib/python3.10/threading.py", line 1016, in _bootstrap_inner
-    self.run()
-  File "/usr/lib/python3.10/threading.py", line 953, in run
-    self._target(*self._args, **self._kwargs)
-  File "/home/yacine/.local/lib/python3.10/site-packages/wandb/sdk/interface/router.py", line 70, in message_loop
-    msg = self._read_message()
-  File "/home/yacine/.local/lib/python3.10/site-packages/wandb/sdk/interface/router_queue.py", line 36, in _read_message
-    msg = self._response_queue.get(timeout=1)
-  File "/usr/lib/python3.10/multiprocessing/queues.py", line 117, in get
-    res = self._recv_bytes()
-  File "/usr/lib/python3.10/multiprocessing/connection.py", line 217, in recv_bytes
-    self._check_closed()
-  File "/usr/lib/python3.10/multiprocessing/connection.py", line 141, in _check_closed
-    raise OSError("handle is closed")
-OSError: handle is closed
