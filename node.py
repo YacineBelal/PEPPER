@@ -193,8 +193,7 @@ def get_individual_set(user, ratings, negatives):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 500 #250
-        self.training_rounds = 1000 #800
+        self.rounds = 480 
         self.all_models = []  
         self.vector = np.empty(0)
         self.labels = np.empty(0)
@@ -280,7 +279,6 @@ class Node(cSimpleModule):
                 # self.all_models.append(self.get_model())
             self.find_profiles(msg)
 
-            # if self.training_rounds > 0:
             # dt = self.merge(msg)
                 # dt = self.FullAvg(msg)
             dt = self.DKL_mergeJ(msg)
@@ -291,9 +289,6 @@ class Node(cSimpleModule):
                 self.best_hr = hr
                 self.best_ndcg = ndcg
                 self.best_model = self.model.get_weights().copy()
-            # else:
-            #     print("Node ", self.id_user , " (hr,best_hr) = (", hr," , ", self.best_hr, ")")
-            #     sys.stdout.flush()
 
 
             ## added the pull possibility
@@ -516,10 +511,9 @@ class Node(cSimpleModule):
    
         self.age = self.age + 1
         
-        self.training_rounds -= 1
 
         print("Node : ",self.getIndex())
-        print("Rounds Left : ",self.training_rounds)
+        print("Rounds Left : ",self.rounds)
         sys.stdout.flush()
         
         
