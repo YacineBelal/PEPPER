@@ -7,30 +7,24 @@ import utility as util
 import random
 import sys
 from evaluate import evaluate_model
-from scipy.spatial.distance import cosine, euclidean
-from sklearn.preprocessing import StandardScaler
 import multiprocessing as mp
 
 
 
-import time
 
-# attack parameters
-# attacker_id = 49
 
 topK = 20
 dataset_name = "ml-100k" #foursquareNYC   ml-1m_version 
 num_items =  1682 # 38333  
 dataset = Dataset(dataset_name)
-train ,testRatings, testNegatives, trainNegatives, \
+train ,testRatings, testNegatives, \
 validationRatings, validationNegatives = dataset.trainMatrix, dataset.testRatings, dataset.testNegatives, \
-    dataset.trainNegatives, dataset.validationRatings, dataset.validationNegatives
+    dataset.validationRatings, dataset.validationNegatives
 
 testRatings = testRatings[:1000] #  2453 1000
 testNegatives= testNegatives[:1000]
 
 number_peers = 3
-genre = 1 # action
 
 
 def get_user_vector(train,user = 0):
@@ -56,54 +50,6 @@ def get_user_test_set(testRatings,testNegatives,user):
             break
         
     return personal_testRatings,personal_testNegatives
-
-
-def get_genreattacked_prop(vector):
-    infos = []
-    with open("u.item",'r', encoding="ISO-8859-1") as info:
-        line = info.readline()
-        while(line and line!=''):
-            arr = line.split("|")
-            temp = arr[-19:]
-            infos.append(temp)
-            line = info.readline()
-    prop = 0
-    for item in vector:
-        if infos[item][genre] == "1":
-            prop += 1
-    return prop /  len(vector)
-
-def create_profile(idx):
-    infos = []
-    vector = []
-    with open("u.item",'r', encoding="ISO-8859-1") as info:
-        line = info.readline()
-        while(line and line!=''):
-            arr = line.split("|")
-            temp = arr[-19:]
-            infos.append(temp)
-            line = info.readline()
-    
-    for it in range(num_items):
-        # action movies
-        if infos[it][genre] == "1":
-            vector.append(it)
-
-    n = len(vector)
-    u = [idx] * n
-    testRatings = [x for x in  zip(u,vector[:int(0.1 * n)])]
-    validationRatings = [x for x in  zip(u,vector[int(0.1 * n):int(0.2 * n)])]
-    testNegatives = []
-    validationNegatives = []
-    for _ in testRatings:
-        testNegatives.append(list(np.random.randint(0,num_items, size = 99)))
-    for _ in validationRatings:
-        validationNegatives.append(list(np.random.randint(0,num_items, size = 99)))
-    vector =  vector[int(0.2 *n):]
-
-
-    return vector, testRatings, testNegatives, validationRatings, validationNegatives
-    
 
 def get_distribution_by_genre(vector):
     infos = []
@@ -148,27 +94,6 @@ def get_global_distribution_by_genre():
     dist = [elem / summ for elem in dist]
     return dist
 
-
-def jaccard_similarity(list1, list2):
-        s1 = set(list1)
-        s2 = set(list2)
-        return float(len(s1.intersection(s2)) / len(s1.union(s2)))
-
-
-def cosine_similarity(list1, list2):
-        return 1 - cosine(list1,list2)
-        # return 1 - 0
-
-def mykey(el1, el2):
-        # bigger frequency
-        if el1[1][1] > el2[1][1]:
-            return 1
-            # better similarity
-        elif el1[1][1] == el2[1][1] and el1[1][0] > el2[1][0]:
-            return 1
-        
-        return -1
-
 def get_training_as_list(train):
     trainingList = []
     for (u, i) in train.keys():
@@ -194,7 +119,6 @@ class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
         self.rounds = 480 
-        self.all_models = []  
         self.vector = np.empty(0)
         self.labels = np.empty(0)
         self.item_input = np.empty(0)
@@ -206,7 +130,6 @@ class Node(cSimpleModule):
         self.period = 0 # np.random.exponential(0.1)
 
         self.vector = get_user_vector(train,self.id_user)
-        self.trainRatings, self.trainNegatives = get_individual_set(self.id_user, get_training_as_list(train), trainNegatives)
         self.testRatings, self.testNegatives = get_user_test_set(testRatings,testNegatives,self.id_user)
         self.validationRatings, self.validationNegatives = get_user_test_set(validationRatings,validationNegatives,self.id_user)
         self.best_hr = 0.0
@@ -222,12 +145,9 @@ class Node(cSimpleModule):
         
         self.period_message = cMessage('period_message')
         self.update()
-        self.all_models.append(self.get_model())
         
         self.peers =  []
-        
-        self.neighbours = dict()
-        
+                
         self.peer_sampling()
         self.performances = {}
         self.scheduleAt(simTime() + self.period,self.period_message)
@@ -253,11 +173,13 @@ class Node(cSimpleModule):
                     sys.stdout.flush()
                     self.diffuse_to_server(lhr, lndcg)
 
+                if self.id_user % 9 == 0:
+                    self.FedAtt()
                 self.diffuse_to_peer()
-                # self.broadcast()
+                
                 if self.rounds % 10 == 0:
-                    # self.peer_sampling()
-                    self.peer_sampling_enhanced()
+                    self.peer_sampling()
+                    # self.peer_sampling_enhanced()
                
 
                 self.rounds = self.rounds - 1
@@ -276,13 +198,10 @@ class Node(cSimpleModule):
                 
              
         elif msg.getName() == 'Model':
-            # if self.rounds % 5 == 0:
-                # self.all_models.append(self.get_model())
-            self.find_profiles(msg)
 
             # dt = self.merge(msg)
-            # dt = self.FullAvg(msg)
-            dt = self.DKL_mergeJ(msg)
+            dt = self.FullAvg(msg)
+            # dt = self.DKL_mergeJ(msg)
         
 
             hr, ndcg = self.evaluate_local_model(False, True)
@@ -290,13 +209,7 @@ class Node(cSimpleModule):
                 self.best_hr = hr
                 self.best_ndcg = ndcg
                 self.best_model = self.model.get_weights().copy()
-
-
-            ## added the pull possibility
-            # if msg.type == "pull":
-            #     self.diffuse_to_specific_peer(msg.id)
     
-
             self.delete(msg)
             
 
@@ -305,45 +218,22 @@ class Node(cSimpleModule):
     
 
     
-            # 
     
-    def find_profiles(self, msg, fine_tuned_model = True, based_on_items_only = True):
-        
-        
-        if based_on_items_only:
-            # just evaluating the items embeddings
-            local_items_embeddings = self.model.get_layer('item_embedding').get_weights()
-            self.model.get_layer('item_embedding').set_weights([msg.weights[0]])
-            
-            _, ndcg = self.evaluate_on_train_items()
-            
-            self.neighbours[msg.id] = (ndcg, 1)
-
-            self.model.get_layer('item_embedding').set_weights(local_items_embeddings)
-        else:
-            local_model = self.model.get_weights().copy()
-            self.model.set_weights(msg.weights)
-            _, ndcg = self.evaluate_on_train(user = msg.id)
-            self.neighbours[msg.id] = (ndcg, 1)
-            self.model.set_weights(local_model)
-                    
-    def evaluate_on_train_items(self):
-        evaluation_threads = 1 #mp.cpu_count()
-        (hits, ndcgs) = evaluate_model(self.model, self.trainRatings, self.trainNegatives, topK, evaluation_threads)               
-        hr, ndcg = np.array(hits).mean(), np.array(ndcgs).mean()
-        return hr, ndcg
+    def FedAtt(self):
+        self.item_input, self.labels, self.user_input = self.my_dataset(num_negatives = 0)
+        self.update()
+        self.user_embeddings = self.model.get_weights()[1][self.id_user]
+        items = []
+        for i in range(len(self.model.get_weights()[0])): # for all unseen items, compute dot product
+            if i not in self.vector:
+                items.append((i, np.dot(self.user_embeddings, self.model.get_weights()[0][i])))
+        items.sort(key= lambda x:x[1], reverse = True)
+        items = [x[0] for x in items]  
+        hardest_negatives = items[:self.positives_nums] 
+        hardest_pseudo_positives = items[len(items) - self.positives_nums:]
+        self.item_input, self.labels, self.user_input = self.poisoned_dataset(hardest_negatives, hardest_pseudo_positives)
+        self.update()                
     
-           
-    def evaluate_on_train(self, user):
-        v_ratings = self.trainRatings.copy()
-        for i in range(len(v_ratings)):
-                v_ratings[i][0] = user
-
-        evaluation_threads = 1 #mp.cpu_count()
-        (hits, ndcgs) = evaluate_model(self.model, v_ratings, self.trainNegatives, topK, evaluation_threads)               
-        hr, ndcg = np.array(hits).mean(), np.array(ndcgs).mean()
-        return hr, ndcg
-
     def evaluate_local_model(self,all_dataset = False, validation=True, topK = topK):
         evaluation_threads = 1 #mp.cpu_count()
         if not all_dataset:
@@ -359,9 +249,6 @@ class Node(cSimpleModule):
     def get_model(self):
         # return self.model.get_layer("item_embedding").get_weights().copy()
         return self.model.get_weights().copy()
-
-    def get_attack_model(self):
-        return self.attack_model
        
     def set_model(self, weights):
         # self.model.get_layer("item_embedding").set_weights(weights)
@@ -450,17 +337,12 @@ class Node(cSimpleModule):
             weights = WeightsMessage('Performance')
         else:
             weights = WeightsMessage('FinalPerformance')
-            weights.model = self.get_model()
-            weights.vector = self.vector
 
-
-        neighbours = list(self.neighbours.items())
-        neighbours.sort(key= lambda x:x[1][0], reverse = True)
-        weights.cluster_found = [x[0] for x in neighbours]
         weights.user_id = self.id_user
         weights.round = self.rounds
         weights.hit_ratio = hr
         weights.ndcg = ndcg
+        weights.attacker = 1 if self.id_user % 9 == 0 else 0
         self.send(weights, 'nl$o',0)
 
     
@@ -545,7 +427,7 @@ class Node(cSimpleModule):
         
         return 0
 
-    def my_dataset(self,num_negatives = 4):
+    def my_dataset(self, num_negatives = 4):
         item_input = []
         labels = []
         user_input = []
@@ -564,3 +446,17 @@ class Node(cSimpleModule):
 
    
     
+    def poisoned_dataset(self, hardest_negatives, pseudo_positives):
+        item_input = []
+        labels = []
+        user_input = []
+        for i in pseudo_positives:
+            item_input.append(i)
+            labels.append(1)
+            user_input.append(self.id_user)
+        for i in hardest_negatives:
+            item_input.append(i)
+            labels.append(0)
+            user_input.append(self.id_user)
+        
+        return np.array(item_input), np.array(labels), np.array(user_input)
