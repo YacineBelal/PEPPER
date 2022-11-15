@@ -307,7 +307,7 @@ class Node(cSimpleModule):
     
             # 
     
-    def find_profiles(self, msg, fine_tuned_model = False, based_on_items_only = True):
+    def find_profiles(self, msg, fine_tuned_model = True, based_on_items_only = True):
         
         
         if based_on_items_only:
