@@ -9,13 +9,14 @@ import multiprocessing as mp
 from collections import defaultdict, Counter
 import seaborn as sns
 import matplotlib
+import time 
 
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
 topK_clustering = 20
 num_items = 1682
-num_users = 300
+num_users = 100
 
 reset_random_seeds()
 
@@ -157,7 +158,7 @@ def get_train_instances(train, num_negatives=4):
     return user_input, item_input, labels
 
 
-evaluation_threads = 1  # mp.cpu_count()
+evaluation_threads = 1 #mp.cpu_count()
 topK = 20
 epochs = 9
 batch_size = 128
@@ -179,12 +180,21 @@ model = get_model(num_items, num_users)  # each node initialize its own model
 model.compile(optimizer=Adam(lr=0.01), loss='binary_crossentropy')
 groundtruthK = get_topK(groundturth_metadata(dataset),
                         groundtruth_topkitemsliked(dataset))  #
+
+print(len(model.get_weights()[0]))
+exit(1)
 # evaluation before start of training
+print("starting evaluation")
+start = time.time()
 (hits, ndcgs) = evaluate_model(model, testRatings, testNegatives, topK, evaluation_threads)
+print("it lasted ", time.time() - start, " seconds")
+
+
 hr, ndcg = np.array(hits).mean(), np.array(ndcgs).mean()
 print('Init: HR = %.4f, NDCG = %.4f\t' % (hr, ndcg))
-acc = compute_metrics(topk_per_embedding(model), groundtruthK)
-print('Init Acc = %3.f' % acc)
+acc = 0
+# acc = compute_metrics(topk_per_embedding(model), groundtruthK)
+# print('Init Acc = %3.f' % acc)
 best_hr, best_ndcg, best_iter = hr, ndcg, -1
 
 for epoch in range(epochs):
@@ -198,7 +208,7 @@ for epoch in range(epochs):
     if epoch % verbose == 0:
         (hits, ndcgs) = evaluate_model(model, testRatings, testNegatives, topK, evaluation_threads)
         hr, ndcg, loss = np.array(hits).mean(), np.array(ndcgs).mean(), hist.history['loss'][0]
-        acc = compute_metrics(topk_per_embedding(model), groundtruthK)
+        # acc = compute_metrics(topk_per_embedding(model), groundtruthK)
         print('Iteration %d: HR = %.4f, NDCG = %.4f, loss = %.4f, ACC = %.4f'
               % (epoch, hr, ndcg, loss, acc))
         if hr > best_hr:

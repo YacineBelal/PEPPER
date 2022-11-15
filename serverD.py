@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 sync_ = 1
 a2a = False
 # nodes communicate with all nodes that they interacted with, in the last round, in order to get fresh models
-name_ = "Pepper (Model Evaluation)"  # "Model_Age_Based Attacked" #  "Pepper Attacked"
+name_ = "Pepper (Items Embeddings Evaluation)"  # "Model_Age_Based Attacked" #  "Pepper Attacked"
 dataset_ = "ml-100k"  # foursquareNYC
 topK = 20
 topK_clustering = 5
@@ -92,7 +92,7 @@ def cdf(data, metric, sync=sync_, topK=topK):
         else:
             table = wandb.Table(data=data, columns=[metric + "@" + str(topK), "CDF"])
             wandb.log(
-                {metric + "@" + str(topK_clustering) + " CDF": wandb.plot.line(table, metric, "CDF", stroke="dash",
+                {metric + "@" + str(topK) + " CDF": wandb.plot.line(table, metric, "CDF", stroke="dash",
                                                                                title=metric + " last round cumulative distribution")})
     # else:
     #     plt.plot(bin_edges[0:-1], cdf ,linestyle='--', marker="o")
@@ -162,7 +162,6 @@ class Server(cSimpleModule):
         # self.clusters = self.groundTruth_Clustering()
         self.clusters = self.groundTruth_TopKItemsLiked()
 
-        # self.clusters2 = self.groundTruth_TopK()
 
     def handleMessage(self, msg):
 

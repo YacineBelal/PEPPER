@@ -11,7 +11,6 @@ import math
 import heapq # for retrieval topK
 import multiprocessing
 import numpy as np
-from scipy.spatial.distance import jensenshannon
 import random
 #from numba import jit, autojit
 
@@ -53,6 +52,7 @@ def evaluate_model(model, testRatings, testNegatives, K, num_thread):
             ndcgs.append(ndcg)      
     return (hits, ndcgs)
 
+
 def eval_one_rating(idx):
     rating = _testRatings[idx]
     items = _testNegatives[idx]
@@ -64,13 +64,16 @@ def eval_one_rating(idx):
     users = np.full(len(items), u, dtype = 'int32')
     predictions = _model.predict([users, np.array(items)], 
                                  batch_size=100, verbose=0)
+    
     for i in range(len(items)):
         item = items[i]
         map_item_score[item] = predictions[i]
+
     items.pop()
-    
+
     # Evaluate top rank list
-    ranklist = heapq.nlargest(_K, map_item_score, key=map_item_score.get)
+    ranklist = heapq.nlargest(_K, map_item_score, map_item_score.get)
+   
     hr = getHitRatio(ranklist, gtItem)
     ndcg = getNDCG(ranklist, gtItem)
     return (hr, ndcg)

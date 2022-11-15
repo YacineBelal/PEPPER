@@ -242,7 +242,8 @@ class Node(cSimpleModule):
                     if self.rounds % 10 == 0:
                         lhr, lndcg = self.evaluate_local_model(False,False)   
                     else:
-                        self.model.set_weights(self.best_model)
+                        if(len(self.best_model) > 0):
+                            self.model.set_weights(self.best_model)
                         lhr, lndcg = self.evaluate_local_model(False,False)
                 
                     print('node : ',self.id_user)
@@ -280,7 +281,7 @@ class Node(cSimpleModule):
             self.find_profiles(msg)
 
             # dt = self.merge(msg)
-                # dt = self.FullAvg(msg)
+            # dt = self.FullAvg(msg)
             dt = self.DKL_mergeJ(msg)
         
 
@@ -306,85 +307,45 @@ class Node(cSimpleModule):
     
             # 
     
-    def find_profiles(self, msg, fine_tuned_model = True, distance_based = False):
+    def find_profiles(self, msg, fine_tuned_model = False, based_on_items_only = True):
         
         
-        if not distance_based:
+        if based_on_items_only:
             # just evaluating the items embeddings
             local_items_embeddings = self.model.get_layer('item_embedding').get_weights()
             self.model.get_layer('item_embedding').set_weights([msg.weights[0]])
             
-            _, ndcg = self.evaluate_on_train()
+            _, ndcg = self.evaluate_on_train_items()
             
             self.neighbours[msg.id] = (ndcg, 1)
 
-            # if self.neighbours.get(msg.id) is None:
-            #     self.neighbours[msg.id] = (ndcg, 1)
-            # else:
-            #     # similarity = ( similarity + self.neighbours[msg.id][1] * self.neighbours[msg.id][0] ) / ( self.neighbours[msg.id][1] + 1) 
-            #     # self.neighbours[msg.id] = (similarity, self.neighbours[msg.id][1] + 1)  
-            #     self.neighbours[msg.id] = (ndcg, self.neighbours[msg.id][1]) if ndcg > self.neighbours[msg.id][0] else self.neighbours[msg.id]
-
             self.model.get_layer('item_embedding').set_weights(local_items_embeddings)
         else:
-        
-            similarity = 0
-            if fine_tuned_model:
-                
-                for i in range(2): # user and items embeddings
-                    local_embeddings =  self.get_model()[i]
-                    received_embeddings = msg.weights[i]
-                    for j in self.vector:
-                        if i == 0:
-                            similarity += euclidean(local_embeddings[j], received_embeddings[j])
-                        if i == 1:
-                            similarity /= len(self.vector)
-                            similarity = similarity / 2 + euclidean(local_embeddings[self.id_user], received_embeddings[msg.id]) / 2
-                            break
-
-               
-                
-            else:
-                for i in range(2): # user and items embeddings
-                    local_embeddings =  self.get_model()[i]
-                    received_embeddings = msg.weights[i]
-                    for j in self.vector:
-                        if i == 0:
-                            similarity += euclidean(local_embeddings[j], received_embeddings[j])
-                        if i == 1:
-                            similarity /= len(self.vector)
-                            similarity = similarity / 2 + euclidean(local_embeddings[self.id_user], received_embeddings[msg.id]) / 2
-                            break
-
-                
-            # *************** incermental averaging here 
-            if self.neighbours.get(msg.id) is None:
-                self.neighbours[msg.id] = (similarity, 1)
-            else:
-                similarity = ( similarity + self.neighbours[msg.id][1] * self.neighbours[msg.id][0] ) / ( self.neighbours[msg.id][1] + 1) 
-                self.neighbours[msg.id] = (similarity, self.neighbours[msg.id][1] + 1)  
-                # self.neighbours[msg.id] = (similarity, 0) 
-                # if similarity > self.neighbours[msg.id][0] else self.neighbours[msg.id]
-
-
-            # topk = sorted(list(self.neighbours.items()), key= lambda x:x[1][0], reverse = True)[:20]
-            # for k in self.neighbours.keys():
-            #     if k in topk:
-            #         self.neighbours[k] = (self.neighbours[k][0], (self.neighbours[k][1] % 10) + 1)
-            #     else:
-            #         if self.neighbours[k][1] > 0:
-            #             self.neighbours[k] = (self.neighbours[k][0],self.neighbours[k][1]-1)
-
-          
-           
-    def evaluate_on_train(self):
-        evaluation_threads = 2 #mp.cpu_count()
+            local_model = self.model.get_weights().copy()
+            self.model.set_weights(msg.weights)
+            _, ndcg = self.evaluate_on_train(user = msg.id)
+            self.neighbours[msg.id] = (ndcg, 1)
+            self.model.set_weights(local_model)
+                    
+    def evaluate_on_train_items(self):
+        evaluation_threads = 1 #mp.cpu_count()
         (hits, ndcgs) = evaluate_model(self.model, self.trainRatings, self.trainNegatives, topK, evaluation_threads)               
+        hr, ndcg = np.array(hits).mean(), np.array(ndcgs).mean()
+        return hr, ndcg
+    
+           
+    def evaluate_on_train(self, user):
+        v_ratings = self.trainRatings.copy()
+        for i in range(len(v_ratings)):
+                v_ratings[i][0] = user
+
+        evaluation_threads = 1 #mp.cpu_count()
+        (hits, ndcgs) = evaluate_model(self.model, v_ratings, self.trainNegatives, topK, evaluation_threads)               
         hr, ndcg = np.array(hits).mean(), np.array(ndcgs).mean()
         return hr, ndcg
 
     def evaluate_local_model(self,all_dataset = False, validation=True, topK = topK):
-        evaluation_threads = 2 #mp.cpu_count()
+        evaluation_threads = 1 #mp.cpu_count()
         if not all_dataset:
             if validation :
                 (hits, ndcgs) = evaluate_model(self.model, self.validationRatings, self.validationNegatives, topK, evaluation_threads)               
@@ -601,92 +562,5 @@ class Node(cSimpleModule):
                 labels.append(0)            
         return np.array(item_input), np.array(labels), np.array(user_input)
 
+   
     
-    def get_user_train_distribution_vector(self):
-        h = m = t = 0   
-        for i in self.vector:
-            if  str(i) in self.H:
-                h += 1
-            elif str(i) in self.M:
-                m += 1
-            else:
-                t += 1
-            
-        train_prop = [h,m,t]
-        train_prop = [item / sum(train_prop) for item in train_prop]
-        return train_prop
-
-    def crap(self):
-        pass
-    #     if consider_user_embeddings:
-    #             user_embeddings = msg.weights[1]
-    #             distance = abs(euclidean(self.all_models[0][1][self.id_user], user_embeddings[msg.id]))        
-    #             for i in range(1,len(self.all_models)):
-    #                 temp = abs(euclidean(self.all_models[i][1][self.id_user], user_embeddings[msg.id]))        
-    #                 if temp < distance:
-    #                     distance = temp 
-
-    #             if(self.neighbours.get(msg.id) == None):
-    #                 self.neighbours[msg.id] = distance
-    #             else:
-    #                 self.neighbours[msg.id] = distance  if distance  < self.neighbours[msg.id] else self.neighbours[msg.id]
-
-    #         else: # consider item embeddings for the case where user embeddings are not shared            
-    #             self_items_embeddings = self.get_attack_model()[0] 
-    #             items_embeddings = msg.weights[0]
-    #             distance = 0
-    #             for i in range(len(self_items_embeddings)):
-    #                 if i in self.vector: # added to consider only items in the local set of the user
-    #                     distance += abs(euclidean(self_items_embeddings[i], items_embeddings[i]))
-                
-    #             distance /= len(self.vector)
-    #             if(self.neighbours.get(msg.id) == None):
-    #                 self.neighbours[msg.id] = distance
-    #             else:
-    #                 self.neighbours[msg.id] = distance  if distance  < self.neighbours[msg.id] else self.neighbours[msg.id]
-    #
-    # 
-    #  ***********************************************************************
-     # if consider_user_embeddings:
-            #     self_user_embeddings = scaler.fit_transform(self.get_model()[1])
-            #     user_embeddings = scaler.fit_transform(msg.weights[1])
-            #     distance = 0
-            #     distance = abs(euclidean(self_user_embeddings[self.id_user], user_embeddings[msg.id]))        
-
-
-            #     # if(self.neighbours.get(msg.id) == None):
-            #     self.neighbours[msg.id] = distance
-            #     # else:
-            #         # self.neighbours[msg.id] = distance  # if distance  < self.neighbours[msg.id] else self.neighbours[msg.id]
-
-            # else: # consider item embeddings for the case where user embeddings are not shared            
-            #     self_items_embeddings = self.get_model()[0] 
-            #     items_embeddings = msg.weights[0]
-            #     scaler = StandardScaler(with_mean=False)
-            #     self_items_embeddings = scaler.fit_transform(self_items_embeddings)
-            #     items_embeddings = scaler.fit_transform(items_embeddings)
-            #     distance = 0
-            #     for i in range(len(self_items_embeddings)):
-            #         # if i in self.vector: # added to consider only items in the local set of the user
-            #             distance += abs(euclidean(self_items_embeddings[i], items_embeddings[i]))
-                
-            #     distance /= len(self.vector)
-            #     # if(self.neighbours.get(msg.id) == None):
-            #     self.neighbours[msg.id] = distance
-            #     # else:
-            #         # self.neighbours[msg.id] = distance  if distance  < self.neighbours[msg.id] else self.neighbours[msg.id]
-
-
-            # received_embeddings = msg.weights[0]
-            #     local_embeddings =  self.all_models[j][0]
-            #     pool = mp.Pool(processes = cpu_count())
-            #     similarities = pool.starmap(cosine_similarity, [(local_embeddings[k], received_embeddings[k]) for k in range(len(received_embeddings))])
-            #     pool.close()  # 'TERM'
-            #     pool.join()
-            #     similarity = sum(similarities) / len(received_embeddings)
-                
-            #     received_embeddings = msg.weights[1]
-            #     local_embeddings =  self.all_models[j][1]
-            #     similarity = similarity / 2 + cosine_similarity(local_embeddings[self.id_user], received_embeddings[msg.id]) / 2
-            #     average_similarity += similarity
-            
