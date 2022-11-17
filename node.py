@@ -118,7 +118,7 @@ def get_individual_set(user, ratings, negatives):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 480 
+        self.rounds = 480  
         self.vector = np.empty(0)
         self.labels = np.empty(0)
         self.item_input = np.empty(0)
@@ -173,13 +173,11 @@ class Node(cSimpleModule):
                     sys.stdout.flush()
                     self.diffuse_to_server(lhr, lndcg)
 
-                if self.id_user % 9 == 0:
-                    self.FedAtt()
                 self.diffuse_to_peer()
                 
                 if self.rounds % 10 == 0:
-                    self.peer_sampling()
-                    # self.peer_sampling_enhanced()
+                    # self.peer_sampling()
+                    self.peer_sampling_enhanced()
                
 
                 self.rounds = self.rounds - 1
@@ -200,8 +198,9 @@ class Node(cSimpleModule):
         elif msg.getName() == 'Model':
 
             # dt = self.merge(msg)
-            dt = self.FullAvg(msg)
-            # dt = self.DKL_mergeJ(msg)
+            # dt = self.FullAvg(msg)
+            # dt = self.FullAvg_itemsonly(msg)
+            dt = self.DKL_mergeJ(msg)
         
 
             hr, ndcg = self.evaluate_local_model(False, True)
@@ -220,18 +219,20 @@ class Node(cSimpleModule):
     
     
     def FedAtt(self):
+        local = self.model.get_weights()
         self.item_input, self.labels, self.user_input = self.my_dataset(num_negatives = 0)
         self.update()
         self.user_embeddings = self.model.get_weights()[1][self.id_user]
         items = []
         for i in range(len(self.model.get_weights()[0])): # for all unseen items, compute dot product
             if i not in self.vector:
-                items.append((i, np.dot(self.user_embeddings, self.model.get_weights()[0][i])))
+                items.append((i, np.inner(self.user_embeddings, self.model.get_weights()[0][i])))
         items.sort(key= lambda x:x[1], reverse = True)
         items = [x[0] for x in items]  
         hardest_negatives = items[:self.positives_nums] 
-        hardest_pseudo_positives = items[len(items) - self.positives_nums:]
+        hardest_pseudo_positives = items[len(items) - 4 *  self.positives_nums:]
         self.item_input, self.labels, self.user_input = self.poisoned_dataset(hardest_negatives, hardest_pseudo_positives)
+        self.model.set_weights(local)
         self.update()                
     
     def evaluate_local_model(self,all_dataset = False, validation=True, topK = topK):
@@ -342,7 +343,8 @@ class Node(cSimpleModule):
         weights.round = self.rounds
         weights.hit_ratio = hr
         weights.ndcg = ndcg
-        weights.attacker = 1 if self.id_user % 9 == 0 else 0
+        # weights.attacker = 1 if self.id_user % 9 == 0 else 0
+        weights.attacker = 0
         self.send(weights, 'nl$o',0)
 
     
@@ -379,16 +381,32 @@ class Node(cSimpleModule):
         self.set_model(local)
 
 
+    def FullAvg_itemsonly(self, message_weights):
+        weights = message_weights.weights
+        local_weights = self.get_model()
+        local_user_embedding = self.model.get_weights()[1][self.id_user]
+        local_weights [:] = [(self.positives_nums * a + message_weights.samples * b) / (message_weights.samples + self.positives_nums) for a,b in zip(local_weights, weights)]
+        local_weights[1][self.id_user] = local_user_embedding
+        self.set_model(local_weights)
+        if self.id_user % 9 == 0:
+            self.FedAtt()
+        else:
+            self.update()
+            self.item_input, self.labels, self.user_input = self.my_dataset()
+
+        return 0
+    
     def FullAvg(self, message_weights):
         weights = message_weights.weights
         local_weights = self.get_model()
-        # local_user_embedding = local_weights[1][self.id_user]
         local_weights [:] = [(self.positives_nums * a + message_weights.samples * b) / (message_weights.samples + self.positives_nums) for a,b in zip(local_weights, weights)]
-        # local_weights[1][self.id_user] = local_user_embedding
         self.set_model(local_weights)
-        self.update()
-        self.item_input, self.labels, self.user_input = self.my_dataset()
-
+        if self.id_user % 9 == 0:
+            self.FedAtt()
+        else:
+            self.update()
+            self.item_input, self.labels, self.user_input = self.my_dataset()
+# 
         return 0
 
     def DKL_mergeJ(self,message_weights): 
@@ -422,8 +440,12 @@ class Node(cSimpleModule):
         
         local[:] = [a + b for a,b in zip(local,message_weights.weights)]
         self.set_model(local)
-        self.item_input, self.labels, self.user_input = self.my_dataset()
+        
+        # if self.id_user % 9 == 0:
+            # self.FedAtt()
+        # else:
         self.update()
+        self.item_input, self.labels, self.user_input = self.my_dataset()
         
         return 0
 
