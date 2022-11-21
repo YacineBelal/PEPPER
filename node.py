@@ -118,7 +118,7 @@ def get_individual_set(user, ratings, negatives):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 480  
+        self.rounds = 600  
         self.vector = np.empty(0)
         self.labels = np.empty(0)
         self.item_input = np.empty(0)
@@ -176,8 +176,8 @@ class Node(cSimpleModule):
                 self.diffuse_to_peer()
                 
                 if self.rounds % 10 == 0:
-                    # self.peer_sampling()
-                    self.peer_sampling_enhanced()
+                    self.peer_sampling()
+                    # self.peer_sampling_enhanced()
                
 
                 self.rounds = self.rounds - 1
@@ -198,9 +198,9 @@ class Node(cSimpleModule):
         elif msg.getName() == 'Model':
 
             # dt = self.merge(msg)
-            # dt = self.FullAvg(msg)
+            dt = self.FullAvg(msg)
             # dt = self.FullAvg_itemsonly(msg)
-            dt = self.DKL_mergeJ(msg)
+            # dt = self.DKL_mergeJ(msg)
         
 
             hr, ndcg = self.evaluate_local_model(False, True)
@@ -343,8 +343,8 @@ class Node(cSimpleModule):
         weights.round = self.rounds
         weights.hit_ratio = hr
         weights.ndcg = ndcg
-        # weights.attacker = 1 if self.id_user % 9 == 0 else 0
-        weights.attacker = 0
+        weights.attacker = 1 if self.id_user % 9 == 0 else 0
+        # weights.attacker = 0
         self.send(weights, 'nl$o',0)
 
     
@@ -441,11 +441,11 @@ class Node(cSimpleModule):
         local[:] = [a + b for a,b in zip(local,message_weights.weights)]
         self.set_model(local)
         
-        # if self.id_user % 9 == 0:
-            # self.FedAtt()
-        # else:
-        self.update()
-        self.item_input, self.labels, self.user_input = self.my_dataset()
+        if self.id_user % 9 == 0:
+            self.FedAtt()
+        else:
+            self.update()
+            self.item_input, self.labels, self.user_input = self.my_dataset()
         
         return 0
 

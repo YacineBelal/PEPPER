@@ -7,11 +7,11 @@ import wandb
 import os
 
 sync_ = 1
-name_ = "Pepper (FedAtt with 10% attackers)" #(FedAtt with 10% attackers)"  # "Model_Age_Based Attacked" #  "Pepper Attacked"
+name_ = "DFedAvg (FedAtt with 10% attackers)" #(FedAtt with 10% attackers)"  # "Model_Age_Based Attacked" #  "Pepper Attacked"
 dataset_ = "ml-100k"  
 topK = 20
 dataset = Dataset("ml-100k")
-Attackers_ratio = 0 #0.1
+Attackers_ratio = 0.1
 Worst_ratio = 0.2
 
 def get_user_vector(user):
@@ -99,7 +99,7 @@ class Server(cSimpleModule):
 
     def initialize(self):
         self.all_participants = [i for i in range(self.gateSize('sl'))]
-        self.num_participants = len(self.all_participants) #int(len(self.all_participants) - (len(self.all_participants) * Attackers_ratio))
+        self.num_participants = int(len(self.all_participants) - (len(self.all_participants) * Attackers_ratio)) #len(self.all_participants) 
         self.hit_ratios = defaultdict(list)
         self.ndcgs = defaultdict(list)
         self.attackers = defaultdict(list)
@@ -118,28 +118,35 @@ class Server(cSimpleModule):
         nb_rounds = max(self.hit_ratios.keys())
         best_round = 0
         best_avg_hr = 0
+        best_avg_ndcg = 0
+        best_worst_hr = 0
+        best_worst_ndcg = 0
         for round in self.hit_ratios.keys():
             avg_hr = sum(self.hit_ratios[round]) / self.num_participants
             print("Average Test HR = ", avg_hr)
-            if avg_hr > best_avg_hr:
-                best_round = round
-                best_avg_hr = avg_hr
-                
             avg_ndcg = sum(self.ndcgs[round]) / self.num_participants
             print("Average Test NDCG = ",avg_ndcg)
             sys.stdout.flush()
+            
             worst_hr = sorted(self.hit_ratios[round])[:int(self.num_participants * Worst_ratio)] # to have 10% here, might change later
             worst_avg_hr = sum(worst_hr) / int(self.num_participants * Worst_ratio)
             worst_ndcg = sorted(self.ndcgs[round])[:int(self.num_participants * Worst_ratio)] 
             worst_avg_ndcg = sum(worst_ndcg) / int(self.num_participants * Worst_ratio)      
+            
+            if avg_hr > best_avg_hr:
+                best_round = round
+                best_avg_hr = avg_hr
+                best_avg_ndcg = avg_ndcg
+                best_worst_hr = worst_avg_hr
+                best_worst_ndcg = worst_avg_ndcg
+
             if sync_ :
                 wandb.log({"Average HR": avg_hr, "Average NDCG": avg_ndcg, "Worst 20% Average HR": worst_avg_hr, "Worst 20% Average NDCG": worst_avg_ndcg, \
                            "Round ": nb_rounds - round})
-                if round == 0:
-                    wandb.log({"Final Average HR": avg_hr, "Final Average NDCG": avg_ndcg,
-                     "Final Worst 20% Average HR": worst_avg_hr, "Final Worst 20% Average NDCG": worst_avg_ndcg})
-
+                
         if sync_:
+            wandb.log({"Final Average HR": best_avg_hr, "Final Average NDCG": best_avg_ndcg,
+                "Final Worst 20% Average HR": best_worst_hr, "Final Worst 20% Average NDCG": best_worst_ndcg})
             cdf(self.hit_ratios[best_round], "Local HR")
             cdf(self.ndcgs[best_round], "Local NDCG")
             cdf(worst_hr, "Worst 20\% Local HR")

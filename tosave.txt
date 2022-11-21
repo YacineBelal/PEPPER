@@ -1,5 +1,9 @@
 fedavg (10% attackers):
-wandb sync /home/yacine/git/PersonalizedGL/wandb/offline-run-20221117_004934-80vg6api
 
 pepper (10% attackers)
-wandb sync /home/yacine/git/PersonalizedGL/wandb/offline-run-20221117_011116-1g7byk5l
+wandb sync /home/yacine/git/PersonalizedGL/wandb/offline-run-20221119_231651-3uxgzdip
+
+pepper without attackers:
+wandb sync /home/yacine/git/PersonalizedGL/wandb/offline-run-20221119_183906-286ir8br
+
+
