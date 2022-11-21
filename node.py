@@ -7,13 +7,9 @@ import utility as util
 import random
 import sys
 from evaluate import evaluate_model
-from scipy.spatial.distance import cosine, euclidean
-from sklearn.preprocessing import StandardScaler
-import multiprocessing as mp
-import time
 
 
-topK = 20
+topK = 20 # Rank to consider when evaluating recommended items 
 dataset_name = "ml-100k" #foursquareNYC   
 num_items =  1682 # 38333  
 dataset = Dataset(dataset_name)
@@ -21,7 +17,7 @@ train ,testRatings, testNegatives, \
 validationRatings, validationNegatives = dataset.trainMatrix, dataset.testRatings, dataset.testNegatives, \
     dataset.validationRatings, dataset.validationNegatives
     
-# testRatings = testRatings[:1000]   if one wishes to evaluate the models globally, for only 100 users; not a problem for a personalized-data metric measurement
+# testRatings = testRatings[:1000] #   if one wishes to evaluate the models globally & for only 100 users; not a problem for a personalized-data metric measurement
 # testNegatives= testNegatives[:1000]
 
 number_peers = 3
@@ -37,7 +33,7 @@ def get_user_vector(train,user = 0):
 
     return positive_instances
 
-def get_user_test_set(testRatings,testNegatives,user):
+def get_user_test_set(testRatings, testNegatives, user):
     personal_testRatings = []
     personal_testNegatives = []
     
@@ -49,7 +45,7 @@ def get_user_test_set(testRatings,testNegatives,user):
         elif idx > user:
             break
         
-    return personal_testRatings,personal_testNegatives
+    return personal_testRatings, personal_testNegatives
 
 def get_individual_set(user, ratings, negatives):
     personal_Ratings = []
@@ -76,9 +72,9 @@ class Node(cSimpleModule):
         self.age = 1
         self.alpha = 0.4
         self.num_items = 1682 #train.shape[1] #1682 ml-100k #3900 foursquare; TODO automate this, get number of items from all sets (train, val..) before building the model
-        self.num_users = 100 #train.shape[0] # 100 to consider only 100 users 
+        self.num_users = train.shape[0] # 100 to consider only 100 users, .ned file needs to be altered too when modying number of users in the system 
         self.id_user = self.getIndex()  
-        self.period = 0 # np.random.exponential(0.1) *** for different periods per node  ***
+        self.period = np.random.exponential(0.1) #*** for different periods per node  ***
 
         self.vector = get_user_vector(train,self.id_user)
         self.testRatings, self.testNegatives = get_user_test_set(testRatings, testNegatives, self.id_user)
@@ -112,7 +108,8 @@ class Node(cSimpleModule):
                     if self.rounds % 10 == 0:
                         lhr, lndcg = self.evaluate_local_model(False,False)   
                     else:
-                        self.model.set_weights(self.best_model)
+                        if(len(self.best_model) > 0):
+                            self.model.set_weights(self.best_model)
                         lhr, lndcg = self.evaluate_local_model(False,False)
                     
                     print('node : ',self.id_user)
@@ -182,7 +179,7 @@ class Node(cSimpleModule):
     def get_model(self):
         # if we're sharing only items' embeddings : 
         # return self.model.get_layer("item_embedding").get_weights().copy()
-        return self.model.get_weights().copy()
+        return self.model.get_weights()
         
     def set_model(self, weights):
         # similarly
