@@ -6,8 +6,9 @@ simple Server
 simple Node
 {
     gates:
-        inout no[86];
-        inout nl[];
+        inout no[942];
+        inout nl[1];
+
 }
 
 network RandomGraph

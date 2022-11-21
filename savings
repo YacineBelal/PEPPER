@@ -1,0 +1,6 @@
+ wandb sync /home/yacine/git/PersonalizedGL/wandb/offline-run-20221003_145850-1oqoikrl (fine tuned with incremental similarity comparison)
+ wandb sync /home/yacine/git/PersonalizedGL/wandb/offline-run-20221004_003747-6un7bgg6 (standard defavg)
+ wandb sync /home/yacine/git/PersonalizedGL/wandb/offline-run-20221004_042944-1jlsyc4o (standard pepper bad acc)
+
+ wandb sync /home/yacine/git/PersonalizedGL/wandb/offline-run-20221005_145924-fs6q4ltq (fedavg standard)
+ 
