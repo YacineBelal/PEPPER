@@ -6,7 +6,7 @@ simple Server
 simple Node
 {
     gates:
-        inout no[942];
+        inout no[100];
         inout nl[1];
 
 }
@@ -14,7 +14,7 @@ simple Node
 network RandomGraph
 {
     parameters:
-        int size = default(86);
+        int size = default(100);
         
     submodules: 
         server: Server {

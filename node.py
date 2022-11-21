@@ -17,9 +17,9 @@ topK = 20
 dataset_name = "ml-100k" #foursquareNYC   
 num_items =  1682 # 38333  
 dataset = Dataset(dataset_name)
-train ,testRatings, testNegatives, trainNegatives, \
+train ,testRatings, testNegatives, \
 validationRatings, validationNegatives = dataset.trainMatrix, dataset.testRatings, dataset.testNegatives, \
-    dataset.trainNegatives, dataset.validationRatings, dataset.validationNegatives
+    dataset.validationRatings, dataset.validationNegatives
     
 # testRatings = testRatings[:1000]   if one wishes to evaluate the models globally, for only 100 users; not a problem for a personalized-data metric measurement
 # testNegatives= testNegatives[:1000]
@@ -75,13 +75,13 @@ class Node(cSimpleModule):
         self.item_input = np.empty(0)
         self.age = 1
         self.alpha = 0.4
-        self.num_items = 1682 #train.shape[1] #1682 ml-100k #3900 foursquare; TO DO automate this, get number of items from all sets (train, val..) before building the model
-        self.num_users = train.shape[0] # 100 to consider only 100 users 
+        self.num_items = 1682 #train.shape[1] #1682 ml-100k #3900 foursquare; TODO automate this, get number of items from all sets (train, val..) before building the model
+        self.num_users = 100 #train.shape[0] # 100 to consider only 100 users 
         self.id_user = self.getIndex()  
-        self.period = 0 # *** for different periods per node np.random.exponential(0.1) ***
+        self.period = 0 # np.random.exponential(0.1) *** for different periods per node  ***
 
         self.vector = get_user_vector(train,self.id_user)
-        self.testRatings, self.testNegatives = get_user_test_set(testRatings,testNegatives,self.id_user)
+        self.testRatings, self.testNegatives = get_user_test_set(testRatings, testNegatives, self.id_user)
         self.validationRatings, self.validationNegatives = get_user_test_set(validationRatings,validationNegatives,self.id_user)
         self.best_hr = 0.0
         self.best_ndcg = 0.0
@@ -105,31 +105,32 @@ class Node(cSimpleModule):
     def handleMessage(self, msg):
         # periodic self sent message used as a timer by each node to diffuse its model 
         if msg.getName() == 'period_message':
-            if self.rounds % 10 == 0 or self.rounds == 1:
-                if self.rounds % 10 == 0:
-                    lhr, lndcg = self.evaluate_local_model(False,False)   
-                else:
-                    if(len(self.best_model) > 0):
-                        self.model.set_weights(self.best_model)
-                    lhr, lndcg = self.evaluate_local_model(False,False)
-                
-                print('node : ',self.id_user)
-                print('Local HR =  ', lhr)
-                print('Local NDCG =  ',lndcg)
-                print('Round left = ', self.rounds)
-                sys.stdout.flush()
-                self.diffuse_to_server(lhr, lndcg)
-
+            
             if self.rounds > 0 :
 
+                if self.rounds % 10 == 0 or self.rounds == 1:
+                    if self.rounds % 10 == 0:
+                        lhr, lndcg = self.evaluate_local_model(False,False)   
+                    else:
+                        self.model.set_weights(self.best_model)
+                        lhr, lndcg = self.evaluate_local_model(False,False)
+                    
+                    print('node : ',self.id_user)
+                    print('Local HR =  ', lhr)
+                    print('Local NDCG =  ',lndcg)
+                    print('Round left = ', self.rounds)
+                    sys.stdout.flush()
+                    self.diffuse_to_server(lhr, lndcg)
+
+            
                 # diffuse model periodically, either to one peer or the whole neighborhood 
                 self.diffuse_to_peer()
                 # self.broadcast()
                 
                 # peer-sampling call; 
                 if self.rounds % 10 == 0:
-                    # self.peer_sampling()
-                    self.peer_sampling_enhanced()
+                    self.peer_sampling()
+                    # self.peer_sampling_enhanced()
                
                 self.rounds = self.rounds - 1
                 self.scheduleAt(simTime() + self.period,self.period_message)
@@ -143,8 +144,8 @@ class Node(cSimpleModule):
             # TODO: Automate choice of aggregation function
              
             # self.model_age(msg) 
-            # self.FullAvg(msg) # Decentralized FedAvg
-            dt = self.DKL_mergeJ(msg) # Performance based 
+            self.FullAvg(msg) # Decentralized FedAvg
+            # dt = self.DKL_mergeJ(msg) # Performance based 
         
 
             # Evaluation on validation set

@@ -17,13 +17,9 @@ class Dataset(object):
         '''
         Constructor
         '''
-        print(path)
         self.trainMatrix = self.load_rating_file_as_matrix(path + ".train.rating")
         self.testRatings = self.load_rating_file_as_list(path + ".test.rating")
         self.testNegatives = self.load_negative_file(path + ".test.negative")
-
-        ## when wanting to evaluate on the training set
-        self.trainNegatives = self.load_negative_file(path +".train.negative")
 
         try:
             self.validationRatings = self.load_rating_file_as_list(path + ".validation.rating")
