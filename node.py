@@ -343,8 +343,8 @@ class Node(cSimpleModule):
         weights.round = self.rounds
         weights.hit_ratio = hr
         weights.ndcg = ndcg
-        weights.attacker = 1 if self.id_user % 9 == 0 else 0
-        # weights.attacker = 0
+        # weights.attacker = 1 if self.id_user % 9 == 0 else 0
+        weights.attacker = 0
         self.send(weights, 'nl$o',0)
 
     
@@ -401,11 +401,11 @@ class Node(cSimpleModule):
         local_weights = self.get_model()
         local_weights [:] = [(self.positives_nums * a + message_weights.samples * b) / (message_weights.samples + self.positives_nums) for a,b in zip(local_weights, weights)]
         self.set_model(local_weights)
-        if self.id_user % 9 == 0:
-            self.FedAtt()
-        else:
-            self.update()
-            self.item_input, self.labels, self.user_input = self.my_dataset()
+        # if self.id_user % 9 == 0:
+            # self.FedAtt()
+        # else:
+        self.update()
+        self.item_input, self.labels, self.user_input = self.my_dataset()
 # 
         return 0
 

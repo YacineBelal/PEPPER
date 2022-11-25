@@ -7,11 +7,11 @@ import wandb
 import os
 
 sync_ = 1
-name_ = "DFedAvg (FedAtt with 10% attackers)" #(FedAtt with 10% attackers)"  # "Model_Age_Based Attacked" #  "Pepper Attacked"
+name_ = "DFedAvg (Without attackers)" #(FedAtt with 10% attackers)"  # "Model_Age_Based Attacked" #  "Pepper Attacked"
 dataset_ = "ml-100k"  
 topK = 20
 dataset = Dataset("ml-100k")
-Attackers_ratio = 0.1
+Attackers_ratio = 0
 Worst_ratio = 0.2
 
 def get_user_vector(user):
