@@ -70,6 +70,7 @@ python3.8
 libqt5opengl5-dev 
 libpcap-dev nemiver 
 pip
+pybind11==2.4.3
 keras==1.0.7
 theano==0.8.0
 numpy 
