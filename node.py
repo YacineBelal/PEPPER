@@ -76,9 +76,9 @@ class Node(cSimpleModule):
         self.id_user = self.getIndex()  
         self.period = np.random.exponential(0.1) #*** for different periods per node  ***
 
-        self.vector = get_user_vector(train,self.id_user)
-        self.testRatings, self.testNegatives = get_user_test_set(testRatings, testNegatives, self.id_user)
-        self.validationRatings, self.validationNegatives = get_user_test_set(validationRatings,validationNegatives,self.id_user)
+        self.vector = get_user_vector(train,self.id_user) # positive samples; relevant items
+        self.testRatings, self.testNegatives = get_user_test_set(testRatings, testNegatives, self.id_user) # final model testing data 
+        self.validationRatings, self.validationNegatives = get_user_test_set(validationRatings,validationNegatives,self.id_user) # D_ weighting
         self.best_hr = 0.0
         self.best_ndcg = 0.0
         self.best_model = []
@@ -142,7 +142,7 @@ class Node(cSimpleModule):
              
             # self.model_age(msg) 
             self.FullAvg(msg) # Decentralized FedAvg
-            # dt = self.DKL_mergeJ(msg) # Performance based 
+            # dt = self.Performance_based(msg) # Performance based 
         
 
             # Evaluation on validation set
@@ -164,7 +164,7 @@ class Node(cSimpleModule):
     def finish(self):
         pass
     
-    def evaluate_local_model(self,all_dataset = False, validation=True, topK = topK):
+    def evaluate_local_model(self,all_dataset = False, validation = True, topK = topK):
         evaluation_threads = 1 #mp.cpu_count()
         if not all_dataset:
             if validation :
@@ -266,8 +266,8 @@ class Node(cSimpleModule):
         weights = WeightsMessage('Performance')
         weights.user_id = self.id_user
         weights.round = self.rounds
-        weights.hit_ratio = hr
-        weights.ndcg = ndcg
+        weights.hit_ratio = hr # hit ratio 
+        weights.ndcg = ndcg # normalized cumulative discounted gain
         self.send(weights, 'nl$o',0)
 
     
@@ -280,7 +280,7 @@ class Node(cSimpleModule):
         self.age = self.age + 1
         sys.stdout.flush()
         
-        
+        # different aggregation functions :
     def model_age(self,message_weights):
         weights = message_weights.weights
         local_weights = self.get_model()
@@ -309,8 +309,9 @@ class Node(cSimpleModule):
 
         return 0
 
-    def DKL_mergeJ(self,message_weights): 
-        if len(self.validationRatings) < 2:
+
+    def Performance_based(self,message_weights): 
+        if len(self.validationRatings) < 2: #D_weighting
             self.simple_merge(message_weights.weights)
             self.item_input, self.labels, self.user_input = self.my_dataset()
             self.update()
@@ -363,3 +364,8 @@ class Node(cSimpleModule):
 
    
     
+
+    # self.vector  contains relevant items for user
+    # user 0 : [55,89,22] 
+    # at each update
+    # we generate a set of negative items :  [55,(41,9,1,3),..]
