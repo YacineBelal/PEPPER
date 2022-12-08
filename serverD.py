@@ -94,7 +94,7 @@ if sync_:
         "Dataset": dataset_,
         "Implementation": "TensorFlow",
         "Rounds": 600,
-        "Nodes": 942,
+        "Nodes": 100,
         "Learning_rate": 0.01,
         "Epochs": 2,
         "Batch_size": "Full",

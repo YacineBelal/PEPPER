@@ -7,6 +7,7 @@ import utility as util
 import random
 import sys
 from evaluate import evaluate_model
+import csv 
 
 
 topK = 20 # Rank to consider when evaluating recommended items 
@@ -72,9 +73,9 @@ class Node(cSimpleModule):
         self.age = 1
         self.alpha = 0.4
         self.num_items = 1682 #train.shape[1] #1682 ml-100k #3900 foursquare; TODO automate this, get number of items from all sets (train, val..) before building the model
-        self.num_users = train.shape[0] # 100 to consider only 100 users, .ned file needs to be altered too when modying number of users in the system 
+        self.num_users = 100 #to consider only 100 users, .ned file needs to be altered too when modying number of users in the system 
         self.id_user = self.getIndex()  
-        self.period = np.random.exponential(0.1) #*** for different periods per node  ***
+        self.period = 0 # np.random.exponential(0.1) #*** for different periods per node  ***
 
         self.vector = get_user_vector(train,self.id_user) # positive samples; relevant items
         self.testRatings, self.testNegatives = get_user_test_set(testRatings, testNegatives, self.id_user) # final model testing data 
@@ -126,8 +127,8 @@ class Node(cSimpleModule):
                 
                 # peer-sampling call; 
                 if self.rounds % 10 == 0:
-                    self.peer_sampling()
-                    # self.peer_sampling_enhanced()
+                    # self.peer_sampling()
+                    self.peer_sampling_enhanced()
                
                 self.rounds = self.rounds - 1
                 self.scheduleAt(simTime() + self.period,self.period_message)
@@ -141,8 +142,8 @@ class Node(cSimpleModule):
             # TODO: Automate choice of aggregation function
              
             # self.model_age(msg) 
-            self.FullAvg(msg) # Decentralized FedAvg
-            # dt = self.Performance_based(msg) # Performance based 
+            # self.FullAvg(msg) # Decentralized FedAvg
+            dt = self.Performance_based(msg) # Performance based 
         
 
             # Evaluation on validation set
@@ -303,11 +304,18 @@ class Node(cSimpleModule):
         weights = message_weights.weights
         local_weights = self.get_model()
         local_weights [:] = [(self.positives_nums * a + message_weights.samples * b) / (message_weights.samples + self.positives_nums) for a,b in zip(local_weights, weights)]
+        normalized_weight = (message_weights.samples / (message_weights.samples + self.positives_nums))
+        self.to_csv_file(message_weights.id, "no", self.id_user, normalized_weight, normalized_weight, self.rounds, "FedAvg")
         self.set_model(local_weights)
         self.update()
         self.item_input, self.labels, self.user_input = self.my_dataset()
 
         return 0
+
+    def to_csv_file(self, sender, isAttacker, receiver, none_normalized_weights, normalized_weights, round, setting):
+        with open("list_weights_given.csv","a") as output:
+            writer = csv.writer(output, delimiter=",")
+            writer.writerow([sender, isAttacker, receiver, none_normalized_weights, normalized_weights, round, setting])
 
 
     def Performance_based(self,message_weights): 
@@ -325,7 +333,8 @@ class Node(cSimpleModule):
         hr, ndcg = self.evaluate_local_model()
         self.performances[message_weights.id] = hr * ndcg
         ndcgs.append(hr * ndcg)
-
+        none_normalized_weight = hr * ndcg 
+        
         ndcg_total = sum(ndcgs)
         
         if(ndcg_total) == 0:
@@ -338,6 +347,9 @@ class Node(cSimpleModule):
         local[:] = [w * norm[0] for w in local]
         message_weights.weights[:] = [w * norm[1] for w in message_weights.weights]
         
+        normalized_weight = norm[1]
+        # self.to_csv_file(message_weights.id, "no", self.id_user, none_normalized_weight, normalized_weight, self.rounds, "Pepper")
+
         local[:] = [a + b for a,b in zip(local,message_weights.weights)]
         self.set_model(local)
         self.item_input, self.labels, self.user_input = self.my_dataset()
