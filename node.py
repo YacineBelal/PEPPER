@@ -8,7 +8,7 @@ import random
 import sys
 from evaluate import evaluate_model
 import multiprocessing as mp
-
+import csv 
 
 
 
@@ -147,7 +147,7 @@ class Node(cSimpleModule):
         self.update()
         
         self.peers =  []
-                
+        self.hop = 0
         self.peer_sampling()
         self.performances = {}
         self.scheduleAt(simTime() + self.period,self.period_message)
@@ -158,14 +158,8 @@ class Node(cSimpleModule):
         if msg.getName() == 'period_message':
             if self.rounds > 0 :
 
-                if self.rounds % 10 == 0 or self.rounds == 1:
-                    if self.rounds % 10 == 0:
-                        lhr, lndcg = self.evaluate_local_model(False,False)   
-                    else:
-                        if(len(self.best_model) > 0):
-                            self.model.set_weights(self.best_model)
-                        lhr, lndcg = self.evaluate_local_model(False,False)
-                
+                if self.rounds % 10 == 0:
+                    lhr, lndcg = self.evaluate_local_model(False,False)                   
                     print('node : ',self.id_user)
                     print('Local HR =  ', lhr)
                     print('Local NDCG =  ',lndcg)
@@ -173,6 +167,8 @@ class Node(cSimpleModule):
                     sys.stdout.flush()
                     self.diffuse_to_server(lhr, lndcg)
 
+                if self.attacker_condition():
+                    self.FedAtt()
                 self.diffuse_to_peer()
                 
                 if self.rounds % 10 == 0:
@@ -184,6 +180,8 @@ class Node(cSimpleModule):
                 self.scheduleAt(simTime() + self.period,self.period_message)
             
             elif self.rounds == 0: # if number of rounds has been acheived, we can evaluate the model both locally
+                    if(len(self.best_model) > 0):
+                        self.model.set_weights(self.best_model)
                     lhr, lndcg = self.evaluate_local_model(False, False)                    
                     print('node : ',self.id_user)
                     print('Local HR =  ', lhr)
@@ -198,26 +196,41 @@ class Node(cSimpleModule):
         elif msg.getName() == 'Model':
 
             # dt = self.merge(msg)
+            
+            if msg.isattacker:
+                self.hop = 1
+    
+            if not self.attacker_condition():
+                before_hr, before_ndcg = self.evaluate_local_model(False, True)
+
             dt = self.FullAvg(msg)
             # dt = self.FullAvg_itemsonly(msg)
             # dt = self.DKL_mergeJ(msg)
         
 
             hr, ndcg = self.evaluate_local_model(False, True)
-            if hr >= self.best_hr:
+            if hr >= self.best_hr :
                 self.best_hr = hr
                 self.best_ndcg = ndcg
                 self.best_model = self.model.get_weights().copy()
+            # we'll need to plot the impact (the before/after) of the attacker on this user's model
+
+            if not self.attacker_condition() and msg.hop != 0:
+                self.impact_to_csv_file(msg.id, self.id_user, before_hr, before_ndcg, hr, ndcg, self.hop, self.rounds, "FedAvg")
     
+            if msg.hop != 0:
+                self.hop = (msg.hop + 1) % 15
+            
             self.delete(msg)
             
 
     def finish(self):
         pass
     
+    
+    def attacker_condition(self):
+        return self.id_user % 9 == 0
 
-    
-    
     def FedAtt(self):
         local = self.model.get_weights()
         self.item_input, self.labels, self.user_input = self.my_dataset(num_negatives = 0)
@@ -328,6 +341,8 @@ class Node(cSimpleModule):
             weights.age = self.age       
             weights.samples = self.positives_nums 
             weights.id = self.id_user
+            weights.isattacker = 1 if self.attacker_condition() else 0
+            weights.hop = 1 if self.attacker_condition() else self.hop
             weights.type = type
             self.send(weights, 'no$o',self.get_gate(peer))
             peers.remove(peer)
@@ -343,8 +358,8 @@ class Node(cSimpleModule):
         weights.round = self.rounds
         weights.hit_ratio = hr
         weights.ndcg = ndcg
-        # weights.attacker = 1 if self.id_user % 9 == 0 else 0
-        weights.attacker = 0
+        weights.attacker = 1 if self.attacker_condition() else 0
+        # weights.attacker = 0
         self.send(weights, 'nl$o',0)
 
     
@@ -388,7 +403,7 @@ class Node(cSimpleModule):
         local_weights [:] = [(self.positives_nums * a + message_weights.samples * b) / (message_weights.samples + self.positives_nums) for a,b in zip(local_weights, weights)]
         local_weights[1][self.id_user] = local_user_embedding
         self.set_model(local_weights)
-        if self.id_user % 9 == 0:
+        if self.attacker_condition():
             self.FedAtt()
         else:
             self.update()
@@ -401,13 +416,27 @@ class Node(cSimpleModule):
         local_weights = self.get_model()
         local_weights [:] = [(self.positives_nums * a + message_weights.samples * b) / (message_weights.samples + self.positives_nums) for a,b in zip(local_weights, weights)]
         self.set_model(local_weights)
-        # if self.id_user % 9 == 0:
-            # self.FedAtt()
-        # else:
-        self.update()
         self.item_input, self.labels, self.user_input = self.my_dataset()
-# 
+        self.update()
+        normalized_weight = (message_weights.samples / (message_weights.samples + self.positives_nums))
+        if not self.attacker_condition():
+            SenderIsanAttacker = "yes" if message_weights.isattacker else "no"
+            self.weighting_to_csv_file(message_weights.id, SenderIsanAttacker , self.id_user, normalized_weight, normalized_weight, self.rounds, "FedAvg")
+        
         return 0
+
+    def weighting_to_csv_file(self, sender, isAttacker, receiver, none_normalized_weights, normalized_weights, round, setting):
+        with open("../list_weights_given.csv","a") as output:
+            writer = csv.writer(output, delimiter=",")
+            writer.writerow([sender, isAttacker, receiver, none_normalized_weights, normalized_weights, round, setting])
+        return 0
+
+    def impact_to_csv_file(self, sender, receiver, before_hr, before_ndcg, after_hr, after_ndcg, hops, round, setting):
+        with open("../list_attacker_impact.csv","a") as output:
+            writer = csv.writer(output, delimiter=",")
+            writer.writerow([sender, receiver,before_hr, before_ndcg, after_hr, after_ndcg, hops, round, setting])
+        return 0
+    
 
     def DKL_mergeJ(self,message_weights): 
         
@@ -425,7 +454,7 @@ class Node(cSimpleModule):
         hr, ndcg = self.evaluate_local_model()
         self.performances[message_weights.id] = hr * ndcg
         ndcgs.append(hr * ndcg)
-
+        none_normalized_weights = hr * ndcg
         ndcg_total = sum(ndcgs)
         
         if(ndcg_total) == 0:
@@ -441,12 +470,14 @@ class Node(cSimpleModule):
         local[:] = [a + b for a,b in zip(local,message_weights.weights)]
         self.set_model(local)
         
-        if self.id_user % 9 == 0:
-            self.FedAtt()
-        else:
-            self.update()
-            self.item_input, self.labels, self.user_input = self.my_dataset()
-        
+        self.item_input, self.labels, self.user_input = self.my_dataset()
+        self.update()
+        normalized_weights = norm[1] 
+      
+        if not self.attacker_condition():
+            SenderIsanAttacker = "yes" if message_weights.isattacker else "no"
+            self.weighting_to_csv_file(message_weights.id, SenderIsanAttacker , self.id_user, none_normalized_weights, normalized_weights, self.rounds, "Pepper")
+       
         return 0
 
     def my_dataset(self, num_negatives = 4):

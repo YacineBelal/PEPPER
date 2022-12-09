@@ -7,11 +7,11 @@ import wandb
 import os
 
 sync_ = 1
-name_ = "DFedAvg (Without attackers)" #(FedAtt with 10% attackers)"  # "Model_Age_Based Attacked" #  "Pepper Attacked"
+name_ = "(FedAvg with 10% attackers)" #(FedAtt with 10% attackers)"  # "Model_Age_Based Attacked" #  "Pepper Attacked"
 dataset_ = "ml-100k"  
 topK = 20
 dataset = Dataset("ml-100k")
-Attackers_ratio = 0
+Attackers_ratio = 0.1
 Worst_ratio = 0.2
 
 def get_user_vector(user):
@@ -74,7 +74,7 @@ if sync_:
     wandb_config = {
         "Dataset": dataset_,
         "Implementation": "TensorFlow",
-        "Rounds": 300,
+        "Rounds": 600,
         "Nodes": 100,
         "Learning_rate": 0.01,
         "Epochs": 2,
