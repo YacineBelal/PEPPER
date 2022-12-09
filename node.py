@@ -172,8 +172,8 @@ class Node(cSimpleModule):
                 self.diffuse_to_peer()
                 
                 if self.rounds % 10 == 0:
-                    self.peer_sampling()
-                    # self.peer_sampling_enhanced()
+                    # self.peer_sampling()
+                    self.peer_sampling_enhanced()
                
 
                 self.rounds = self.rounds - 1
@@ -197,15 +197,13 @@ class Node(cSimpleModule):
 
             # dt = self.merge(msg)
             
-            if msg.isattacker:
-                self.hop = 1
-    
             if not self.attacker_condition():
                 before_hr, before_ndcg = self.evaluate_local_model(False, True)
 
-            dt = self.FullAvg(msg)
+            # dt = self.FullAvg(msg)
+            self.Performance_based_v2(msg)
             # dt = self.FullAvg_itemsonly(msg)
-            # dt = self.DKL_mergeJ(msg)
+            # dt = self.Performance_based(msg)
         
 
             hr, ndcg = self.evaluate_local_model(False, True)
@@ -216,10 +214,9 @@ class Node(cSimpleModule):
             # we'll need to plot the impact (the before/after) of the attacker on this user's model
 
             if not self.attacker_condition() and msg.hop != 0:
-                self.impact_to_csv_file(msg.id, self.id_user, before_hr, before_ndcg, hr, ndcg, self.hop, self.rounds, "FedAvg")
-    
-            if msg.hop != 0:
+                self.impact_to_csv_file(msg.id, self.id_user, before_hr, before_ndcg, hr, ndcg, msg.hop, self.rounds, "Pepper_v2")
                 self.hop = (msg.hop + 1) % 15
+    
             
             self.delete(msg)
             
@@ -248,6 +245,17 @@ class Node(cSimpleModule):
         self.model.set_weights(local)
         self.update()                
     
+
+    def evaluate_user_embedding_on_validation(self, user):
+        v_ratings = self.validationRatings.copy()
+        for i in range(len(v_ratings)):
+                v_ratings[i][0] = user
+        
+        (hits, ndcgs) = evaluate_model(self.model, v_ratings, self.validationNegatives, topK, 1)
+        hr, ndcg = np.array(hits).mean(), np.array(ndcgs).mean()
+
+        return hr,ndcg 
+
     def evaluate_local_model(self,all_dataset = False, validation=True, topK = topK):
         evaluation_threads = 1 #mp.cpu_count()
         if not all_dataset:
@@ -437,8 +445,47 @@ class Node(cSimpleModule):
             writer.writerow([sender, receiver,before_hr, before_ndcg, after_hr, after_ndcg, hops, round, setting])
         return 0
     
+    def Performance_based_v2(self, message_weights):
+        if len(self.validationRatings) < 2:
+            self.simple_merge(message_weights.weights)
+            self.item_input, self.labels, self.user_input = self.my_dataset()
+            self.update()
+            return 0
+         
+        local = self.get_model()
+        ndcgs = []
+        lhr,lndcg =self.evaluate_local_model()
+        ndcgs.append(lhr * lndcg)
+        self.set_model(message_weights.weights)
+        hr, ndcg = self.evaluate_user_embedding_on_validation(message_weights.id)
+        self.performances[message_weights.id] = hr * ndcg
+        ndcgs.append(hr * ndcg)
+        none_normalized_weights = hr * ndcg
+        ndcg_total = sum(ndcgs)
+        
+        if(ndcg_total) == 0:
+            self.set_model(local)
+            return 0
 
-    def DKL_mergeJ(self,message_weights): 
+        norm = [ (float(i))/ndcg_total for i in ndcgs]
+            
+
+        local[:] = [w * norm[0] for w in local]
+        message_weights.weights[:] = [w * norm[1] for w in message_weights.weights]
+        
+        local[:] = [a + b for a,b in zip(local,message_weights.weights)]
+        self.set_model(local)
+        
+        self.item_input, self.labels, self.user_input = self.my_dataset()
+        self.update()
+        normalized_weights = norm[1] 
+      
+        if not self.attacker_condition():
+            SenderIsanAttacker = "yes" if message_weights.isattacker else "no"
+            self.weighting_to_csv_file(message_weights.id, SenderIsanAttacker , self.id_user, none_normalized_weights, normalized_weights, self.rounds, "Pepper_v2")
+       
+
+    def Performance_based(self,message_weights): 
         
         if len(self.validationRatings) < 2:
             self.simple_merge(message_weights.weights)
