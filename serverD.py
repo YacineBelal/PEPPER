@@ -7,7 +7,7 @@ import wandb
 import os
 
 sync_ = 1
-name_ = "(FedAvg with 10% attackers)" #(FedAtt with 10% attackers)"  # "Model_Age_Based Attacked" #  "Pepper Attacked"
+name_ = "(Pepper with 10% attackers)" #(FedAtt with 10% attackers)"  # "Model_Age_Based Attacked" #  "Pepper Attacked"
 dataset_ = "ml-100k"  
 topK = 20
 dataset = Dataset("ml-100k")

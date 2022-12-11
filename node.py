@@ -127,7 +127,7 @@ class Node(cSimpleModule):
         self.num_items = num_items #train.shape[1] #1682 #3900  TO DO automate this, doesn't work since the validation data has been added because one item is present there and not in training
         self.num_users = 100 # train.shape[0] #100 
         self.id_user = self.getIndex()  
-        self.period = 0 # np.random.exponential(0.1)
+        self.period = 0 #np.random.exponential(0.01)
 
         self.vector = get_user_vector(train,self.id_user)
         self.testRatings, self.testNegatives = get_user_test_set(testRatings,testNegatives,self.id_user)
@@ -148,6 +148,8 @@ class Node(cSimpleModule):
         
         self.peers =  []
         self.hop = 0
+        self.agg_num = 0
+        self.diff_num = 0
         self.peer_sampling()
         self.performances = {}
         self.scheduleAt(simTime() + self.period,self.period_message)
@@ -170,6 +172,7 @@ class Node(cSimpleModule):
                 if self.attacker_condition():
                     self.FedAtt()
                 self.diffuse_to_peer()
+                self.diff_num += 1
                 
                 if self.rounds % 10 == 0:
                     # self.peer_sampling()
@@ -194,16 +197,16 @@ class Node(cSimpleModule):
                 
              
         elif msg.getName() == 'Model':
-
+            self.agg_num += 1
             # dt = self.merge(msg)
             
             if not self.attacker_condition():
                 before_hr, before_ndcg = self.evaluate_local_model(False, True)
 
             # dt = self.FullAvg(msg)
-            self.Performance_based_v2(msg)
+            # self.Performance_based_v2(msg)
             # dt = self.FullAvg_itemsonly(msg)
-            # dt = self.Performance_based(msg)
+            dt = self.Performance_based(msg)
         
 
             hr, ndcg = self.evaluate_local_model(False, True)
@@ -214,7 +217,7 @@ class Node(cSimpleModule):
             # we'll need to plot the impact (the before/after) of the attacker on this user's model
 
             if not self.attacker_condition() and msg.hop != 0:
-                self.impact_to_csv_file(msg.id, self.id_user, before_hr, before_ndcg, hr, ndcg, msg.hop, self.rounds, "Pepper_v2")
+                self.impact_to_csv_file(msg.id, self.id_user, before_hr, before_ndcg, hr, ndcg, msg.hop, self.rounds, "Pepper")
                 self.hop = (msg.hop + 1) % 15
     
             
@@ -222,7 +225,10 @@ class Node(cSimpleModule):
             
 
     def finish(self):
-        pass
+        if self.attacker_condition():
+            with open("../aggregationvsdiffusion.csv","a") as output:
+                writer = csv.writer(output, delimiter=",")
+                writer.writerow([self.id_user,self.agg_num, self.diff_num])
     
     
     def attacker_condition(self):
@@ -424,14 +430,16 @@ class Node(cSimpleModule):
         local_weights = self.get_model()
         local_weights [:] = [(self.positives_nums * a + message_weights.samples * b) / (message_weights.samples + self.positives_nums) for a,b in zip(local_weights, weights)]
         self.set_model(local_weights)
-        self.item_input, self.labels, self.user_input = self.my_dataset()
-        self.update()
         normalized_weight = (message_weights.samples / (message_weights.samples + self.positives_nums))
         if not self.attacker_condition():
+            self.item_input, self.labels, self.user_input = self.my_dataset()
+            self.update()
             SenderIsanAttacker = "yes" if message_weights.isattacker else "no"
             self.weighting_to_csv_file(message_weights.id, SenderIsanAttacker , self.id_user, normalized_weight, normalized_weight, self.rounds, "FedAvg")
         
         return 0
+
+
 
     def weighting_to_csv_file(self, sender, isAttacker, receiver, none_normalized_weights, normalized_weights, round, setting):
         with open("../list_weights_given.csv","a") as output:
@@ -476,11 +484,11 @@ class Node(cSimpleModule):
         local[:] = [a + b for a,b in zip(local,message_weights.weights)]
         self.set_model(local)
         
-        self.item_input, self.labels, self.user_input = self.my_dataset()
-        self.update()
         normalized_weights = norm[1] 
       
         if not self.attacker_condition():
+            self.item_input, self.labels, self.user_input = self.my_dataset()
+            self.update()
             SenderIsanAttacker = "yes" if message_weights.isattacker else "no"
             self.weighting_to_csv_file(message_weights.id, SenderIsanAttacker , self.id_user, none_normalized_weights, normalized_weights, self.rounds, "Pepper_v2")
        
