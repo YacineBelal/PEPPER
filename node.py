@@ -75,7 +75,7 @@ class Node(cSimpleModule):
         self.num_items = 1682 #train.shape[1] #1682 ml-100k #3900 foursquare; TODO automate this, get number of items from all sets (train, val..) before building the model
         self.num_users = 100 #to consider only 100 users, .ned file needs to be altered too when modying number of users in the system 
         self.id_user = self.getIndex()  
-        self.period = 0 # np.random.exponential(0.1) #*** for different periods per node  ***
+        self.period = 0 # np.random.exponential(0.1) #*** for different periods per node, TODO exploring periodicity impact***
 
         self.vector = get_user_vector(train,self.id_user) # positive samples; relevant items
         self.testRatings, self.testNegatives = get_user_test_set(testRatings, testNegatives, self.id_user) # final model testing data 
