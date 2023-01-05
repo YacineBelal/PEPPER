@@ -5,7 +5,6 @@ import sys
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_samples, silhouette_score
 from scipy.spatial.distance import cosine, euclidean
-from sklearn.preprocessing import StandardScaler
 from collections import defaultdict
 from Dataset import Dataset
 import numpy as np
@@ -16,13 +15,13 @@ import matplotlib.pyplot as plt
 sync_ = 1
 a2a = False
 # nodes communicate with all nodes that they interacted with, in the last round, in order to get fresh models
-name_ = "Pepper (Items Embeddings Evaluation)"  # "Model_Age_Based Attacked" #  "Pepper Attacked"
-dataset_ = "ml-100k"  # foursquareNYC
+name_ = "Pepper-FS (Model Evaluation)"  # "Model_Age_Based Attacked" #  "Pepper Attacked"
+dataset_ = "foursquareNYC"  # ml-100k 
 topK = 20
 topK_clustering = 5
 clustersK = 10
 ground_truth_type = "topk"  # None
-dataset = Dataset("ml-100k")
+dataset = Dataset(dataset_)
 
 
 def get_user_vector(user):
@@ -109,21 +108,18 @@ if sync_:
         "Dataset": dataset_,
         "Implementation": "TensorFlow",
         "Rounds": 300,
-        "Nodes": 100,
+        "Nodes": 146,
         "Learning_rate": 0.01,
         "Epochs": 2,
         "Batch_size": "Full",
         "TopK": topK,
         "TopK_Clustering": topK_clustering,
         "Attacker id": "all",
-        "Distance_Metric temporality": "Fresh",
         "Distance computed on": "both user and items embeddings",
-        "Model used to attack": "Current model",
         "Pull": False,
         "Epsilon": np.inf,
         "Delta": np.inf,
         "Number of clusters": clustersK,
-        "Ground_Truth_type": ground_truth_type
     }
 
     os.environ["WANDB_API_KEY"] = "334fd1cd4a03c95f4655357b92cdba2b7d706d4c"
@@ -159,7 +155,6 @@ class Server(cSimpleModule):
         self.att_random_bound = defaultdict(list)
         self.models = dict()
         self.vectors = dict()
-        # self.clusters = self.groundTruth_Clustering()
         self.clusters = self.groundTruth_TopKItemsLiked()
 
 
@@ -376,7 +371,7 @@ class Server(cSimpleModule):
 
         found_and_relevant = set(users_topk[attacker_id]) & set(self.cluster_found[attacker_id][idx][:topK])
 
-        size = len(self.cluster_found[attacker_id][idx])
+        # size = len(self.cluster_found[attacker_id][idx])
         acc = len(found_and_relevant) / len(users_topk[attacker_id])
 
         if len(interacted_with_fair_recall) == 0:

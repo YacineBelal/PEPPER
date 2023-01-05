@@ -1,12 +1,12 @@
 #
-# OMNeT++/OMNEST Makefile for pytictoc
+# OMNeT++/OMNEST Makefile for Dec-GMF
 #
 # This file was generated with the command:
 #  opp_makemake -f --deep -O out -I.
 #
 
 # Name of target to be created (-o option)
-TARGET = pytictoc$(D)$(EXE_SUFFIX)
+TARGET = Dec-GMF$(D)$(EXE_SUFFIX)
 TARGET_DIR = .
 
 # User interface (uncomment one) (-u option)

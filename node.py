@@ -7,27 +7,20 @@ import utility as util
 import random
 import sys
 from evaluate import evaluate_model
-from scipy.spatial.distance import cosine, euclidean
-from sklearn.preprocessing import StandardScaler
-import multiprocessing as mp
+from scipy.spatial.distance import cosine
 
 
-
-import time
-
-# attack parameters
-# attacker_id = 49
 
 topK = 20
-dataset_name = "ml-100k" #foursquareNYC   ml-1m_version 
-num_items =  1682 # 38333  
+dataset_name = "foursquareNYC" # ml-100k   ml-1m_version 
+num_items =  38333 # 1682  
 dataset = Dataset(dataset_name)
 train ,testRatings, testNegatives, trainNegatives, \
 validationRatings, validationNegatives = dataset.trainMatrix, dataset.testRatings, dataset.testNegatives, \
     dataset.trainNegatives, dataset.validationRatings, dataset.validationNegatives
 
-testRatings = testRatings[:1000] #  2453 1000
-testNegatives= testNegatives[:1000]
+# testRatings = testRatings[:1000] #  2453 1000
+# testNegatives= testNegatives[:1000]
 
 number_peers = 3
 genre = 1 # action
@@ -178,7 +171,6 @@ def get_training_as_list(train):
 def get_individual_set(user, ratings, negatives):
     personal_Ratings = []
     personal_Negatives = []
-
     for i in range(len(ratings)):
         idx = ratings[i][0]
         if idx == user:
@@ -193,15 +185,14 @@ def get_individual_set(user, ratings, negatives):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 480 
-        self.all_models = []  
+        self.rounds = 250 
         self.vector = np.empty(0)
         self.labels = np.empty(0)
         self.item_input = np.empty(0)
         self.age = 1
         self.alpha = 0.4
         self.num_items = num_items #train.shape[1] #1682 #3900  TO DO automate this, doesn't work since the validation data has been added because one item is present there and not in training
-        self.num_users = 100 # train.shape[0] #100 
+        self.num_users = 146 # train.shape[0] #100 
         self.id_user = self.getIndex()  
         self.period = 0 # np.random.exponential(0.1)
 
@@ -217,13 +208,11 @@ class Node(cSimpleModule):
 
         self.item_input, self.labels, self.user_input = self.my_dataset()
         self.model = util.get_model(self.num_items,self.num_users) # each node initialize its own model 
+
         self.model.compile(optimizer=Adam(lr=0.01), loss='binary_crossentropy')
-        # self.scaler = StandardScaler(with_mean=False)
         
         self.period_message = cMessage('period_message')
         self.update()
-        self.all_models.append(self.get_model())
-        
         self.peers =  []
         
         self.neighbours = dict()
@@ -307,14 +296,13 @@ class Node(cSimpleModule):
     
             # 
     
-    def find_profiles(self, msg, fine_tuned_model = True, based_on_items_only = True):
+    def find_profiles(self, msg, based_on_items_only = False):
         
         
         if based_on_items_only:
             # just evaluating the items embeddings
             local_items_embeddings = self.model.get_layer('item_embedding').get_weights()
             self.model.get_layer('item_embedding').set_weights([msg.weights[0]])
-            
             _, ndcg = self.evaluate_on_train_items()
             
             self.neighbours[msg.id] = (ndcg, 1)
@@ -500,9 +488,9 @@ class Node(cSimpleModule):
     def FullAvg(self, message_weights):
         weights = message_weights.weights
         local_weights = self.get_model()
-        # local_user_embedding = local_weights[1][self.id_user]
+        local_user_embedding = local_weights[1][self.id_user]
         local_weights [:] = [(self.positives_nums * a + message_weights.samples * b) / (message_weights.samples + self.positives_nums) for a,b in zip(local_weights, weights)]
-        # local_weights[1][self.id_user] = local_user_embedding
+        local_weights[1][self.id_user] = local_user_embedding
         self.set_model(local_weights)
         self.update()
         self.item_input, self.labels, self.user_input = self.my_dataset()

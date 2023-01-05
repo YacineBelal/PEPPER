@@ -18,8 +18,8 @@ import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 
 topK_clustering = 5
-num_items = 1682
-num_users = 100
+num_items =  1682 #38333
+num_users = 943
 
 reset_random_seeds()
 
@@ -228,6 +228,23 @@ def get_individual_set(user, ratings, negatives):
     return personal_Ratings, personal_Negatives
 
 
+def remove_duplicates():
+    users_liked = defaultdict(list)
+    new_lines = []
+    with open("foursquareNYC.train.rating","r") as f:
+        lines = f.readlines()
+        for line in lines:
+            arr = line.split("\t")
+            user, item = int(arr[0]), int(arr[1])
+            if item not in users_liked[user]:
+                users_liked[user].append(item) 
+                new_lines.append(line)
+        
+    with open("foursquareNYC_new.train.rating","w") as w:
+        w.writelines(new_lines)
+        print('here')
+
+
 def create_train_negatives(user, train):
     _, item_input, _ = get_individual_train_instances(user, train, only_positives=True)
     lines = []
@@ -258,21 +275,18 @@ def get_training_as_list(train):
 def get_individual_train_instances(user, train, only_positives=False, num_negatives=4):
     user_input, item_input, labels = [], [], []
     for (u, i) in train.keys():
-        if u > user:
-            break
-        elif u < user:
-            continue
-        user_input.append(u)
-        item_input.append(i)
-        labels.append(1)
-        if not only_positives:
-            for t in range(num_negatives):
-                j = np.random.randint(num_items)
-                while (u, j) in train:
-                    j = np.random.randint(num_items)
-                user_input.append(u)
-                item_input.append(j)
-                labels.append(0)
+        if u == user:
+            user_input.append(u)
+            item_input.append(i)
+            labels.append(1)
+            # if not only_positives:
+            #     for _ in range(num_negatives):
+            #         j = np.random.randint(num_items)
+            #         while (u, j) in train:
+            #             j = np.random.randint(num_items)
+            #         user_input.append(u)
+            #         item_input.append(j)
+            #         labels.append(0)
     return user_input, item_input, labels
 
 
@@ -302,9 +316,18 @@ batch_size = 64
 verbose = 1
 
 dataset = Dataset("ml-100k")
-train, testRatings, testNegatives, trainNegatives, _, _ = dataset.trainMatrix, dataset.testRatings, \
+
+
+train, testRatings, testNegatives, _, _, _ = dataset.trainMatrix, dataset.testRatings, \
                                                           dataset.testNegatives, dataset.trainNegatives, \
                                                           dataset.validationRatings, dataset.validationNegatives
+# remove_duplicates()
+# size = 0 
+for user in range(num_users):
+    create_train_negatives(user, train)
+
+exit(1)
+
 testRatings = testRatings[:1000]
 testNegatives = testNegatives[:1000]
 
