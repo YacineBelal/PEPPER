@@ -12,8 +12,15 @@ from scipy.spatial.distance import cosine
 
 
 topK = 20
-dataset_name = "foursquareNYC" # ml-100k   ml-1m_version 
-num_items =  38333 # 1682  
+dataset_name = "foursquareNYC" #ml-100k    GowallaNYC 
+
+if dataset_name == "foursquareNYC":
+    num_items =   38333 #  10978  
+elif dataset_name =="ml-100k ":
+    num_items =   1682
+else: # GowallaNYC
+    num_items =   10978 
+
 dataset = Dataset(dataset_name)
 train ,testRatings, testNegatives, trainNegatives, \
 validationRatings, validationNegatives = dataset.trainMatrix, dataset.testRatings, dataset.testNegatives, \
@@ -23,7 +30,6 @@ validationRatings, validationNegatives = dataset.trainMatrix, dataset.testRating
 # testNegatives= testNegatives[:1000]
 
 number_peers = 3
-genre = 1 # action
 
 
 def get_user_vector(train,user = 0):
@@ -49,98 +55,6 @@ def get_user_test_set(testRatings,testNegatives,user):
             break
         
     return personal_testRatings,personal_testNegatives
-
-
-def get_genreattacked_prop(vector):
-    infos = []
-    with open("u.item",'r', encoding="ISO-8859-1") as info:
-        line = info.readline()
-        while(line and line!=''):
-            arr = line.split("|")
-            temp = arr[-19:]
-            infos.append(temp)
-            line = info.readline()
-    prop = 0
-    for item in vector:
-        if infos[item][genre] == "1":
-            prop += 1
-    return prop /  len(vector)
-
-def create_profile(idx):
-    infos = []
-    vector = []
-    with open("u.item",'r', encoding="ISO-8859-1") as info:
-        line = info.readline()
-        while(line and line!=''):
-            arr = line.split("|")
-            temp = arr[-19:]
-            infos.append(temp)
-            line = info.readline()
-    
-    for it in range(num_items):
-        # action movies
-        if infos[it][genre] == "1":
-            vector.append(it)
-
-    n = len(vector)
-    u = [idx] * n
-    testRatings = [x for x in  zip(u,vector[:int(0.1 * n)])]
-    validationRatings = [x for x in  zip(u,vector[int(0.1 * n):int(0.2 * n)])]
-    testNegatives = []
-    validationNegatives = []
-    for _ in testRatings:
-        testNegatives.append(list(np.random.randint(0,num_items, size = 99)))
-    for _ in validationRatings:
-        validationNegatives.append(list(np.random.randint(0,num_items, size = 99)))
-    vector =  vector[int(0.2 *n):]
-
-
-    return vector, testRatings, testNegatives, validationRatings, validationNegatives
-    
-
-def get_distribution_by_genre(vector):
-    infos = []
-    with open("u.item",'r', encoding="ISO-8859-1") as info:
-        line = info.readline()
-        while(line and line!=''):
-            arr = line.split("|")
-
-            temp = arr[-19:]
-            infos.append(temp)
-            line = info.readline()
-    
-    dist = [0 for _ in range(19)]
-    for item in vector:
-        for i in range(len(dist)):
-            dist[i] += int(infos[item][i]) 
-        
-    summ = sum(dist)
-    dist = [elem / summ for elem in dist]
-    
-    return dist
-
-def get_global_distribution_by_genre():
-    infos = []
-    with open("u.item",'r', encoding="ISO-8859-1") as info:
-        line = info.readline()
-        while(line and line!=''):
-            arr = line.split("|")
-            temp = arr[-19:]
-            infos.append(temp)
-            line = info.readline()
-    with open("ml-100k.train.rating") as base:
-        dist = [0 for _ in range(19)]
-        line = base.readline()
-        while (line and line !=''):
-            arr = line.split("\t")
-            item = int(arr[1])  
-            for i in range(len(dist)):
-                dist[i] += int(infos[item][i]) 
-            line = base.readline()
-    summ = sum(dist)
-    dist = [elem / summ for elem in dist]
-    return dist
-
 
 def jaccard_similarity(list1, list2):
         s1 = set(list1)
@@ -185,14 +99,14 @@ def get_individual_set(user, ratings, negatives):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds = 250 
+        self.rounds =  250 #500 
         self.vector = np.empty(0)
         self.labels = np.empty(0)
         self.item_input = np.empty(0)
         self.age = 1
         self.alpha = 0.4
         self.num_items = num_items #train.shape[1] #1682 #3900  TO DO automate this, doesn't work since the validation data has been added because one item is present there and not in training
-        self.num_users = 146 # train.shape[0] #100 
+        self.num_users = 146 # train.shape[0] #146 
         self.id_user = self.getIndex()  
         self.period = 0 # np.random.exponential(0.1)
 
@@ -245,8 +159,8 @@ class Node(cSimpleModule):
                 self.diffuse_to_peer()
                 # self.broadcast()
                 if self.rounds % 10 == 0:
-                    # self.peer_sampling()
-                    self.peer_sampling_enhanced()
+                    self.peer_sampling()
+                    # self.peer_sampling_enhanced()
                
 
                 self.rounds = self.rounds - 1
@@ -265,15 +179,16 @@ class Node(cSimpleModule):
                 
              
         elif msg.getName() == 'Model':
-            # if self.rounds % 5 == 0:
-                # self.all_models.append(self.get_model())
             self.find_profiles(msg)
 
             # dt = self.merge(msg)
-            # dt = self.FullAvg(msg)
-            dt = self.DKL_mergeJ(msg)
+            dt = self.FullAvg(msg)
+            # dt = self.FullAvg_items_only(msg)
+            # dt = self.DKL_mergeJ(msg)
+            # dt = self.DKL_mergeJ_Items_only(msg)
         
-
+            
+            # when validation samples are drawn from training : less training, more validation and weighting by validating
             hr, ndcg = self.evaluate_local_model(False, True)
             if hr >= self.best_hr:
                 self.best_hr = hr
@@ -294,11 +209,9 @@ class Node(cSimpleModule):
     
 
     
-            # 
+            
     
     def find_profiles(self, msg, based_on_items_only = False):
-        
-        
         if based_on_items_only:
             # just evaluating the items embeddings
             local_items_embeddings = self.model.get_layer('item_embedding').get_weights()
@@ -483,9 +396,18 @@ class Node(cSimpleModule):
         local = self.get_model()
         local[:] =  [ (a + b) / 2 for a,b in zip(local,weights)]
         self.set_model(local)
-
-
+ 
     def FullAvg(self, message_weights):
+        weights = message_weights.weights
+        local_weights = self.get_model()
+        local_weights [:] = [(self.positives_nums * a + message_weights.samples * b) / (message_weights.samples + self.positives_nums) for a,b in zip(local_weights, weights)]
+        self.set_model(local_weights)
+        self.update()
+        self.item_input, self.labels, self.user_input = self.my_dataset()
+
+        return 0
+
+    def FullAvg_items_only(self, message_weights):
         weights = message_weights.weights
         local_weights = self.get_model()
         local_user_embedding = local_weights[1][self.id_user]
@@ -496,7 +418,49 @@ class Node(cSimpleModule):
         self.item_input, self.labels, self.user_input = self.my_dataset()
 
         return 0
+    
 
+    def DKL_mergeJ_Items_only(self, message_weights):
+        if len(self.validationRatings) < 2:
+            self.simple_merge(message_weights.weights)
+            self.item_input, self.labels, self.user_input = self.my_dataset()
+            self.update()
+            return 0
+         
+        local = self.get_model()
+        local_user_embedding = local[1][self.id_user]
+        ndcgs = []
+        lhr,lndcg =self.evaluate_local_model()
+        ndcgs.append(lhr * lndcg)
+
+
+        message_weights.weights[1][self.id_user] = local_user_embedding
+        
+        self.set_model(message_weights.weights)
+        hr, ndcg = self.evaluate_local_model()
+        self.performances[message_weights.id] = hr * ndcg
+        ndcgs.append(hr * ndcg)
+
+        ndcg_total = sum(ndcgs)
+        
+        if(ndcg_total) == 0:
+            self.set_model(local)
+            return 0
+
+        norm = [ (float(i))/ndcg_total for i in ndcgs]
+            
+
+        local[:] = [w * norm[0] for w in local]
+        message_weights.weights[:] = [w * norm[1] for w in message_weights.weights]
+        
+        local[:] = [a + b for a,b in zip(local,message_weights.weights)]
+        local[1][self.id_user] = local_user_embedding
+        self.set_model(local)
+        self.item_input, self.labels, self.user_input = self.my_dataset()
+        self.update()
+        
+        return 0
+    
     def DKL_mergeJ(self,message_weights): 
         
         if len(self.validationRatings) < 2:

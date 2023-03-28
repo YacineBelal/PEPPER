@@ -29,7 +29,7 @@ class Dataset(object):
             self.validationRatings = self.load_rating_file_as_list(path + ".validation.rating")
             self.validationNegatives = self.load_negative_file(path + ".validation.negative") 
         except:
-            print("Error : Validation files were not found")
+            print("Warning : Validation files were not found, Simulation must be for generic aggregation functions")
             sys.stdout.flush()
             self.validationNegatives, self.validationRatings = [], []
 

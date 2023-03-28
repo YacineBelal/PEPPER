@@ -1,0 +1,14 @@
+model age full gowalla 
+wandb sync /home/yacine/git/PersonalizedGL/wandb/offline-run-20230312_225216-24sk62mf
+items only
+wandb sync /home/yacine/git/PersonalizedGL/wandb/offline-run-20230313_105502-yar9t0cn
+
+pepper full gowalla 
+wandb sync /home/yacine/git/PersonalizedGL/wandb/offline-run-20230313_161525-2kxrh3jt
+
+items only  
+wandb sync /home/yacine/git/PersonalizedGL/wandb/offline-run-20230313_142101-c8csvlij
+
+
+pepper full foursquare 
+wandb sync /home/yacine/git/PersonalizedGL/wandb/offline-run-20230314_143516-1m9y75ma

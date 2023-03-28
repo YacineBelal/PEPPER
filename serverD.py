@@ -1,4 +1,3 @@
-from audioop import avg
 import random
 from pyopp import cSimpleModule
 import sys
@@ -11,12 +10,13 @@ import numpy as np
 import wandb
 import os
 import matplotlib.pyplot as plt
+import pandas as pd 
 
 sync_ = 1
 a2a = False
 # nodes communicate with all nodes that they interacted with, in the last round, in order to get fresh models
-name_ = "Pepper-FS (Model Evaluation)"  # "Model_Age_Based Attacked" #  "Pepper Attacked"
-dataset_ = "foursquareNYC"  # ml-100k 
+name_ = "FedAvg_Based-FS (Model Evaluation)"  # "Pepper Model_Age_Based Attacked" #  "Pepper Attacked"
+dataset_ = "foursquareNYC"  # GowallaNYC ml-100k  
 topK = 20
 topK_clustering = 5
 clustersK = 10
@@ -107,7 +107,7 @@ if sync_:
     wandb_config = {
         "Dataset": dataset_,
         "Implementation": "TensorFlow",
-        "Rounds": 300,
+        "Rounds": 250,
         "Nodes": 146,
         "Learning_rate": 0.01,
         "Epochs": 2,
@@ -156,6 +156,7 @@ class Server(cSimpleModule):
         self.models = dict()
         self.vectors = dict()
         self.clusters = self.groundTruth_TopKItemsLiked()
+        self.attack_results = []
 
 
     def handleMessage(self, msg):
@@ -163,7 +164,7 @@ class Server(cSimpleModule):
         self.hit_ratios[msg.round].append(msg.hit_ratio)  # hit ratio ~ recall for recsys
         self.ndcgs[msg.round].append(msg.ndcg)  # ~ accuracy
         self.cluster_found[msg.user_id].append(msg.cluster_found)
-
+        self.attack_results.append([msg.round, msg.user_id, msg.cluster_found])
         # get models to compute topK with last models; trying to figure out if temporality has an effect on topK quality of attack
         if msg.getName() == 'FinalPerformance':
             self.models[msg.user_id] = msg.model
@@ -172,6 +173,8 @@ class Server(cSimpleModule):
         self.delete(msg)
 
     def finish(self):
+        df = pd.DataFrame(self.attack_results, columns=['Round','Attacker',"Cluster_Found"])
+        df.to_pickle(path="attack_results_FedAvg_Foursquare.pkl", compression="gzip")
         global wandb
         if a2a == True:
             refreshed_usertopK = defaultdict(list)
