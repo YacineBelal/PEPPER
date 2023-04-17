@@ -159,8 +159,8 @@ class Node(cSimpleModule):
                 self.diffuse_to_peer()
                 # self.broadcast()
                 if self.rounds % 10 == 0:
-                    self.peer_sampling()
-                    # self.peer_sampling_enhanced()
+                    # self.peer_sampling()
+                    self.peer_sampling_enhanced()
                
 
                 self.rounds = self.rounds - 1
@@ -182,9 +182,9 @@ class Node(cSimpleModule):
             self.find_profiles(msg)
 
             # dt = self.merge(msg)
-            dt = self.FullAvg(msg)
+            # dt = self.FullAvg(msg)
             # dt = self.FullAvg_items_only(msg)
-            # dt = self.DKL_mergeJ(msg)
+            dt = self.DKL_mergeJ(msg)
             # dt = self.DKL_mergeJ_Items_only(msg)
         
             

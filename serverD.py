@@ -15,7 +15,7 @@ import pandas as pd
 sync_ = 1
 a2a = False
 # nodes communicate with all nodes that they interacted with, in the last round, in order to get fresh models
-name_ = "FedAvg_Based-FS (Model Evaluation)"  # "Pepper Model_Age_Based Attacked" #  "Pepper Attacked"
+name_ = "Pepper-FS (Model Evaluation)"  # "Pepper Model_Age_Based Attacked" #  "Pepper Attacked"
 dataset_ = "foursquareNYC"  # GowallaNYC ml-100k  
 topK = 20
 topK_clustering = 5
@@ -174,7 +174,7 @@ class Server(cSimpleModule):
 
     def finish(self):
         df = pd.DataFrame(self.attack_results, columns=['Round','Attacker',"Cluster_Found"])
-        df.to_pickle(path="attack_results_FedAvg_Foursquare.pkl", compression="gzip")
+        df.to_pickle(path="attack_results_Pepper_Full_Foursquare.pkl", compression="gzip")
         global wandb
         if a2a == True:
             refreshed_usertopK = defaultdict(list)
