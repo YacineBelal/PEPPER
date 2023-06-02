@@ -54,6 +54,16 @@ def get_distribution_by_genre(vector):
     return dist
 
 
+def kulczynski2_similarity_bags(list1, list2):
+    s1 = set(list1)
+    s2 = set(list2)
+    a = len(s1.intersection(s2))
+    b = len(s1 - s2)
+    c = len(s2 - s1)
+
+    return float((a / (a + b) + a / (a + c)) / 2)
+
+
 def jaccard_similarity(list1, list2):
     s1 = set(list1)
     s2 = set(list2)
@@ -298,7 +308,26 @@ class Server(cSimpleModule):
             rand_accuracies.append(acc)
 
         return rand_accuracies
+        
+    def groundTruth_TopKItemsLiked_UnionSourceDestination_kulczynski2(self, topK = topK_clustering):
+        users = []
+        users_topk = defaultdict(list)
+        for u in range(len(self.all_participants)):
+            users.append(get_user_vector(u))
 
+
+        for u in range(len(self.all_participants)):
+            for v in range(len(self.all_participants)):
+                if u != v:
+                    users_topk[u].append((v, kulczynski2_similarity_bags([x[0] for x in users[u]],[x[0] for x in users[v]]) * kulczynski2_similarity_bags([x[1] for x in users[u]],[x[1] for x in users[v]])))
+           
+            users_topk[u].sort(key=lambda x: x[1], reverse=True)
+            # print("user ",u," ground truth : ", users_topk[u][:topK])
+            # sys.stdout.flush()
+            users_topk[u] = [x[0] for x in users_topk[u]][:topK]
+        
+        return users_topk
+    
     def groundTruth_TopKItemsLiked(self, topK = topK_clustering):
         users = []
         users_topk = defaultdict(list)

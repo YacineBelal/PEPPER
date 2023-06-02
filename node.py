@@ -105,7 +105,7 @@ class Node(cSimpleModule):
         self.item_input = np.empty(0)
         self.age = 1
         self.alpha = 0.4
-        self.num_items = num_items #train.shape[1] #1682 #3900  TO DO automate this, doesn't work since the validation data has been added because one item is present there and not in training
+       groundTruth_TopKItemsLiked self.num_items = num_items #train.shape[1] #1682 #3900  TO DO automate this, doesn't work since the validation data has been added because one item is present there and not in training
         self.num_users = 146 # train.shape[0] #146 
         self.id_user = self.getIndex()  
         self.period = 0 # np.random.exponential(0.1)
