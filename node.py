@@ -8,11 +8,13 @@ import random
 import sys
 from evaluate import evaluate_model
 from scipy.spatial.distance import cosine
+from numpy import linalg as LA
+from sklearn.preprocessing import normalize
 
 
 
 topK = 20
-dataset_name = "foursquareNYC" #ml-100k    GowallaNYC 
+dataset_name = "ml-100k" #foursquareNYC    GowallaNYC 
 
 if dataset_name == "foursquareNYC":
     num_items =   38333 #  10978  
@@ -99,14 +101,14 @@ def get_individual_set(user, ratings, negatives):
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds =  250 #500 
+        self.rounds =  200 #500 
         self.vector = np.empty(0)
         self.labels = np.empty(0)
         self.item_input = np.empty(0)
         self.age = 1
         self.alpha = 0.4
-       groundTruth_TopKItemsLiked self.num_items = num_items #train.shape[1] #1682 #3900  TO DO automate this, doesn't work since the validation data has been added because one item is present there and not in training
-        self.num_users = 146 # train.shape[0] #146 
+        self.num_items = num_items #train.shape[1] #1682 #3900  TO DO automate this, doesn't work since the validation data has been added because one item is present there and not in training
+        self.num_users = 100 # train.shape[0] #146 
         self.id_user = self.getIndex()  
         self.period = 0 # np.random.exponential(0.1)
 
@@ -130,7 +132,7 @@ class Node(cSimpleModule):
         self.peers =  []
         
         self.neighbours = dict()
-        
+        self.colliders = []
         self.peer_sampling()
         self.performances = {}
         self.scheduleAt(simTime() + self.period,self.period_message)
@@ -138,7 +140,12 @@ class Node(cSimpleModule):
 
     def handleMessage(self, msg):
         # periodic self sent message used as a timer by each node to diffuse its model 
-        if msg.getName() == 'period_message':
+        if msg.getName() == 'attackers_list':
+            self.colliders = msg.list_attackers.copy()
+            if self.id_user in self.colliders:
+                self.colliders.remove(self.id_user)
+            self.delete(msg)
+        elif msg.getName() == 'period_message':
             if self.rounds > 0 :
 
                 if self.rounds % 10 == 0 or self.rounds == 1:
@@ -156,11 +163,12 @@ class Node(cSimpleModule):
                     sys.stdout.flush()
                     self.diffuse_to_server(lhr, lndcg)
 
+                self.add_noise()
                 self.diffuse_to_peer()
                 # self.broadcast()
                 if self.rounds % 10 == 0:
-                    # self.peer_sampling()
-                    self.peer_sampling_enhanced()
+                    self.peer_sampling()
+                    # self.peer_sampling_enhanced()
                
 
                 self.rounds = self.rounds - 1
@@ -181,28 +189,39 @@ class Node(cSimpleModule):
         elif msg.getName() == 'Model':
             self.find_profiles(msg)
 
+            # for id in self.colliders:
+            #     if msg.id != id:
+            #         new_message = WeightsMessage("Model_Collider")
+            #         new_message.weights = msg.weights.copy()
+            #         new_message.age = msg.age       
+            #         new_message.samples = msg.samples 
+            #         new_message.id = msg.id
+            #         self.diffuse_to_specific_peer(id, new_message)
+
             # dt = self.merge(msg)
-            # dt = self.FullAvg(msg)
+            dt = self.FullAvg(msg)
             # dt = self.FullAvg_items_only(msg)
-            dt = self.DKL_mergeJ(msg)
+            # dt = self.DKL_mergeJ(msg)
             # dt = self.DKL_mergeJ_Items_only(msg)
-        
-            
-            # when validation samples are drawn from training : less training, more validation and weighting by validating
-            hr, ndcg = self.evaluate_local_model(False, True)
-            if hr >= self.best_hr:
-                self.best_hr = hr
-                self.best_ndcg = ndcg
-                self.best_model = self.model.get_weights().copy()
-
-
-            ## added the pull possibility
+          
+            ## when validation samples are drawn from training : less training, more validation and weighting by validating
+            # hr, ndcg = self.evaluate_local_model(False, True)
+            # if hr >= self.best_hr:
+            #     self.best_hr = hr
+            #     self.best_ndcg = ndcg
+            #     self.best_model = self.model.get_weights().copy()
+          
+          
+            # ## added the pull possibility
             # if msg.type == "pull":
             #     self.diffuse_to_specific_peer(msg.id)
-    
 
             self.delete(msg)
-            
+
+        elif msg.getName() == 'Model_Collider':
+            self.find_profiles(msg)
+            self.delete(msg)
+
 
     def finish(self):
         pass
@@ -210,7 +229,32 @@ class Node(cSimpleModule):
 
     
             
-    
+    def add_noise(self):
+        sensitivity = 2
+        # check thesis of NIKOLAOS TATARAKIS on DP for more information
+        # full privacy budget (approximate DP, advanced composition)
+        # is equal to= epsilon * sqrt(number of steps * ln(1/delta))
+        # in our case: epsilon * sqrt(200* ln(10^6))
+        # quadruples epsilon, delta, full epsilon, full delta
+        # 0.000694, 10^-6 0.1, 0.0015 // HR=0.017 NDCG=0.0054 Acc = 0.04001
+        # 0.00694,10^-6  1, 0.0015 // HR=0.017 NDCG= Acc = 0.04
+        # 0.019, 10^-6  10, 0.0015 // HR=0.194 NDCG= Acc = 0.064
+        # 0.19, 10^-6, 100, 0.0015 // HR = 0.24  NDCG=0.07   ACC = 0.08
+        # 19, 10^-6, 1000, 0.0015 // HR= 0.301 NDCG= 0.09 Acc=0.112
+            
+        epsilon = 0.019
+        delta = 10e-6
+        sigma =  sensitivity * np.sqrt(2 * np.log(1.25 / delta)) / epsilon
+        self.dp_model = self.model.get_weights().copy()
+        
+        # for i in range(0, len(self.dp_model)):
+        #    if i!= 1:
+        for i in range(len(self.dp_model[0])):
+            norm_i = LA.norm(self.dp_model[0][i])
+            self.dp_model[0][i] = np.divide(self.dp_model[0][i], norm_i)     
+            self.dp_model[0][i] = np.add(self.dp_model[0][i],np.random.normal(loc = 0, scale = sigma, size = self.dp_model[0][i].shape))
+        self.model.set_weights(self.dp_model)
+
     def find_profiles(self, msg, based_on_items_only = False):
         if based_on_items_only:
             # just evaluating the items embeddings
@@ -310,16 +354,18 @@ class Node(cSimpleModule):
             self.peers.append(p)
 
 
-    def diffuse_to_specific_peer(self, id):
+    def diffuse_to_specific_peer(self, id, msg = None):
 
-        weights = WeightsMessage('Model')
-        weights.weights = self.get_model()
-        weights.age = self.age       
-        weights.samples = self.positives_nums 
-        weights.type = "push"
-        weights.id = self.getIndex()
-
-        self.send(weights, 'no$o', self.get_gate(id))
+        if msg is not None:
+            self.send(msg, 'no$o', self.get_gate(id))
+        else:        
+            weights = WeightsMessage('Model')
+            weights.weights = self.get_model()
+            weights.age = self.age       
+            weights.samples = self.positives_nums 
+            weights.type = "push"
+            weights.id = self.id_user
+            self.send(weights, 'no$o', self.get_gate(id))
     
     def broadcast (self):
         for p in self.peers:
