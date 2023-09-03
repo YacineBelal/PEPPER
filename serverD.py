@@ -23,7 +23,6 @@ clustersK = 10
 ground_truth_type = "topk"  # None
 dataset = Dataset(dataset_)
 
-
 def get_user_vector(user):
     positive_instances = []
 
@@ -103,18 +102,65 @@ def cdf(data, metric, sync=sync_, topK=topK):
             wandb.log(
                 {metric + "@" + str(topK) + " CDF": wandb.plot.line(table, metric, "CDF", stroke="dash",
                                                                                title=metric + " last round cumulative distribution")})
-    # else:
-    #     plt.plot(bin_edges[0:-1], cdf ,linestyle='--', marker="o")
-    #     plt.xlim((0,1))
-    #     plt.xlabel("Correspondance between the two grand truths")
-    #     plt.ylabel("CDF")
-    #     plt.grid(True)
-    #     plt.savefig('CDF_'+metric+'K='+str(topK_clustering)+'.pdf') 
-    #     # plt.show()
+
+def cosine_similarity(list1, list2):
+    return 1 - cosine(list1, list2)
 
 
-if sync_:
-    wandb_config = {
+# hypergeometric law!
+# a elements respect the criteria; N population size, echantillon;
+def RandomBoundAccuracy(N, a=topK_clustering, n=topK_clustering):
+    p = a / N
+    Expected_value = n * p
+    return Expected_value / n
+
+
+
+def groundTruth_TopKItemsLiked(num_participants, topK = topK_clustering, ids_or_distances = "ids"):
+        users = []
+        users_topk = defaultdict(list)
+
+        for u in range(num_participants):
+            users.append(get_user_vector(u))
+
+        for u in range(num_participants):
+            for v in range(num_participants):
+                if u != v:
+                    users_topk[u].append((v, jaccard_similarity(users[u], users[v])))
+            users_topk[u].sort(key=lambda x: x[1], reverse=True)
+            if ids_or_distances == "ids":
+                users_topk[u] = [x[0] for x in users_topk[u]][:topK]
+            elif ids_or_distances == "distances":
+                users_topk[u] = [x[1] for x in users_topk[u]][:topK]
+        
+        return users_topk
+
+def groundTruth_TopKItemsLiked_Cosine(num_participants, topK = topK_clustering, ids_or_distances = "ids"):
+        users = []
+        users_topk = defaultdict(list)
+
+        for u in range(num_participants):
+            vector = get_user_vector(u)
+            dist = get_distribution_by_genre(vector)
+            s = sum(dist)
+            dist = [x / s for x in dist]
+            users.append(dist)
+        
+        for u1 in range(num_participants):
+            for u2 in range(num_participants):
+                if u1 != u2:
+                    users_topk[u1].append((u2, cosine_similarity(users[u1], users[u2])))
+            users_topk[u1].sort(key=lambda x: x[1], reverse=True)
+            if ids_or_distances == "ids":
+                users_topk[u1] = [x[0] for x in users_topk[u1]][:topK]
+            elif ids_or_distances == "distances":
+                users_topk[u1] = [x[1] for x in users_topk[u1]][:topK]
+        
+        return users_topk
+
+def init_wandb():
+    if sync_:
+        wandb_config = {
         "Dataset": dataset_,
         "Implementation": "TensorFlow",
         "Rounds": 250,
@@ -139,21 +185,9 @@ if sync_:
     wandb.init(project="DecentralizedGL", entity="drimfederatedlearning", name=name_, config=wandb_config)
 
 
-def cosine_similarity(list1, list2):
-    return 1 - cosine(list1, list2)
-
-
-# hypergeometric law!
-# a elements respect the criteria; N population size, echantillon;
-def RandomBoundAccuracy(N, a=topK_clustering, n=topK_clustering):
-    p = a / N
-    Expected_value = n * p
-    return Expected_value / n
-
-
 class Server(cSimpleModule):
-
     def initialize(self):
+        init_wandb()
         self.all_participants = [i for i in range(self.gateSize('sl'))]
         self.num_participants = len(self.all_participants)
         self.hit_ratios = defaultdict(list)
@@ -165,7 +199,7 @@ class Server(cSimpleModule):
         self.att_random_bound = defaultdict(list)
         self.models = dict()
         self.vectors = dict()
-        self.clusters = self.groundTruth_TopKItemsLiked()
+        self.clusters = groundTruth_TopKItemsLiked(num_participants=self.num_participants)
         self.attack_results = []
 
 
@@ -328,23 +362,6 @@ class Server(cSimpleModule):
         
         return users_topk
     
-    def groundTruth_TopKItemsLiked(self, topK = topK_clustering):
-        users = []
-        users_topk = defaultdict(list)
-        for u in range(len(self.all_participants)):
-            users.append(get_user_vector(u))
-
-        for u in range(len(self.all_participants)):
-            for v in range(len(self.all_participants)):
-                if u != v:
-                    users_topk[u].append((v, jaccard_similarity(users[u], users[v])))
-            users_topk[u].sort(key=lambda x: x[1], reverse=True)
-            # print("User ", u, " has true cluster@K :", users_topk[u])
-            # sys.stdout.flush()
-            users_topk[u] = [x[0] for x in users_topk[u]][:topK]
-
-        return users_topk
-
     def groundTruth_TopK(self, topK = topK_clustering):
         users = []
         for u in range(len(self.all_participants)):
@@ -449,3 +466,5 @@ class Server(cSimpleModule):
             recall_bound = len(found_and_relevant) / len(interacted_with_fair_recall)
 
         return acc, recall, recall_bound
+
+
