@@ -158,6 +158,9 @@ def groundTruth_TopKItemsLiked_Cosine(num_participants, topK = topK_clustering, 
         
         return users_topk
 
+def zero():
+    return 0
+
 def init_wandb():
     if sync_:
         wandb_config = {
@@ -194,6 +197,7 @@ class Server(cSimpleModule):
         self.ndcgs = defaultdict(list)
         self.cluster_found = defaultdict(list)
         self.att_acc = defaultdict(list)
+        self.best_att_acc = defaultdict(zero)
         self.att_acc_bound = defaultdict(list)
         self.att_recall = defaultdict(list)
         self.att_random_bound = defaultdict(list)
@@ -217,8 +221,8 @@ class Server(cSimpleModule):
         self.delete(msg)
 
     def finish(self):
-        # df = pd.DataFrame(self.attack_results, columns=['Round','Attacker',"Cluster_Found"])
-        # df.to_pickle(path="attack_results_Pepper_Full_Foursquare.pkl", compression="gzip")
+        df = pd.DataFrame(self.attack_results, columns=['Round','Attacker',"Cluster_Found"])
+        df.to_pickle(path=name_+".pkl", compression="gzip")
         global wandb
         if a2a == True:
             refreshed_usertopK = defaultdict(list)
@@ -272,6 +276,9 @@ class Server(cSimpleModule):
                     self.att_acc[round].append(acc)
                     self.att_acc_bound[round].append(acc_bound)
                     self.att_random_bound[round].append(rand_bound)
+                    if acc > self.best_att_acc[attacker]:
+                        self.best_att_acc[attacker] = acc
+
                     avg_acc += acc
                     avg_acc_bound += acc_bound
                     avg_random_bound += rand_bound
@@ -304,6 +311,7 @@ class Server(cSimpleModule):
             cdf(self.ndcgs[0], "Local NDCG")
             cdf(self.att_acc[0], "Attack Acc", topK_clustering)
             cdf(self.att_acc_bound[0], "Attack Acc bound", topK_clustering)
+            cdf(self.best_att_acc.values(), "Best Attack Acc", topK_clustering)
             wandb.finish()
             topks = [5,10,15,20]
             idx_round -= 1
@@ -319,7 +327,7 @@ class Server(cSimpleModule):
             ax.set_title('Attack accuracy distribution w.r.t different Topk Values')
             ax.boxplot(att_accs)
             ax.set_xticklabels(['5','10', '15','20'])
-            fig.savefig("accuracy@topk.png")                       
+            fig.savefig(name_+"accuracy@topk.png")                       
 
        
         elif sync_ and ground_truth_type == "kmeans":

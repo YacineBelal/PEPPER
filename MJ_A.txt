@@ -7,30 +7,5 @@ Setting up Cmdenv...
 Loading NED files from .:  1
 
 Preparing for running configuration General, run #0...
-Assigned runID=General-0-20230828-01:06:52-805251
+Assigned runID=General-0-20231001-12:19:55-75719
 Setting up network "RandomGraph"...
-2023-08-28 01:06:56.622063: I tensorflow/core/util/port.cc:110] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
-2023-08-28 01:06:56.624300: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
-2023-08-28 01:06:56.652074: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
-2023-08-28 01:06:56.652406: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
-To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2023-08-28 01:06:57.425375: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
-
-<!> Error: ImportError: cannot import name 'initializations' from 'keras' (/home/yacine/.local/lib/python3.8/site-packages/keras/__init__.py)
-
-At:
-  /home/yacine/git/PersonalizedGL/utility.py(12): <module>
-  <frozen importlib._bootstrap>(219): _call_with_frames_removed
-  <frozen importlib._bootstrap_external>(843): exec_module
-  <frozen importlib._bootstrap>(686): _load_unlocked
-  <frozen importlib._bootstrap>(975): _find_and_load_unlocked
-  <frozen importlib._bootstrap>(991): _find_and_load
-  /home/yacine/git/PersonalizedGL/node.py(6): <module>
-  <frozen importlib._bootstrap>(219): _call_with_frames_removed
-  <frozen importlib._bootstrap_external>(843): exec_module
-  <frozen importlib._bootstrap>(686): _load_unlocked
-  <frozen importlib._bootstrap>(975): _find_and_load_unlocked
-  <frozen importlib._bootstrap>(991): _find_and_load
-
-
-End.

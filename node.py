@@ -28,8 +28,8 @@ train ,testRatings, testNegatives, trainNegatives, \
 validationRatings, validationNegatives = dataset.trainMatrix, dataset.testRatings, dataset.testNegatives, \
     dataset.trainNegatives, dataset.validationRatings, dataset.validationNegatives
 
-# testRatings = testRatings[:1000] #  2453 1000
-# testNegatives= testNegatives[:1000]
+testRatings = testRatings[:1000] #  2453 1000
+testNegatives= testNegatives[:1000]
 
 number_peers = 3
 
