@@ -13,9 +13,8 @@ import matplotlib.pyplot as plt
 import pandas as pd 
 
 sync_ = 1
-a2a = False
 # nodes communicate with all nodes that they interacted with, in the last round, in order to get fresh models
-name_ = "FedAvg-ML (Model Evaluation)"  # "Pepper Model_Age_Based Attacked" #  "Pepper Attacked"
+name_ = "Pepper-ML-GMF (Model Evaluation, Momentum)" # "FedAvg-ML (Model Evaluation)"  # "Pepper Model_Age_Based Attacked" #  "Pepper Attacked"
 dataset_ = "ml-100k"  # GowallaNYC foursquareNYC   
 topK = 20
 topK_clustering = 5
@@ -162,8 +161,8 @@ def zero():
     return 0
 
 def init_wandb():
-    if sync_:
-        wandb_config = {
+    global wandb 
+    wandb_config = {
         "Dataset": dataset_,
         "Implementation": "TensorFlow",
         "Rounds": 250,
@@ -188,9 +187,10 @@ def init_wandb():
     wandb.init(project="DecentralizedGL", entity="drimfederatedlearning", name=name_, config=wandb_config)
 
 
-class Server(cSimpleModule):
+class Server(cSimpleModule):    
     def initialize(self):
-        init_wandb()
+        if sync_:   
+            init_wandb()
         self.all_participants = [i for i in range(self.gateSize('sl'))]
         self.num_participants = len(self.all_participants)
         self.hit_ratios = defaultdict(list)
@@ -224,27 +224,6 @@ class Server(cSimpleModule):
         df = pd.DataFrame(self.attack_results, columns=['Round','Attacker',"Cluster_Found"])
         df.to_pickle(path=name_+".pkl", compression="gzip")
         global wandb
-        if a2a == True:
-            refreshed_usertopK = defaultdict(list)
-            for u in range(self.num_participants):
-                local_model = self.models[u]
-                for v in self.cluster_found[u][len(self.cluster_found[u]) - 1]:
-                    similarity = 0
-                    for i in range(2):  # user and items embeddings
-                        local_embeddings = local_model[i]
-                        received_embeddings = self.models[v][i]
-                        for j in self.vectors[u]:
-                            if i == 0:
-                                similarity += euclidean(local_embeddings[j], received_embeddings[j])
-                            if i == 1:
-                                similarity /= len(self.vectors[u])
-                                similarity = similarity / 2 + euclidean(local_embeddings[u], received_embeddings[v]) / 2
-                            break
-                    refreshed_usertopK[u].append((v, similarity))
-
-                refreshed_usertopK[u].sort(key=lambda x: x[1])
-                self.cluster_found[u][len(self.cluster_found[u]) - 1] = [x[0] for x in refreshed_usertopK[u]]
-
         nb_rounds = max(self.hit_ratios.keys())
         rand_acc = RandomBoundAccuracy(N=self.num_participants)
         idx_round = 0
@@ -287,12 +266,13 @@ class Server(cSimpleModule):
                 avg_acc = avg_acc / self.num_participants
                 avg_acc_bound = avg_acc_bound / self.num_participants
                 avg_random_bound = avg_random_bound / self.num_participants
-
+                best_att_acc = list(self.best_att_acc.values())
+                avg_best_att_acc = sum(best_att_acc)/ len(best_att_acc)
 
             if sync_ and ground_truth_type == "topk":
                 wandb.log({"Average HR": avg_hr, "Average NDCG": avg_ndcg, "Average Attack Acc": avg_acc,
                            "Average Attack Acc Bound": avg_acc_bound,
-                           "Average Random Bound": rand_acc, "Average Crossed Random Bound": avg_random_bound,
+                           "Average Random Bound": rand_acc, "Average Crossed Random Bound": avg_random_bound, "Best Average Attack Acc": avg_best_att_acc,
                            "Round ": nb_rounds - round})
                 if round == 0:
                     wandb.log({"Final Average HR": avg_hr, "Final Average NDCG": avg_ndcg,
@@ -307,17 +287,18 @@ class Server(cSimpleModule):
                                "Final Attack Average Precision": avg_acc, "Final Attack Average Recall": avg_recall})
 
         if sync_ and ground_truth_type == "topk":
-            cdf(self.hit_ratios[0], "Local HR")
-            cdf(self.ndcgs[0], "Local NDCG")
-            cdf(self.att_acc[0], "Attack Acc", topK_clustering)
-            cdf(self.att_acc_bound[0], "Attack Acc bound", topK_clustering)
-            cdf(self.best_att_acc.values(), "Best Attack Acc", topK_clustering)
+            cdf(self.hit_ratios[1], "Local HR")
+            cdf(self.ndcgs[1], "Local NDCG")
+            cdf(self.att_acc[1], "Attack Acc", topK_clustering)
+            cdf(self.att_acc_bound[1], "Attack Acc bound", topK_clustering)
+            best_att_acc = list(self.best_att_acc.values())
+            cdf(best_att_acc, "Best Attack Acc", 2)
             wandb.finish()
             topks = [5,10,15,20]
             idx_round -= 1
             att_accs = []
             for topk in topks:
-                self.clusters = self.groundTruth_TopKItemsLiked(topK = topk)
+                self.clusters = groundTruth_TopKItemsLiked(num_participants=self.num_participants ,topK = topk)
                 accs = []
                 for u in range(self.num_participants):
                     acc, _, _ = self.Accuracy_Topk_Attack(self.clusters, u, idx_round, topK=topk)

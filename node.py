@@ -7,11 +7,12 @@ import utility as util
 import random
 import sys
 from evaluate import evaluate_model
-from scipy.spatial.distance import cosine
-from numpy import linalg as LA
-from sklearn.preprocessing import normalize
+import csv 
 
 
+Item_based_only = False
+Personalization = True
+Momentum = True
 
 topK = 20
 dataset_name = "ml-100k" #foursquareNYC    GowallaNYC 
@@ -22,14 +23,15 @@ elif dataset_name =="ml-100k ":
     num_items =   1682
 else: # GowallaNYC
     num_items =   10978 
-
+    
 dataset = Dataset(dataset_name)
 train ,testRatings, testNegatives, trainNegatives, \
 validationRatings, validationNegatives = dataset.trainMatrix, dataset.testRatings, dataset.testNegatives, \
     dataset.trainNegatives, dataset.validationRatings, dataset.validationNegatives
 
-testRatings = testRatings[:1000] #  2453 1000
-testNegatives= testNegatives[:1000]
+    
+# testRatings = testRatings[:1000] #   if one wishes to evaluate the models globally & for only 100 users; not a problem for a personalized-data metric measurement
+# testNegatives= testNegatives[:1000]
 
 number_peers = 3
 
@@ -44,7 +46,7 @@ def get_user_vector(train,user = 0):
 
     return positive_instances
 
-def get_user_test_set(testRatings,testNegatives,user):
+def get_user_test_set(testRatings, testNegatives, user):
     personal_testRatings = []
     personal_testNegatives = []
     
@@ -56,37 +58,12 @@ def get_user_test_set(testRatings,testNegatives,user):
         elif idx > user:
             break
         
-    return personal_testRatings,personal_testNegatives
-
-def jaccard_similarity(list1, list2):
-        s1 = set(list1)
-        s2 = set(list2)
-        return float(len(s1.intersection(s2)) / len(s1.union(s2)))
-
-
-def cosine_similarity(list1, list2):
-        return 1 - cosine(list1,list2)
-        # return 1 - 0
-
-def mykey(el1, el2):
-        # bigger frequency
-        if el1[1][1] > el2[1][1]:
-            return 1
-            # better similarity
-        elif el1[1][1] == el2[1][1] and el1[1][0] > el2[1][0]:
-            return 1
-        
-        return -1
-
-def get_training_as_list(train):
-    trainingList = []
-    for (u, i) in train.keys():
-        trainingList.append([u, i])
-    return trainingList
+    return personal_testRatings, personal_testNegatives
 
 def get_individual_set(user, ratings, negatives):
     personal_Ratings = []
     personal_Negatives = []
+
     for i in range(len(ratings)):
         idx = ratings[i][0]
         if idx == user:
@@ -98,54 +75,56 @@ def get_individual_set(user, ratings, negatives):
     return personal_Ratings, personal_Negatives
 
 
+def get_training_as_list(train):
+    trainingList = []
+    for (u, i) in train.keys():
+        trainingList.append([u, i])
+    return trainingList
+
+
 class Node(cSimpleModule):
     def initialize(self):
         # initialization phase in which number of rounds, model age, data is read, model is created, connecter peers list is created
-        self.rounds =  200 #500 
+        self.rounds = 500   
         self.vector = np.empty(0)
         self.labels = np.empty(0)
         self.item_input = np.empty(0)
         self.age = 1
         self.alpha = 0.4
-        self.num_items = num_items #train.shape[1] #1682 #3900  TO DO automate this, doesn't work since the validation data has been added because one item is present there and not in training
-        self.num_users = 100 # train.shape[0] #146 
+        self.num_items = 1682 #train.shape[1] #1682 ml-100k #3900 foursquare; TODO automate this, get number of items from all sets (train, val..) before building the model
+        self.num_users = 100 #to consider only 100 users, .ned file needs to be altered too when modying number of users in the system 
         self.id_user = self.getIndex()  
-        self.period = 0 # np.random.exponential(0.1)
+        self.period = 0 # np.random.exponential(0.1) #*** for different periods per node, TODO exploring periodicity impact***
 
-        self.vector = get_user_vector(train,self.id_user)
+        self.vector = get_user_vector(train,self.id_user) # positive samples; relevant items
         self.trainRatings, self.trainNegatives = get_individual_set(self.id_user, get_training_as_list(train), trainNegatives)
-        self.testRatings, self.testNegatives = get_user_test_set(testRatings,testNegatives,self.id_user)
-        self.validationRatings, self.validationNegatives = get_user_test_set(validationRatings,validationNegatives,self.id_user)
+        self.testRatings, self.testNegatives = get_user_test_set(testRatings, testNegatives, self.id_user) # final model testing data 
+        self.validationRatings, self.validationNegatives = get_user_test_set(validationRatings,validationNegatives,self.id_user) # D_ weighting
         self.best_hr = 0.0
         self.best_ndcg = 0.0
         self.best_model = []
-
+        self.models_attack = dict()
+        self.beta = 0.99
         self.positives_nums = len(self.vector)
 
         self.item_input, self.labels, self.user_input = self.my_dataset()
-        self.model = util.get_model(self.num_items,self.num_users) # each node initialize its own model 
-
+        self.model = util.get_model(self.num_items,self.num_users) # *** each node initialize its own model ***
         self.model.compile(optimizer=Adam(lr=0.01), loss='binary_crossentropy')
         
         self.period_message = cMessage('period_message')
         self.update()
         self.peers =  []
-        
-        self.neighbours = dict()
-        self.colliders = []
         self.peer_sampling()
-        self.performances = {}
+        self.performances = {} # *** used for the personnalized peer-sampling protocol *** 
+        self.neighbours = dict()
+
         self.scheduleAt(simTime() + self.period,self.period_message)
         
 
     def handleMessage(self, msg):
         # periodic self sent message used as a timer by each node to diffuse its model 
-        if msg.getName() == 'attackers_list':
-            self.colliders = msg.list_attackers.copy()
-            if self.id_user in self.colliders:
-                self.colliders.remove(self.id_user)
-            self.delete(msg)
-        elif msg.getName() == 'period_message':
+        if msg.getName() == 'period_message':
+            
             if self.rounds > 0 :
 
                 if self.rounds % 10 == 0 or self.rounds == 1:
@@ -155,7 +134,7 @@ class Node(cSimpleModule):
                         if(len(self.best_model) > 0):
                             self.model.set_weights(self.best_model)
                         lhr, lndcg = self.evaluate_local_model(False,False)
-                
+                    
                     print('node : ',self.id_user)
                     print('Local HR =  ', lhr)
                     print('Local NDCG =  ',lndcg)
@@ -163,85 +142,50 @@ class Node(cSimpleModule):
                     sys.stdout.flush()
                     self.diffuse_to_server(lhr, lndcg)
 
-                self.add_noise()
+            
+                # diffuse model periodically, either to one peer or the whole neighborhood 
                 self.diffuse_to_peer()
                 # self.broadcast()
+                
+                # peer-sampling call; 
                 if self.rounds % 10 == 0:
-                    self.peer_sampling()
-                    # self.peer_sampling_enhanced()
+                    # self.peer_sampling()
+                    self.peer_sampling_enhanced()
                
-
                 self.rounds = self.rounds - 1
                 self.scheduleAt(simTime() + self.period,self.period_message)
             
-            elif self.rounds == 0: # if number of rounds has been acheived, we can evaluate the model both locally
-                    lhr, lndcg = self.evaluate_local_model(False, False)                    
-                    print('node : ',self.id_user)
-                    print('Local HR =  ', lhr)
-                    print('Local NDCG =  ',lndcg)
-                    print('Round left = ', self.rounds)
-                    sys.stdout.flush() 
-                    self.diffuse_to_server(lhr, lndcg)
-
 
                 
              
         elif msg.getName() == 'Model':
-            self.find_profiles(msg)
 
-            # for id in self.colliders:
-            #     if msg.id != id:
-            #         new_message = WeightsMessage("Model_Collider")
-            #         new_message.weights = msg.weights.copy()
-            #         new_message.age = msg.age       
-            #         new_message.samples = msg.samples 
-            #         new_message.id = msg.id
-            #         self.diffuse_to_specific_peer(id, new_message)
+            if Momentum:
+                self.find_profiles_with_momentum(msg)
+            else:
+                self.find_profiles(msg)
 
-            # dt = self.merge(msg)
-            dt = self.FullAvg(msg)
-            # dt = self.FullAvg_items_only(msg)
-            # dt = self.DKL_mergeJ(msg)
-            # dt = self.DKL_mergeJ_Items_only(msg)
-          
-            ## when validation samples are drawn from training : less training, more validation and weighting by validating
-            # hr, ndcg = self.evaluate_local_model(False, True)
-            # if hr >= self.best_hr:
-            #     self.best_hr = hr
-            #     self.best_ndcg = ndcg
-            #     self.best_model = self.model.get_weights().copy()
-          
-          
-            # ## added the pull possibility
-            # if msg.type == "pull":
-            #     self.diffuse_to_specific_peer(msg.id)
+            if Personalization:
+                if not Item_based_only:
+                    self.Performance_based(msg) # Performance based 
+                else:
+                    self.Performance_Based_Items_only(msg)
+            else:
+                if not Item_based_only:
+                    self.FullAvg(msg)
+                else:
+                    self.FullAvg_items_only(msg)
 
             self.delete(msg)
-
-        elif msg.getName() == 'Model_Collider':
-            self.find_profiles(msg)
-            self.delete(msg)
-
+            
 
     def finish(self):
         pass
     
 
-    
             
     def add_noise(self):
         sensitivity = 2
-        # check thesis of NIKOLAOS TATARAKIS on DP for more information
-        # full privacy budget (approximate DP, advanced composition)
-        # is equal to= epsilon * sqrt(number of steps * ln(1/delta))
-        # in our case: epsilon * sqrt(200* ln(10^6))
-        # quadruples epsilon, delta, full epsilon, full delta
-        # 0.000694, 10^-6 0.1, 0.0015 // HR=0.017 NDCG=0.0054 Acc = 0.04001
-        # 0.00694,10^-6  1, 0.0015 // HR=0.017 NDCG= Acc = 0.04
-        # 0.019, 10^-6  10, 0.0015 // HR=0.194 NDCG= Acc = 0.064
-        # 0.19, 10^-6, 100, 0.0015 // HR = 0.24  NDCG=0.07   ACC = 0.08
-        # 19, 10^-6, 1000, 0.0015 // HR= 0.301 NDCG= 0.09 Acc=0.112
-            
         epsilon = 0.019
         delta = 10e-6
         sigma =  sensitivity * np.sqrt(2 * np.log(1.25 / delta)) / epsilon
@@ -255,7 +199,39 @@ class Node(cSimpleModule):
             self.dp_model[0][i] = np.add(self.dp_model[0][i],np.random.normal(loc = 0, scale = sigma, size = self.dp_model[0][i].shape))
         self.model.set_weights(self.dp_model)
 
-    def find_profiles(self, msg, based_on_items_only = False):
+     
+    def find_profiles_with_momentum(self, msg, based_on_items_only = Item_based_only):
+        if self.models_attack.get(msg.id) is None:
+            self.models_attack[msg.id] = msg.weights.copy()
+        else:
+            self.models_attack[msg.id][0] = (self.beta * self.models_attack.get(msg.id)[0]
+                                + (1 - self.beta) * msg.weights[0])
+            if not based_on_items_only:
+               for i in range(2, len(self.models_attack[msg.id])):  
+                    self.models_attack[msg.id][i] = ( (self.beta) * self.models_attack.get(msg.id)[i] 
+                                    + (1 - self.beta) * msg.weights[i])
+            else:
+                for i in range(1, len(self.models_attack[msg.id])):  
+                    self.models_attack[msg.id][i] = ( (self.beta) * self.models_attack.get(msg.id)[i] 
+                                    + (1 - self.beta) * msg.weights[i])
+
+        if based_on_items_only:
+            # just evaluating the items embeddings
+            local_items_embeddings = self.model.get_layer('item_embedding').get_weights()
+            self.model.get_layer('item_embedding').set_weights([self.models_attack[msg.id][0]])
+            _, ndcg = self.evaluate_on_train_items()
+            
+            self.neighbours[msg.id] = (ndcg, 1)
+
+            self.model.get_layer('item_embedding').set_weights(local_items_embeddings)
+        else:
+            local_model = self.model.get_weights().copy()
+            self.model.set_weights(self.models_attack[msg.id])
+            _, ndcg = self.evaluate_on_train(user = msg.id)
+            self.neighbours[msg.id] = (ndcg, 1)
+            self.model.set_weights(local_model)
+
+    def find_profiles(self, msg, based_on_items_only = Item_based_only):
         if based_on_items_only:
             # just evaluating the items embeddings
             local_items_embeddings = self.model.get_layer('item_embedding').get_weights()
@@ -329,8 +305,7 @@ class Node(cSimpleModule):
                 p = random.randint(0,size - 1)
             self.peers.append(p)
 
-
-
+    # peer-sample considering the performances of received models in the last period;
     def peer_sampling_enhanced(self):       
         size = self.gateSize("no") - 1 
         self.peers = []
@@ -353,9 +328,7 @@ class Node(cSimpleModule):
                 p = random.randint(0,size - 1)
             self.peers.append(p)
 
-
     def diffuse_to_specific_peer(self, id, msg = None):
-
         if msg is not None:
             self.send(msg, 'no$o', self.get_gate(id))
         else:        
@@ -366,6 +339,7 @@ class Node(cSimpleModule):
             weights.type = "push"
             weights.id = self.id_user
             self.send(weights, 'no$o', self.get_gate(id))
+    
     
     def broadcast (self):
         for p in self.peers:
@@ -418,20 +392,15 @@ class Node(cSimpleModule):
                         batch_size= batch_size, nb_epoch=epochs, verbose=0, shuffle=True) 
    
         self.age = self.age + 1
-        
-
-        print("Node : ",self.getIndex())
-        print("Rounds Left : ",self.rounds)
         sys.stdout.flush()
         
-        
-    def merge(self,message_weights):
+        # different aggregation functions :
+    def model_age(self,message_weights):
         weights = message_weights.weights
         local_weights = self.get_model()
         local_weights[:] =  [ (a * self.age + b * message_weights.age) / (self.age + message_weights.age) for a,b in zip(local_weights,weights)]
         self.age = max(self.age,message_weights.age)
         self.set_model(local_weights)
-
         self.update()
         self.item_input, self.labels, self.user_input = self.my_dataset()
 
@@ -442,16 +411,7 @@ class Node(cSimpleModule):
         local = self.get_model()
         local[:] =  [ (a + b) / 2 for a,b in zip(local,weights)]
         self.set_model(local)
- 
-    def FullAvg(self, message_weights):
-        weights = message_weights.weights
-        local_weights = self.get_model()
-        local_weights [:] = [(self.positives_nums * a + message_weights.samples * b) / (message_weights.samples + self.positives_nums) for a,b in zip(local_weights, weights)]
-        self.set_model(local_weights)
-        self.update()
-        self.item_input, self.labels, self.user_input = self.my_dataset()
 
-        return 0
 
     def FullAvg_items_only(self, message_weights):
         weights = message_weights.weights
@@ -465,8 +425,24 @@ class Node(cSimpleModule):
 
         return 0
     
+    def FullAvg(self, message_weights):
+        weights = message_weights.weights
+        local_weights = self.get_model()
+        local_weights [:] = [(self.positives_nums * a + message_weights.samples * b) / (message_weights.samples + self.positives_nums) for a,b in zip(local_weights, weights)]
+        self.set_model(local_weights)
+        self.update()
+        self.item_input, self.labels, self.user_input = self.my_dataset()
 
-    def DKL_mergeJ_Items_only(self, message_weights):
+        return 0
+
+    def to_csv_file(self, sender, isAttacker, receiver, none_normalized_weights, normalized_weights, round, setting):
+        with open("list_weights_given.csv","a") as output:
+            writer = csv.writer(output, delimiter=",")
+            writer.writerow([sender, isAttacker, receiver, none_normalized_weights, normalized_weights, round, setting])
+
+
+
+    def Performance_Based_Items_only(self, message_weights):
         if len(self.validationRatings) < 2:
             self.simple_merge(message_weights.weights)
             self.item_input, self.labels, self.user_input = self.my_dataset()
@@ -506,10 +482,8 @@ class Node(cSimpleModule):
         self.update()
         
         return 0
-    
-    def DKL_mergeJ(self,message_weights): 
-        
-        if len(self.validationRatings) < 2:
+    def Performance_based(self,message_weights): 
+        if len(self.validationRatings) < 2: #D_weighting
             self.simple_merge(message_weights.weights)
             self.item_input, self.labels, self.user_input = self.my_dataset()
             self.update()
@@ -523,7 +497,7 @@ class Node(cSimpleModule):
         hr, ndcg = self.evaluate_local_model()
         self.performances[message_weights.id] = hr * ndcg
         ndcgs.append(hr * ndcg)
-
+        
         ndcg_total = sum(ndcgs)
         
         if(ndcg_total) == 0:
@@ -542,6 +516,8 @@ class Node(cSimpleModule):
         self.update()
         
         return 0
+
+
 
     def my_dataset(self,num_negatives = 4):
         item_input = []
@@ -562,3 +538,8 @@ class Node(cSimpleModule):
 
    
     
+
+    # self.vector  contains relevant items for user
+    # user 0 : [55,89,22] 
+    # at each update
+    # we generate a set of negative items :  [55,(41,9,1,3),..]
